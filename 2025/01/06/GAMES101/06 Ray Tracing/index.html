@@ -1,0 +1,939 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Enlight3n">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="06 Ray Tracing光线追踪光栅化的局限 光栅化并做不好全局的效果，如软阴影，反射，环境光照，渲染的质量不高。相比之下，光线追踪处理速度虽慢，渲染质量却很高。此外，光栅化很容易做到实时，而光线追踪更多的应用于离线渲染。 图形学中的光线假设——光线沿直线传播   光线之间彼此不会发生碰撞 从光源发出光线到达人眼，经过了多次反射与折射，由于光是可逆的，我们可以认为是从人眼发出光线，最终到达了光">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06 Ray Tracing">
+<meta property="og:url" content="https://enlight3n.github.io/2025/01/06/GAMES101/06%20Ray%20Tracing/index.html">
+<meta property="og:site_name" content="Enlight3n的博客">
+<meta property="og:description" content="06 Ray Tracing光线追踪光栅化的局限 光栅化并做不好全局的效果，如软阴影，反射，环境光照，渲染的质量不高。相比之下，光线追踪处理速度虽慢，渲染质量却很高。此外，光栅化很容易做到实时，而光线追踪更多的应用于离线渲染。 图形学中的光线假设——光线沿直线传播   光线之间彼此不会发生碰撞 从光源发出光线到达人眼，经过了多次反射与折射，由于光是可逆的，我们可以认为是从人眼发出光线，最终到达了光">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427145739-cfjqixo.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427155115-5pzis5z.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427155413-0ylixkc.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427155427-5ph3zgp.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427155502-1469lnx.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427170555-vz22mo5.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174342-vvm4dl2.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174342-sn62kyf.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174342-4jp8oaa.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174342-go9mp5o.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-07hst5z.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427181257-tb6qocm.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427181345-ob9l8rb.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427181634-dzh5t8u.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-w5h00tg.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-mnjtj1c.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-kc8hfy3.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427181856-39usvwy.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-mryjp2a.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427181918-1r14x51.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-wteq8zd.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-ffsea1h.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-30ss2br.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-xau2756.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250425172645-r3b2uc3.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250425172446-5b9bm41.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250425172426-55bj1wm.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-rqfkiej.png">
+<meta property="article:published_time" content="2025-01-06T12:06:23.000Z">
+<meta property="article:modified_time" content="2025-04-28T15:46:43.810Z">
+<meta property="article:author" content="Enlight3n">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427145739-cfjqixo.png">
+  
+  
+  
+  <title>06 Ray Tracing - Enlight3n的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"enlight3n.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enlight3n</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="06 Ray Tracing"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-06 20:06" pubdate>
+          2025年1月6日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          41 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">06 Ray Tracing</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="06-Ray-Tracing"><a href="#06-Ray-Tracing" class="headerlink" title="06 Ray Tracing"></a>06 Ray Tracing</h1><h2 id="光线追踪"><a href="#光线追踪" class="headerlink" title="光线追踪"></a>光线追踪</h2><p><strong>光栅化的局限</strong></p>
+<p>光栅化并做不好全局的效果，如软阴影，反射，环境光照，渲染的质量不高。相比之下，光线追踪处理速度虽慢，渲染质量却很高。此外，光栅化很容易做到实时，而光线追踪更多的应用于离线渲染。</p>
+<p><strong>图形学中的光线假设</strong>——光线沿直线传播 </p>
+<ul>
+<li>光线之间彼此不会发生碰撞</li>
+<li>从光源发出光线到达人眼，经过了多次反射与折射，由于光是可逆的，我们可以认为是从人眼发出光线，最终到达了光源。</li>
+</ul>
+<p><strong>光线追踪的基本思想</strong></p>
+<p>因为光路是可逆的，那么就让光线从眼睛出发，沿屏幕每个像素投射出去，判断与场景物体的交点，然后计算该交点的受光照情况。形成一个屏幕图像就需要投射出屏幕分辨率个光线出去，这种计算量无疑是巨大的，但是图像质量极高。</p>
+<h2 id="递归式光线追踪"><a href="#递归式光线追踪" class="headerlink" title="递归式光线追踪"></a>递归式光线追踪</h2><p><strong>Whitted-Style  Ray Tracing（Recursive Ray Tracing）</strong></p>
+<p><img src="/GAMES101_Assets/image-20250427145739-cfjqixo.png" alt="">​</p>
+<ol>
+<li>从相机出发，发射出屏幕像素个数的光线，穿过每一个像素点，打到物体。由于一条光线可能穿过多个物体，取取光路与物体最近的交点（涉及深度测试），这个点称为着色点。</li>
+<li><p>在这个着色点上，可能发生两种情况：</p>
+<ol>
+<li>这一点发生了<strong>漫反射</strong>：如果光源能看见着色点（着色点不在阴影中），那么就生成一条有效光路，计算能量并着色（我们很容易知道这个着色点的法线，入射方向等信息，这时候可以用各种各样的着色模型（如Blinn Phong））</li>
+<li>这一点发生了完美的<strong>折射与反射</strong>：折射或反射后的光线会打到新的着色点上，对于这个新的着色点进行同样的判断与处理。</li>
+</ol>
+</li>
+<li>最后，将每个交点的受光照情况（使用Blinn Phong算法）以一定权重综合起来，得到的颜色即是该像素的颜色。</li>
+</ol>
+<p>需要注意的是：</p>
+<ul>
+<li>为了减少递归次数，可以额外给予一定的递归终止条件（如允许的最大反射或折射次数为10）。</li>
+<li>光线在每次反射和折射之后都有能量损耗的（由系数决定），因此经过多次投射后的光线贡献的能量就越小。</li>
+<li>如果投射光线没有碰撞到物体，一般直接返回一个背景色。</li>
+</ul>
+<p><strong>漫反射表面（diffuse surface）</strong> ：粗糙的表面，可以认为它会向各个方向等强度地反射光，因此光线投射到该表面时，本应该会有无数条光线反射出去，但是为了减少计算量，Whitted-Style  则直接对该交点进行 Blinn Phong 着色后就终止递归。</p>
+<h2 id="光线与物体求交"><a href="#光线与物体求交" class="headerlink" title="光线与物体求交"></a>光线与物体求交</h2><p>为了研究光线与物体求交问题，我们需要先定义光线：一个光线可以有一个点（光源）和一个方向（光线方向）确定，则可设光线上的点的表达式：</p>
+<p><img src="/GAMES101_Assets/image-20250427155115-5pzis5z.png" alt="">​</p>
+<h3 id="与球体求交"><a href="#与球体求交" class="headerlink" title="与球体求交"></a><strong>与球体求交</strong></h3><p><img src="/GAMES101_Assets/image-20250427155413-0ylixkc.png" alt="">​</p>
+<h3 id="隐式表面求交"><a href="#隐式表面求交" class="headerlink" title="隐式表面求交"></a><strong>隐式表面求交</strong></h3><p><img src="/GAMES101_Assets/image-20250427155427-5ph3zgp.png" alt="">​</p>
+<h3 id="显示表面求交"><a href="#显示表面求交" class="headerlink" title="显示表面求交"></a><strong>显示表面求交</strong></h3><p>显示表面中最常见的就是三角形，因此最重要的就是判断与三角形求交的问题</p>
+<p><strong>判断点是否在物体内部</strong>：判断该点发射的光线与物体的交点数量是奇数还是偶数。</p>
+<p><strong>判断三角形与光线的交点：先判断是否与三角面所在平面相交，求出交点，再判断交点是否在三角形内</strong></p>
+<p><strong>光线和平面求交</strong></p>
+<p><img src="/GAMES101_Assets/image-20250427155502-1469lnx.png" alt="">​</p>
+<p><strong>判断交点在不在三角形内部</strong></p>
+<p>Möller  Trumbore Algorithm——MT算法：利用重心坐标，交点可以被重心坐标表示出来，三个未知数三个方程，可求解</p>
+<p><img src="/GAMES101_Assets/image-20250427170555-vz22mo5.png" alt="">​</p>
+<h2 id="加速光线追踪"><a href="#加速光线追踪" class="headerlink" title="加速光线追踪"></a><strong>加速光线追踪</strong></h2><p>对于每一个屏幕像素点投射出来的光线，我们都要计算光线与空间中的所有三角形是否有交点，计算次数=像素数×三角形数×弹射次数。显然这是一个十分巨大的开销。</p>
+<p>我们可以利用<strong>轴对齐包围盒（AABB）</strong> 来优化这个过程。</p>
+<p>我们引入包围盒的概念，将一个复杂的物体用简单的形状围起来。如果光线连包围盒都碰不到，那肯定碰不到包围盒里的物体。对于三维的情况，我们一般用特殊的长方体包围盒——轴对齐包围盒，即包围盒的每一个边都对应和一个坐标轴平行。</p>
+<p><img src="/GAMES101_Assets/image-20240210174342-vvm4dl2.png" alt=""></p>
+<p>如上图，可以得出：只有当光线进入了三组对面，才能说明光线进入了包围盒，同理，只要光线离开了任一对面，就说明光线离开了包围盒。</p>
+<h3 id="光线与包围盒求交算法"><a href="#光线与包围盒求交算法" class="headerlink" title="光线与包围盒求交算法"></a><strong>光线与包围盒求交算法</strong></h3><p>对于任一对面，我们计算出光线进入对面的最小时间tmin和最大时间tmax（负数也无所谓），接着即可求出光线进入和离开包围盒的时间。</p>
+<p><img src="/GAMES101_Assets/image-20240210174342-sn62kyf.png" alt="">​</p>
+<ul>
+<li>如果$t_{enter}$&lt;$t_{exit}$，说明光线进入了这个盒子里，反之就是没有</li>
+<li><p>总的来说</p>
+<ul>
+<li>如果$t_{exit}&lt;0$：说明包围盒在光线的后面——没有交点</li>
+<li>如果$t_{exit}&gt;0$ and $t_{enter}&lt;0$：说明光线起点在包围盒之中——有交点</li>
+<li>总的来说，光线和AABB的交点有且仅有 $t_{enter}<t_{exit} 且t_{enter}>=0$​​</li>
+</ul>
+</li>
+</ul>
+<h3 id="确定包围盒的位置——均匀划分"><a href="#确定包围盒的位置——均匀划分" class="headerlink" title="确定包围盒的位置——均匀划分"></a><strong>确定包围盒的位置——均匀划分</strong></h3><p>通过上述分析，我们已经知道了光线如何和包围盒求交，接下来需要在空间中确定包围盒的位置。</p>
+<p>我们判断光线与物体求交的步骤为：</p>
+<ul>
+<li>找到整个场景包围盒</li>
+<li>均匀划分该包围盒</li>
+<li>判定与物体相交的子包围盒</li>
+<li>与物体求交</li>
+</ul>
+<p>我们可以使用均匀划分的方法，均匀划分就是将空间均匀划分成包围盒。</p>
+<ul>
+<li>量级：如果划分太稀疏或是太密集，效率都不会高，根据经验，人们大概得出划分成场景中物体数目的27倍的格子数比较好</li>
+<li>缺点：格子的划分方法在大量均匀分布的物体上比较有效，然而在复杂空旷的场景中，会造成很多资源浪费</li>
+</ul>
+<h3 id="确定包围盒的位置——空间划分"><a href="#确定包围盒的位置——空间划分" class="headerlink" title="确定包围盒的位置——空间划分"></a><strong>确定包围盒的位置——空间划分</strong></h3><p>在网格均匀划分中划分出来的都是大小相同的格子，但场景中的物体一般不会是均匀分布，空旷的地方不需要进行这样划分</p>
+<p>我们希望在没有物体的地方用大的包围盒，有物体的地方用小的包围盒，这也就引出了空间划分的方法。</p>
+<p>注意：这里提到的空间划分，不是物体划分。比如说一个物体，可以划分到多个包围盒里</p>
+<p><img src="/GAMES101_Assets/image-20240210174342-4jp8oaa.png" alt="">​</p>
+<p><strong>八叉树</strong></p>
+<ul>
+<li>每一次把空间划分成八份（三维上），直到满足一定的停止规则（比如某一次划分8个子空间中7个为空）</li>
+<li>缺点是维数越高越复杂，n维空间对应叉树</li>
+</ul>
+<p><strong>KD树</strong></p>
+<ul>
+<li>每次把空间划分为两份，x，y，z轴轮流切分，直到被切分节点中不存在物体则停止</li>
+</ul>
+<p><strong>BSP树</strong></p>
+<ul>
+<li>一种对空间二分的划分方法，每次选一个方向进行划分，与KD树的区别在于它不是横平竖直地切，且它会有越高维越不好计算的问题（用线切开二维，用面切开三维，维度越高越复杂）</li>
+</ul>
+<p><strong>KD树如何进行划分</strong></p>
+<p><img src="/GAMES101_Assets/image-20240210174342-go9mp5o.png" alt=""></p>
+<p>如果一条光线与当前结点空间有交点，则继续寻找该结点的子节点，直到找到叶子结点，再与其中物体求交</p>
+<p><strong>KD树的局限：</strong></p>
+<p>给出一个节点的包围盒，要判断他与物体哪些三角形有交集，才能进行后续着色，这种算法确实存在，但不太好写</p>
+<p>其次，很多情况下一个物体和很多包围盒都有交集，它可能会存在很多个叶子节点中，会造成重复计算</p>
+<p>因此，KD树现在很少使用到，我们更多使用的是根据物体划分的BVHs划分。</p>
+<p><strong>确定包围盒的位置——BVHs划分（Bounding  Volume Hierarchy）</strong></p>
+<p>找到场景包围盒 -&gt; 每次将物体分为两堆 -&gt; 对两堆物体重新计算包围盒 -&gt;  直到一堆中物体少到一定程度</p>
+<p>KD树的包围盒不会发生重合，而BVHs会发生相交</p>
+<h2 id="辐射度量学"><a href="#辐射度量学" class="headerlink" title="辐射度量学"></a>辐射度量学</h2><p>Blinn-Phong着色模型中会设置一个数当做光照强度，但我们都不清楚这个数的真实的物理意义，甚至连单位是什么也不知道，研究过程中我们只是将这些物理量简化为一个数，另外Whitted风格的光线追踪所得到的结果也不是我们所想要的真实的效果（路径追踪会提到），而所有的这些都会被辐射度量学解决，这同样也是后面学习路径追踪的基础。</p>
+<p>辐射度量学给出了一系列度量方法和单位去定义光照，它定义了光照在空间中的属性，并且这在物理上是完全正确的</p>
+<p><img src="/GAMES101_Assets/image-20240210174353-07hst5z.png" alt="">​</p>
+<p>关于这个Radiance，我们认为它的物理意义是，从dA面积上，向某个方向辐射出的能量；或者说某个方向的能量照射到dA上，作为dA吸收到总能量的一部分。</p>
+<p><img src="/GAMES101_Assets/image-20250427181257-tb6qocm.png" alt="">​</p>
+<p>相比于Irradiance的单位面积上的能量，Radiance可以看作是单位面积上吸收到的单个方向上的能量，于是我们有</p>
+<p>$dE(\mathbf{p}, \omega) = L_i(\mathbf{p}, \omega) \cos \theta \, d\omega \qquad E(\mathbf{p}) = \int_{H^2} L_i(\mathbf{p}, \omega) \cos \theta \, d\omega$  </p>
+<p>即dA面积上的能量 = 所有方向的能量之和，因为是连续的方向，所以是求积分。</p>
+<h3 id="BRDF"><a href="#BRDF" class="headerlink" title="BRDF"></a><strong>BRDF</strong></h3><p><img src="/GAMES101_Assets/image-20250427181345-ob9l8rb.png" alt="">​</p>
+<p>由上式，BRDF就是吸收能量后往某一方向反射时取的比例，即某个角度入射到dA面积上的能量，乘以比例fr后反射到另一个角度。</p>
+<p>于是我们只考虑某一个出射方向，毫无疑问的，这个出射方向的能量 = 全部光线打到dA上时，反射到该被考虑方向上的能量之和。</p>
+<p>渲染方程与反射方程相比，加上了物体自发光的项，渲染方程如下：</p>
+<script type="math/tex; mode=display">
+L_o(\mathbf{x}, \mathbf{\omega}_o) = L_e(\mathbf{x}, \mathbf{\omega}_o) + \int_{\Omega} L_i(\mathbf{x}, \mathbf{\omega}_i) f_r(\mathbf{x}, \mathbf{\omega}_i, \mathbf{\omega}_o) (\mathbf{\omega}_i \cdot \mathbf{n}) \, d\mathbf{\omega}_i</script><ul>
+<li>$L_o(x,ω_o)$：表示从点 x 沿方向 $ω_o$ 发出的光强（出射光强）。</li>
+<li>$L_e(x,ω_o)$：表示点 x 在方向 $ω_o$上的自身发光强度（发射光强），对于非光源物体，这一项通常为零。</li>
+<li>$L_i(x,ω_i)$：表示从点 x 沿方向$ω_i$到达的光强（入射光强）。</li>
+<li>$fr(x,ω_i,ω_o)$：表示双向反射分布函数（Bidirectional Reflectance Distribution Function，BRDF），它描述了从方向 ωi 到方向 ωo 的反射光强的比例。</li>
+<li>$ω_i⋅n$：表示方向 ωi 与表面法线 n 的点积，用于表示入射光与表面的夹角，只有当入射光与表面夹角小于90度时（即点积大于零）才会有有效反射。</li>
+<li>Ω：表示所有可能的入射方向的集合，通常是一个半球面。</li>
+</ul>
+<p>渲染方程描述了从一个点出发的光强由两部分组成：</p>
+<ul>
+<li><strong>自身发光</strong>：物体自身发出的光（如灯泡、荧光屏等）。</li>
+<li><strong>反射光</strong>：其他物体或光源发出的光照射到该点后，经过表面反射而产生的光。</li>
+</ul>
+<p><img src="/GAMES101_Assets/image-20250427181634-dzh5t8u.png" alt="">​</p>
+<h3 id="蒙特卡洛积分"><a href="#蒙特卡洛积分" class="headerlink" title="蒙特卡洛积分"></a><strong>蒙特卡洛积分</strong></h3><p><img src="/GAMES101_Assets/image-20240210174353-w5h00tg.png" alt="">​</p>
+<p><img src="/GAMES101_Assets/image-20240210174353-mnjtj1c.png" alt="">​</p>
+<p>在这之中，$F_N = \int_{a}^{b} f(x) \, dx$</p>
+<p>蒙特卡洛方法可以通过随机采样的方式求解数学问题，对于求解定积分问题，可以通过蒙特卡洛方法估计出一个近似数值解。</p>
+<p>我们把积分变量看成连续型随机变量，每次采样，就用采样所得变量映射得到的函数值，代表所有积分区间内所有变量对应的函数值，多次采样逐渐逼近真实函数的在积分域内所得积分值。</p>
+<h3 id="路径追踪"><a href="#路径追踪" class="headerlink" title="路径追踪"></a><strong>路径追踪</strong></h3><p><img src="/GAMES101_Assets/image-20240210174353-kc8hfy3.png" alt="">​</p>
+<p>Whitted-Style光线追踪的做法是，光线在镜面反射表面弹射，而在漫反射表面停止，这显然是不符合现实的</p>
+<p>其中一个问题，拿经典的Utah teaport为例，whitted光追只能做左图的光照效果，而对于那种有光泽但不全是镜面反射的glossy材质（右图），whitted做出来的效果并不尽如人意</p>
+<p>第二个问题，whitted风格光线追踪不考虑漫反射，虽然递归的思想是正确的，但就像下图（康奈尔盒子）所示，whitted的天花板由于接收不到来自环境光照，呈现一个全黑的状态，并且whitted渲染出的长方体并没有表现红墙和绿墙上反射过来的带有色彩的光，相比之下，路径追踪的结果就真实很多</p>
+<p><img src="/GAMES101_Assets/image-20250427181856-39usvwy.png" alt="">​</p>
+<h2 id="求解渲染方程"><a href="#求解渲染方程" class="headerlink" title="求解渲染方程"></a><strong>求解渲染方程</strong></h2><p>对于之前的渲染方程，我们可以用蒙特卡洛积分法进行求解，忽略自发光项（仅计算直接光照），简单考虑均匀采样的情况</p>
+<p><img src="/GAMES101_Assets/image-20240210174353-mryjp2a.png" alt="">​</p>
+<p><img src="/GAMES101_Assets/image-20250427181918-1r14x51.png" alt="">​​​</p>
+<p>接着引入间接光照：要知道着色点P因Q的反射获得多少能量，其实就相当于摄像机在P点处计算Q的直接光照</p>
+<p><img src="/GAMES101_Assets/image-20240210174353-wteq8zd.png" alt="">​</p>
+<p>那么就只需要在上述算法中加一条判断，看看从P点反射出来的光线有没有打到其他物体</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>至此，基本的求解渲染方程已经有了大概的架构，但依然存在一些不可忽视的问题</p>
+<p><strong>问题传递的可行性</strong></p>
+<p>P点的着色需要Q点的环境光照信息，而Q点的环境光照信息又必须包含其他物体的环境光照信息，如此需要追踪的光线数量会呈指数级增长</p>
+<p>只有当采样数为1的时候，即N=1时，才不会受到这种影响，路径追踪也因此得名（N!=1时称为分布式光线追踪）</p>
+<p>虽然但是，这样一来误差就会特别大，渲染结果势必会有非常多的噪点，为了解决这个问题，我们对单个像素计算多次路径追踪结果（SPP），随后求平均，这个过程其实也用到了蒙特卡洛方法</p>
+<p><strong>递归结束条件</strong></p>
+<p>很容易看出，上述算法的递归没有终止条件，放到现实中这也是非常合理的，因为现实中的光并不会弹射一定次数后终止弹射，而会一直弹射下去，在算法中强行设置终止次数结束递归不满足现实情况的能量守恒定律，会有一定亮度差异（弹射3次和弹射17次的亮度差异是非常明显的），为了解决这一问题，我们需要用到与俄罗斯轮盘赌类似的思想</p>
+<p>这个思想其实就是一个伯努利分布（均匀分布）概念，让光线在每个弹射点都有一定概率继续弹射，设这个概率为p，那么光线停止弹射的概率为（1-p），为了得到相同的路径追踪结果，意味着这个伯努利实验的期望值必须保持Lo不变，那么我们可以巧妙的认为p概率继续弹射得到的能量是L_0/P（终止弹射的结果很自然就是0）</p>
+<p><img src="/GAMES101_Assets/image-20240210174353-ffsea1h.png" alt="">​</p>
+<p>这样一来，我们就有了一个合理的递归终止条件</p>
+<p>思考：闫老师上课提了一个问题，对于分布式光线追踪，这个期望值是多少</p>
+<p><img src="/GAMES101_Assets/image-20240210174353-30ss2br.png" alt="">​</p>
+<h3 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a><strong>优化算法</strong></h3><p>至此，我们的路径追踪算法已经做到完全正确，但又出现了一个矛盾点，即像素的采样率</p>
+<p><img src="/GAMES101_Assets/image-20240210174353-xau2756.png" alt="">​</p>
+<p>在路径追踪算法中，采样率（Samples Per Pixel，SPP）决定了每个像素的光线追踪次数。如果采样率过低，可能会出现以下问题：</p>
+<ul>
+<li><strong>光源太小，采样可能错过光源</strong>：如果光源面积很小，而采样率不高，那么从着色点（被照亮的点）发出的随机光线可能完全错过光源，导致该点看起来过暗，即使它理论上应该被照亮。</li>
+</ul>
+<p>所以我们不用这种基于着色点采样的方式，而改为一种基于光源的采样</p>
+<h3 id="基于着色点采样-vs-基于光源采样"><a href="#基于着色点采样-vs-基于光源采样" class="headerlink" title="基于着色点采样 vs. 基于光源采样"></a><strong>基于着色点采样 vs. 基于光源采样</strong></h3><p><strong>基于着色点采样</strong></p>
+<ul>
+<li><strong>原理</strong>：从着色点随机发射光线，计算这些光线与光源的交点。</li>
+<li><strong>问题</strong>：如果光源面积小，采样率低，很容易错过光源。</li>
+</ul>
+<p><strong>基于光源采样</strong></p>
+<ul>
+<li><strong>原理</strong>：直接在光源表面采样，计算从光源到着色点的光线贡献。</li>
+<li><strong>优点</strong>：不会错过光源，因为采样点直接在光源上，确保了光源的贡献能够被计算。</li>
+<li><strong>假设</strong>：先不考虑光源和着色点之间有物体阻挡的情况，光源被视为一个矩形表面。</li>
+</ul>
+<p>先不考虑光源和着色点之间有物体阻挡这种情况，把光源视为一个矩形表面，直接在光源上采样，就不会发生这种浪费</p>
+<h3 id="改写蒙特卡洛积分"><a href="#改写蒙特卡洛积分" class="headerlink" title="改写蒙特卡洛积分"></a>改写蒙特卡洛积分</h3><p>在基于光源采样的情况下，蒙特卡洛积分的公式需要改写。原本的积分是基于着色点的随机采样，现在改为在光源上采样。</p>
+<p><img src="/GAMES101_Assets/image-20250425172645-r3b2uc3.png" alt="">​</p>
+<p>光源贡献的公式可以表示为：</p>
+<p><img src="/GAMES101_Assets/image-20250425172446-5b9bm41.png" alt="">​</p>
+<p>对于非光源的贡献，仍然使用传统的路径追踪方法</p>
+<p><img src="/GAMES101_Assets/image-20250425172426-55bj1wm.png" alt="">​</p>
+<h3 id="整体思路总结"><a href="#整体思路总结" class="headerlink" title="整体思路总结"></a><strong>整体思路总结</strong></h3><p>路径追踪的整体思路可以概括为以下步骤：</p>
+<ol>
+<li><strong>像素采样</strong>：从每个像素出发，生成多条光线（根据SPP）。</li>
+<li><strong>确定着色点</strong>：追踪这些光线，找到它们与场景的交点（着色点）。</li>
+<li><strong>光源采样</strong>：对于每个着色点，直接在光源上采样，计算光源的贡献。</li>
+<li><strong>非光源贡献</strong>：对于非光源部分，使用传统的路径追踪方法计算。</li>
+<li><strong>合并结果</strong>：将光源贡献和非光源贡献合并，得到最终的着色结果。</li>
+<li><strong>返回像素值</strong>：将计算结果返回给像素，完成渲染。</li>
+</ol>
+<h3 id="考虑遮挡"><a href="#考虑遮挡" class="headerlink" title="考虑遮挡"></a><strong>考虑遮挡</strong></h3><p>在实际应用中，还需要考虑光源和着色点之间可能有物体阻挡的情况。这可以通过以下方式实现：</p>
+<ul>
+<li>在计算光源贡献时，检查从光源点 xs 到着色点 x 的路径是否被遮挡。</li>
+<li>如果被遮挡，则忽略该光源点的贡献。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><ul>
+<li><strong>基于光源采样</strong>：直接在光源上采样，避免了采样率低时错过光源的问题。</li>
+<li><strong>改写蒙特卡洛公式</strong>：将积分从着色点转移到光源上。</li>
+<li><strong>考虑遮挡</strong>：在计算光源贡献时，检查路径是否被遮挡。</li>
+<li><strong>路径追踪的整体思路</strong>：从像素采样到着色点计算，再到光源采样和非光源贡献的合并，最终返回像素值。</li>
+</ul>
+<p>下图是真实光线和路径追踪的比较</p>
+<p><img src="/GAMES101_Assets/image-20240210174353-rqfkiej.png" alt=""></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av756164342/?vd_source=fa868a89c47131bf7faa4e6af78a3a9e">【RTX光线追踪-2】细说光栅化与光线追踪的区别_哔哩哔哩_bilibili</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" class="category-chain-item">计算机图形学</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/GAMES101/" class="category-chain-item">GAMES101</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>06 Ray Tracing</div>
+      <div>https://enlight3n.github.io/2025/01/06/GAMES101/06 Ray Tracing/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Enlight3n</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/06/GAMES101/07%20Materials%20and%20Appearances/" title="07 Materials and Appearances">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">07 Materials and Appearances</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/06/GAMES101/05%20Geometry/" title="05 Geometry">
+                        <span class="hidden-mobile">05 Geometry</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

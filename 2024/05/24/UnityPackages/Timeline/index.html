@@ -1,0 +1,951 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Enlight3n">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="TimelineTrack一览    名称 说明     Track Group Track组，可以放多个track，可以用来按组分类划分   Activation Track 用来控制GameObject是否激活   Animation Track 用来控制Animation的播放   Audio Track 用来控制Audio的播放   Control Track 用来控制gameobject">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Timeline">
+<meta property="og:url" content="https://enlight3n.github.io/2024/05/24/UnityPackages/Timeline/index.html">
+<meta property="og:site_name" content="Enlight3n的博客">
+<meta property="og:description" content="TimelineTrack一览    名称 说明     Track Group Track组，可以放多个track，可以用来按组分类划分   Activation Track 用来控制GameObject是否激活   Animation Track 用来控制Animation的播放   Audio Track 用来控制Audio的播放   Control Track 用来控制gameobject">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240524162937-j8pcrc8.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-v2-73d52dc280fb94539a38d8ce9b764fd0_720w-20240527143450-wx9yp63.webp">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-v2-d8cae529159455580ea03e4a4eb7fa0f_720w-20240524154247-ra0lc31.webp">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-v2-1b9a9da57dbef526eb7b0cd9518850d0_720w-20240524154247-qz1tv6d.webp">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-v2-fe570c3751a724216245470051789f0d_720w-20240524154247-tojtehe.webp">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-v2-f3ceb794532519f09dd9411b9cc7a061_720w-20240524154247-dpcmvvd.webp">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-v2-73c387be2dee042ffd7b183f8bfc4d58_720w-20240524154247-4yaqj3l.webp">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-v2-b25267bb05808a1df5092850e18d0fcc_720w-20240524154247-gf72tao.webp">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-v2-0400c87ce645d30735ba31a820bf1a7f_720w-20240524154247-5h1j04s.webp">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240723155345-ohpczel.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240527154904-4ghb610.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240527160210-7tcdn0z.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240527160308-y27vey2.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528095855-x938tcn.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528105509-slp383o.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528111627-u9vviws.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528112929-6v4lg03.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528103320-l1usjhl.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528104025-gmuwdkv.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528104040-ec6hcgr.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528104058-nb625ix.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528104110-nxcpzag.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/1716864118552-20240528104210-1xegif3.gif">
+<meta property="article:published_time" content="2024-05-24T02:41:10.000Z">
+<meta property="article:modified_time" content="2025-04-28T15:56:47.472Z">
+<meta property="article:author" content="Enlight3n">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240524162937-j8pcrc8.png">
+  
+  
+  
+  <title>Timeline - Enlight3n的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"enlight3n.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enlight3n</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Timeline"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-24 10:41" pubdate>
+          2024年5月24日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Timeline</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h1><h2 id="Track一览"><a href="#Track一览" class="headerlink" title="Track一览"></a>Track一览</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Track Group</td>
+<td>Track组，可以放多个track，可以用来按组分类划分</td>
+</tr>
+<tr>
+<td>Activation Track</td>
+<td>用来控制GameObject是否激活</td>
+</tr>
+<tr>
+<td>Animation Track</td>
+<td>用来控制Animation的播放</td>
+</tr>
+<tr>
+<td>Audio Track</td>
+<td>用来控制Audio的播放</td>
+</tr>
+<tr>
+<td>Control Track</td>
+<td>用来控制gameobject</td>
+</tr>
+<tr>
+<td>Signal Track</td>
+<td>用来发射信号，出发事件</td>
+</tr>
+<tr>
+<td>Playable Track</td>
+<td>用户自定义的轨道</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Control-Track"><a href="#Control-Track" class="headerlink" title="Control Track"></a>Control Track</h3><p>用来控制prefab、特效、gameobject等的时间线</p>
+<p>这个<code>Control Track</code>​可以拖入其他director，然后就能调整这个director的播放，形成嵌套效果</p>
+<p><strong>注意：</strong></p>
+<ol>
+<li>在clip外会自动销毁，</li>
+<li>因此拖入了director后不能拖入director控制的其他gameobject，因为在gameobject外自身是被销毁的状态</li>
+</ol>
+<p>在track中的每一个物体，都对应一个clip来控制</p>
+<p><strong>参数</strong></p>
+<p><img src="/UnityPackages_Assets/image-20240524162937-j8pcrc8.png" alt="image"></p>
+<p>通用属性跳过，看两眼就知道怎么用了</p>
+<p>SourceGameObject：此 clip 要控制的物体</p>
+<p>Prefab：此clip要生成并控制的prefab，当这里赋予了一个Assets下的prefab时，SourceGameObject会变成ParentObject，ParentObject指定的物体将为Prefab生成时的父物体。</p>
+<p>ControlActivation：</p>
+<ul>
+<li>控制激活，控制SourceGameObject的激活状态，</li>
+<li>不勾选SourceGameObject将保持自有状态（也就是会一直存在或者隐藏，取决于自己）</li>
+</ul>
+<p>PostPlayback：剪辑播放完成时SourceGameObject的状态</p>
+<ul>
+<li>Active ：剪辑播放完后，SourceGameObject.active=true</li>
+<li>​​Inactive：剪辑播放完后，SourceGameObject.active=false</li>
+<li>Revert：剪辑播放完后，SourceGameObject.active=播放前的active的值</li>
+</ul>
+<p>Advanced 高级选项：</p>
+<ol>
+<li>ControlPlayableDirectors：控制物体上的 timline 播放状态，勾选后可以控制 clip 物体上的播放进度</li>
+<li>ControlParticleSystem：控制粒子发射器，不勾选只能控制 clip 物体的显隐，勾选后可以 clip 物体上的粒子发射器的发射进度，可以实现粒子发射的倒放</li>
+<li>RandomSeed：当粒子系统的 seed 设置为 AutoRandomSeed 时，这里的值可以设置粒子系统的随机种子，这个选项仅对ps的clip生效，对于 clip 是 timeline 类型的不生效</li>
+<li>ControlItimeControl：勾选后可以同步当前 timeline 的时间到 clip 物体上继承了 ItimeControl 接口的组件上</li>
+<li>ControlChildren：勾选后可以控制 Clip 物体的子对象内的 timeline 、粒子系统和继承了ItimeControl 接口的实体</li>
+</ol>
+<p><strong>ControlTrack clip的操作</strong></p>
+<ul>
+<li>ControlTrack Clip 遵循通用的 clip 操作</li>
+<li>ControlTrack Clip 中间无法做混合，只能做切除操作</li>
+</ul>
+<h3 id="Signal-Track"><a href="#Signal-Track" class="headerlink" title="Signal Track"></a>Signal Track</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42139931/article/details/123913441">Unity【Timeline】- 使用Signal Track添加事件_unity timeline 事件-CSDN博客</a></p>
+<p>因为signal是具体到某个物体上的，需要物体具有signal receiver组件，因此，对于某些额外的物体只需要使用signal功能，就可以采用signal track而不用signal receiver组件</p>
+<p>‍</p>
+<h3 id="Annotation"><a href="#Annotation" class="headerlink" title="Annotation"></a>Annotation</h3><p><a target="_blank" rel="noopener" href="https://docs.unity.cn/Packages/com.unity.timeline@1.7/manual/smpl_custom_annotation.html">注释标记示例 |时间线 |1.7.5 —- Annotation marker sample | Timeline | 1.7.5 (unity.cn)</a></p>
+<p>书签，用来作为注释和标记</p>
+<p>‍</p>
+<h2 id="Timeline-Clip编辑模式"><a href="#Timeline-Clip编辑模式" class="headerlink" title="Timeline Clip编辑模式"></a>Timeline Clip编辑模式</h2><p>Timeline的Clip有三种不同的编辑模式，分别是Mix模式（混合模式，默认），Ripple模式（波纹模式），Replace模式（替换模式）</p>
+<p><img src="/UnityPackages_Assets/network-asset-v2-73d52dc280fb94539a38d8ce9b764fd0_720w-20240527143450-wx9yp63.webp" alt=""></p>
+<p>点击上图中的几个按钮，就可以切换不同的模式，一次是Mix模式，Ripple模式，Replace模式。</p>
+<p>还有一种方法是临时切换模式，快速编辑的时候很有用：比如你编辑一个clip的时候想临时切换到Ripple模式，就可以使用快捷键临时切换，而不用切来切去了。切换方法如下：</p>
+<ul>
+<li>按住<code>1</code>​临时切换到Mix模式。</li>
+<li>按住<code>2</code>​临时切换到Ripple模式。</li>
+<li>按住<code>3</code>​临时切换到Replace模式。</li>
+</ul>
+<p>注意是<strong>按住</strong>这些键，并同时操作。</p>
+<h3 id="Mix模式"><a href="#Mix模式" class="headerlink" title="Mix模式"></a><strong>Mix模式</strong></h3><p>默认的编辑模式。使用这种模式时，当你拖动clip，两个clip发生重叠时，会将重叠部分混合。</p>
+<p>在Mix模式下，当光标在clip的不同区域拖拽时，光标会有不同的变化，表示会执行不同的功能。</p>
+<ul>
+<li>在clip的最前面时，光标会变成一个修剪的光标，拖拽可以修改clip自身开始播放的位置。（注意不是在Timeline中开始播放的位置，而是clip自身开始播放的时间，比如clip有5秒，可以修改为从第3秒开始播放。）</li>
+<li>在clip中间时，光标会变成一个移动的光标，此时拖拽可以移动clip。</li>
+<li>在clip最后面时，光标会变成一个修剪的光标，拖拽可以修改clip自身结束播放的位置。</li>
+</ul>
+<p>在Mix模式中，如果拖拽时和其他clip发生重叠，光标会变成一个白色箭头，指示混合的位置。箭头有三种情况，指示混合创建的位置，在开头、结尾、或是开头和结尾都有。</p>
+<h3 id="Ripple模式"><a href="#Ripple模式" class="headerlink" title="Ripple模式"></a><strong>Ripple模式</strong></h3><p>使用这种模式时，调整clip的长度和位置时，后面的clip的相对位置保持不变。</p>
+<p>在Ripple模式下，当你修剪或者移动一个clip时，光标会变成一个黄色的箭头，表示影响后面的clip。一个黄色的竖线，代表ripple开始的点。</p>
+<h3 id="Replace模式"><a href="#Replace模式" class="headerlink" title="Replace模式"></a><strong>Replace模式</strong></h3><p>替换模式。使用这种模式时，当两个clip发生重叠时，当前操作的clip会替换掉重叠的部分，不会发生混合。</p>
+<p>注意重叠的部分被自动覆盖以后，再修改当前操作的clip的长度后，被覆盖的那个clip也不会自动复原，需要操作被覆盖的clip来还原。</p>
+<h2 id="Signal介绍"><a href="#Signal介绍" class="headerlink" title="Signal介绍"></a>Signal介绍</h2><p>信号，是timeline触发事件的媒介，因为其具有广播的性质，所以比event的名字更适合</p>
+<h3 id="如何添加信号"><a href="#如何添加信号" class="headerlink" title="如何添加信号"></a>如何添加信号</h3><ol>
+<li>右击任何一个bindingType是GameObject或者Component的Track，在弹出的菜单栏中点击Add Signal Emitter即可添加信号</li>
+</ol>
+<p><img src="/UnityPackages_Assets/network-asset-v2-d8cae529159455580ea03e4a4eb7fa0f_720w-20240524154247-ra0lc31.webp" alt=""></p>
+<ol>
+<li>信号添加好后，会出现下图中的游标，带警告的游标说明没有选择要触发的信号类型(Emit Signal为none)</li>
+</ol>
+<p><img src="/UnityPackages_Assets/network-asset-v2-1b9a9da57dbef526eb7b0cd9518850d0_720w-20240524154247-qz1tv6d.webp" alt=""></p>
+<p>3 选中Signal游标，在检视版中选择触发的信号类型</p>
+<p><img src="/UnityPackages_Assets/network-asset-v2-fe570c3751a724216245470051789f0d_720w-20240524154247-tojtehe.webp" alt=""></p>
+<ol>
+<li>Signal选好后，需要在下方添加一个Signal Receiver用来选择接收信号的方法，同按钮点击事件，不在赘述</li>
+</ol>
+<p><img src="/UnityPackages_Assets/network-asset-v2-f3ceb794532519f09dd9411b9cc7a061_720w-20240524154247-dpcmvvd.webp" alt=""></p>
+<ol>
+<li>至此当timeline播放到signal游标处就会触发对应的事件了，（注意，signal触发的事件，只有signal所在track上的对象上的signal receiver生效）</li>
+</ol>
+<h3 id="如何添加带参信号"><a href="#如何添加带参信号" class="headerlink" title="如何添加带参信号"></a>如何添加带参信号</h3><ol>
+<li>继承SignalEmitter，实现一个新的信号触发器，并在其中加入新的参数</li>
+</ol>
+<p><img src="/UnityPackages_Assets/network-asset-v2-73c387be2dee042ffd7b183f8bfc4d58_720w-20240524154247-4yaqj3l.webp" alt=""></p>
+<ol>
+<li>添加自定义的信号。当创建了新的SignalEmitter时，timeline会在原添加信号菜单处加入添加新信号的菜单</li>
+</ol>
+<p><img src="/UnityPackages_Assets/network-asset-v2-b25267bb05808a1df5092850e18d0fcc_720w-20240524154247-gf72tao.webp" alt=""></p>
+<ol>
+<li><p>选择信号类型同普通信号。</p>
+</li>
+<li><p>signal receiver需要自己实现，在挂在track的对象上，这个时候就可以通过 notification获取带参信号的参数了！</p>
+</li>
+</ol>
+<p><img src="/UnityPackages_Assets/network-asset-v2-0400c87ce645d30735ba31a820bf1a7f_720w-20240524154247-5h1j04s.webp" alt=""></p>
+<h2 id="自定义"><a href="#自定义" class="headerlink" title="自定义"></a>自定义</h2><p>timeline很强大，除了自带的轨道，还可以自己定义轨道，从而能够根据自身需要添加timeline clip</p>
+<h3 id="自定义clip：Playable-Track"><a href="#自定义clip：Playable-Track" class="headerlink" title="自定义clip：Playable Track"></a>自定义clip：Playable Track</h3><p><strong>创建自定义clip需要2个脚本</strong>：</p>
+<ul>
+<li>一个用于存放数据：需要继承<code>PlayableAsset</code>​</li>
+<li>一个用于处理逻辑：需要继承<code>PlayableBehaviour</code>​</li>
+</ul>
+<p>存放数据的脚本，也是显示在<code>Playable Track</code>​的脚本</p>
+<pre><code class="hljs">这个脚本必须继承自`PlayableAsset`​
+
+这个脚本的public成员，会序列化显示在对应的Inspector上，以便进行配置
+
+必须重写抽象方法`CreatePlayable`​，这个方法返回一个`Playable`​类对象，在这个方法中可以传递配置好的成员
+</code></pre><p>处理逻辑的脚本，我们可以重写多个生命周期函数，以进行调用</p>
+<p>以text脚本为例，我们可以写成如下形式，在<code>TextPlayableAsset</code>​中配置数据，然后传到<code>TextPlayableBehaviour</code>​进行逻辑处理</p>
+<p>逻辑处理的部分如下</p>
+<p><img src="/UnityPackages_Assets/image-20240723155345-ohpczel.png" alt="image"></p>
+<p>为了获得这些数据，我们在<code>TextPlayableAsset</code>​中配置数据，再传递到<code>TextPlayableBehaviour</code>​</p>
+<p><img src="/UnityPackages_Assets/image-20240527154904-4ghb610.png" alt="image"></p>
+<p>代码</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TextPlayableAsset</span> : <span class="hljs-title">PlayableAsset</span><br>&#123;<br>    <span class="hljs-comment">//配置的数据</span><br>    <span class="hljs-keyword">public</span> ExposedReference&lt;TextMeshProUGUI&gt; textMeshPro;<br>    <span class="hljs-keyword">public</span> Color color = Color.white;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> fontSize = <span class="hljs-number">14</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> text = <span class="hljs-string">&quot;&quot;</span>;<br>  <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> Playable <span class="hljs-title">CreatePlayable</span>(<span class="hljs-params">PlayableGraph graph, GameObject owner</span>)</span><br>    &#123;<br>        TextMeshProUGUI textMeshProUGUI = textMeshPro.Resolve(graph.GetResolver());<br><br>        ScriptPlayable&lt;TextPlayableBehaviour&gt; playable = ScriptPlayable&lt;TextPlayableBehaviour&gt;.Create(graph);<br>      <br>        TextPlayableBehaviour playableBehaviour = playable.GetBehaviour();<br><br>        playableBehaviour.textMeshPro = textMeshProUGUI;<br>        playableBehaviour.color = color;<br>        playableBehaviour.fontSize = fontSize;<br>        playableBehaviour.text = text;<br>      <br>        <span class="hljs-keyword">return</span> playable;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> 逻辑处理：将指定的text格式配置给指定的TextMeshProUGUI</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TextPlayableBehaviour</span> : <span class="hljs-title">PlayableBehaviour</span><br>&#123;<br>   <span class="hljs-keyword">public</span> TextMeshProUGUI textMeshPro;<br>   <span class="hljs-keyword">public</span> Color color = Color.white;<br>   <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> fontSize = <span class="hljs-number">14</span>;<br>   <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> text = <span class="hljs-string">&quot;&quot;</span>;<br><br>   <span class="hljs-comment">//clip开始时执行</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnBehaviourPlay</span>(<span class="hljs-params">Playable playable, FrameData info</span>)</span><br>   &#123;<br>      textMeshPro.color = color;<br>      textMeshPro.fontSize = fontSize;<br>      textMeshPro.text = text;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="ExposedReference类"><a href="#ExposedReference类" class="headerlink" title="ExposedReference类"></a>ExposedReference类</h3><p>在上面创建playable的相关脚本中，如果使用了继承自MonoBehaviour的字段，那么需要注意的是，</p>
+<ol>
+<li>Unity 的 Asset 只能引用资源对象，不能引用MonoBehaviour对象（场景中的对象）</li>
+<li>Unity 的 MonoBehaviour对象既可以引用资源对象，又可以引用MonoBehaviour对象</li>
+</ol>
+<p>因此会出现场景中的物体不能拖拽，而预制体可以拖拽的情况</p>
+<p>Unity 提供 ExposedReference 和 IExposedPropertyTable 机制来实现 Asset 引用场景中的对象</p>
+<p>以<code>TextMeshProUGUI</code>​为例，假设有字段</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> ExposedReference&lt;TextMeshProUGUI&gt; textMeshPro;<br></code></pre></td></tr></table></figure>
+<p>在继承自<code>PlayableAsset</code>​的脚本中，可以在<code>CreatePlayable</code>​方法中这样处理</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> Playable <span class="hljs-title">CreatePlayable</span>(<span class="hljs-params">PlayableGraph graph, GameObject owner</span>)</span><br>&#123;<br>	<span class="hljs-comment">//解析ExposedReference</span><br>	<span class="hljs-keyword">var</span> textMeshProUGUI = textMeshPro.Resolve(graph.GetResolver());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在继承自<code>PlayableBehaviour</code>​的脚本中，可以这样处理</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnGraphStart</span>(<span class="hljs-params">Playable playable</span>)</span><br>&#123;<br>    <span class="hljs-comment">//获取解析器并解析，检索分配的控制对象</span><br>    <span class="hljs-keyword">var</span> _textMeshPro = textMeshPro.Resolve(playable.GetGraph().GetResolver());<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="Playable-Track的改进"><a href="#Playable-Track的改进" class="headerlink" title="Playable Track的改进"></a>Playable Track的改进</h3><p>要实现<code>Playable Track</code>​，需要写两个脚本，一个是用来配置数据的，一个是用来处理逻辑的</p>
+<p>但实际书写时，就会发现很多不便，因为我们需要在两个脚本中都写上同样的成员变量，再进行传递</p>
+<p>我们可以利用<code>[serializable]</code>​特性直接进行成员传递，让继承自<code>PlayableBehaviour</code>​的脚本的成员出现在inpector上</p>
+<p>上面的例子可以改成如下</p>
+<p><img src="/UnityPackages_Assets/image-20240527160210-7tcdn0z.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240527160308-y27vey2.png" alt="image"></p>
+<p>如此，我们可以进行间接配置，从而略去中间的传递数据的过程</p>
+<h3 id="自定义轨道"><a href="#自定义轨道" class="headerlink" title="自定义轨道"></a>自定义轨道</h3><p>使用player track，我们可以更改许多自定义的东西，比如text， transform。但是，player track只能创建clip，我们需要在每一个clip上绑定对应数据，如果我们希望对同一个东西进行频繁修改的话，创建的每一个clip都绑定到了同样的对象上</p>
+<p>通过自定义轨道，能够让数据绑定到轨道上，这样，每一个clip就无需再绑定数据了</p>
+<p>要自定义新轨道，需要继承自<code>TrackAsset</code>​，这个类里面可以什么都不写，如果要实现混合需要酌情重载<code>CreateTrackMixer</code>​和<code>GatherProperties</code>​方法</p>
+<p>要拿到绑定的数据，需要在<code>TextPlayableBehaviour</code>​类中重写方法<code>ProcessFrame</code>​，使用playerData即可</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ProcessFrame</span>(<span class="hljs-params">Playable playable, FrameData info, <span class="hljs-built_in">object</span> playerData</span>)</span><br>&#123;<br>    <span class="hljs-keyword">var</span> textMeshProUGUI = playerData <span class="hljs-keyword">as</span> TextMeshProUGUI;<br><br>    <span class="hljs-keyword">if</span> (textMeshProUGUI == <span class="hljs-literal">null</span>)<br>        <span class="hljs-keyword">return</span>;<br>      <br><br>    textMeshProUGUI.color = color;<br>    textMeshProUGUI.fontSize = fontSize;<br>    textMeshProUGUI.text = text;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><img src="/UnityPackages_Assets/image-20240528095855-x938tcn.png" alt="image"></p>
+<p>这个时候右击timeline的菜单中就出现自定义的轨道了</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_52626549/article/details/131415151">【Unity学习笔记】ExposedReference类的初识 + 自定义Timeline轨道初识-CSDN博客</a></p>
+<h3 id="TimelineMixer"><a href="#TimelineMixer" class="headerlink" title="TimelineMixer"></a>TimelineMixer</h3><p>可以这么理解，Mixer是整条track的底层，它用来处理不同clip之间的混合，包括那些空白的部分的状况（是沿用最后的非空白的状态还是回到默认的状态）</p>
+<p><img src="/UnityPackages_Assets/image-20240528105509-slp383o.png" alt="image"></p>
+<p>要实现Mixer，需要另写一个继承自<code>PlayableBehaviour</code>​的脚本，然后在<code>TrackAsset</code>​中实现<code>CreaterTrackMixer</code>​方法，并绑定到这个脚本</p>
+<ol>
+<li>在这个Mixer脚本中，也需要实现<code>ProcessFrame</code>​方法，并且Mixer的优先级更高，是覆盖执行。也就是说，当Mixer脚本中的重写了<code>ProcessFrame</code>​方法，此前的脚本也重写了<code>ProcessFrame</code>​方法，Mixer脚本中的<code>ProcessFrame</code>​方法会后调用</li>
+<li>需要注意的是，某个clip的<code>ProcessFrame</code>​方法只在播放到这个clip时才启用，而Mixer脚本中的<code>ProcessFrame</code>​方法在整个timeline中都会执行</li>
+<li>Mixer脚本是不知道当前播放到哪里，它只能遍历全部的clip（空白的不管），查询其权重，如果clip返回的权重是1，它才会知道此时播放到这个clip</li>
+<li>如果两个clip重叠，那么过渡的过程中，前面的clip返回的权重就会从1渐变到0，后面的clip返回的权重会从0渐变到1</li>
+</ol>
+<p>还是以卡拉OK为例，之前的做法，在两个clip之间，歌词会沿用上一个clip的歌词，现在我们希望空白部分的歌词为空（最快的做法其实是直接创建clip替代空白，然后歌词不填）</p>
+<p>在<code>TrackAsset</code>​中实现<code>CreaterTrackMixer</code>​方法</p>
+<p><img src="/UnityPackages_Assets/image-20240528111627-u9vviws.png" alt="image"></p>
+<p>实现Mixer脚本，因为两个clip在设计上是不会重叠的，所以不用管插值的部分，而每个clip自己实现了显示歌词的方法，那么在这个脚本里，我们只需要判断是不是当前没有播放到任何一个clip中，是的话就将歌词设置为默认值即可</p>
+<p><img src="/UnityPackages_Assets/image-20240528112929-6v4lg03.png" alt="image"></p>
+<h2 id="实战：卡拉OK轨"><a href="#实战：卡拉OK轨" class="headerlink" title="实战：卡拉OK轨"></a>实战：卡拉OK轨</h2><p>来源：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1F54y1a73Q/?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=fa868a89c47131bf7faa4e6af78a3a9e">Timeline 3 | 卡拉OK轨 | 自定义轨道 | Unity3d 教程_哔哩哔哩_bilibili</a></p>
+<p>要实现卡拉OK轨，首先要弄明白它的原理</p>
+<p>我们可以使用两个叠加的歌词，一个白色，一个绿色，设置二者的轴心都在左侧边缘，然后将绿色歌词的TextMeshPro组件中的，wrapping设置为disabled，将overflow设置为截断，wrapping启用时，会自动换行，overlfow则是对溢出的处理</p>
+<p>然后修改绿色歌词的RectTransform组件的宽度即可实现想要的功能</p>
+<p><img src="/UnityPackages_Assets/image-20240528103320-l1usjhl.png" alt="image"></p>
+<p>然后就是书写代码，我们使用四个脚本来实现</p>
+<p><img src="/UnityPackages_Assets/image-20240528104025-gmuwdkv.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528104040-ec6hcgr.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528104058-nb625ix.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528104110-nxcpzag.png" alt="image"></p>
+<p>表现</p>
+<p><img src="/UnityPackages_Assets/1716864118552-20240528104210-1xegif3.gif" alt="1716864118552">​</p>
+<p>注意：这里的显示其实是一个字符一个字符显示的，更好的滑动效果是逐渐显示，可以使用<code>Rect Mask 2D</code>​组件来实现，不控制TextMeshPro转而控制这个组件的属性即可</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>官方文档：<a target="_blank" rel="noopener" href="https://docs.unity.cn/Packages/com.unity.timeline@1.7/manual/index.html">关于时间轴 |时间线 |1.7.5 —- About Timeline | Timeline | 1.7.5 (unity.cn)</a></p>
+<p>翻译：<a target="_blank" rel="noopener" href="https://blog.csdn.net/linjf520/article/details/104463436">Unity - Timeline 知识汇总_unity2020 timeline-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/29188275">【Unity】TimeLine系列教程——编排剧情！ - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/513872343">Unity Timeline扩展研究之基础篇(一) - 知乎 (zhihu.com)</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Unity/" class="category-chain-item">Unity</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Unity/%E6%8F%92%E4%BB%B6/" class="category-chain-item">插件</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Timeline</div>
+      <div>https://enlight3n.github.io/2024/05/24/UnityPackages/Timeline/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Enlight3n</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/14/UnityPackages/RiderFlow/" title="RiderFlow">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">RiderFlow</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/21/UnitySummary/%E7%BC%96%E8%BE%91%E5%99%A8%E6%89%A9%E5%B1%95/" title="编辑器扩展">
+                        <span class="hidden-mobile">编辑器扩展</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

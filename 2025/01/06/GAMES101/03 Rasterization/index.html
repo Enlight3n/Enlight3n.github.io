@@ -1,0 +1,790 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Enlight3n">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="03 Rasterization视口变换上一节中，已经将物体变换到裁剪空间$[-1,1]^3$中，接下来，需要完成到屏幕空间的映射 其变换矩阵如下： $\mathbf{M_{\text{viewport}}} &#x3D;  \begin{bmatrix} \frac{\text{width}}{2} &amp; 0 &amp; 0 &amp; \frac{\text{width}}{2} \\ 0 &amp;am">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03 Rasterization">
+<meta property="og:url" content="https://enlight3n.github.io/2025/01/06/GAMES101/03%20Rasterization/index.html">
+<meta property="og:site_name" content="Enlight3n的博客">
+<meta property="og:description" content="03 Rasterization视口变换上一节中，已经将物体变换到裁剪空间$[-1,1]^3$中，接下来，需要完成到屏幕空间的映射 其变换矩阵如下： $\mathbf{M_{\text{viewport}}} &#x3D;  \begin{bmatrix} \frac{\text{width}}{2} &amp; 0 &amp; 0 &amp; \frac{\text{width}}{2} \\ 0 &amp;am">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111630-tnpvql4.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111717-m0xi8zm.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111731-ef1pizn.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111748-ab9aro8.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111830-cb6ahxp.png">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/network-asset-v2-940e167efe0b74854cf56082d084fbeb_720w-20250427111943-872wx5e.webp">
+<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250425112057-v5miayu.png">
+<meta property="article:published_time" content="2025-01-06T12:03:24.000Z">
+<meta property="article:modified_time" content="2025-04-28T15:46:43.810Z">
+<meta property="article:author" content="Enlight3n">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111630-tnpvql4.png">
+  
+  
+  
+  <title>03 Rasterization - Enlight3n的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"enlight3n.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enlight3n</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="03 Rasterization"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-06 20:03" pubdate>
+          2025年1月6日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">03 Rasterization</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="03-Rasterization"><a href="#03-Rasterization" class="headerlink" title="03 Rasterization"></a>03 Rasterization</h1><h2 id="视口变换"><a href="#视口变换" class="headerlink" title="视口变换"></a><strong>视口变换</strong></h2><p>上一节中，已经将物体变换到裁剪空间$[-1,1]^3$中，接下来，需要完成到屏幕空间的映射</p>
+<p>其变换矩阵如下：</p>
+<p>$\mathbf{M_{\text{viewport}}} =  \begin{bmatrix} \frac{\text{width}}{2} &amp; 0 &amp; 0 &amp; \frac{\text{width}}{2} \\ 0 &amp; \frac{\text{height}}{2} &amp; 0 &amp; \frac{\text{height}}{2} \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}$  </p>
+<h2 id="采样"><a href="#采样" class="headerlink" title="采样"></a>采样</h2><p><strong>光栅化——采样</strong></p>
+<ul>
+<li>屏幕是一个二维数组的标准数据集，是离散的，是一个典型的光栅成像设备。</li>
+<li>经过矩阵变换后，再把屏幕空间中的多边形打散成三角形，成像到屏幕上，这就是光栅化的大致流程</li>
+<li>最简单的光栅化方法是<strong>采样</strong>。具体来说，是看三角形和像素的位置关系，这一步要借助于向量乘法判断。</li>
+</ul>
+<p><strong>采样优化</strong></p>
+<ul>
+<li>光栅化时的，为了显示某个三角形。我们需要判断屏幕上的像素和三角形的位置关系。只有在三角形内部的像素点才会被赋予颜色。</li>
+</ul>
+<p><strong>轴向包围盒（AABB）</strong></p>
+<ul>
+<li>借助于<strong>轴向包围盒</strong>，我们可以在光栅化前先判断像素点是否在三角形所在包围盒内，若不在则直接忽略。</li>
+</ul>
+<p><strong>走样（锯齿）</strong></p>
+<ul>
+<li>由于分辨率的限制，可能出现走样的情况。</li>
+<li>要解决普通的反走样，我们先对原图进行模糊处理，再进行采样，可以一定程度上解决走样问题。</li>
+<li>注意反过来是不可行的</li>
+</ul>
+<p><strong>深度缓存 -Zbuffering</strong></p>
+<ul>
+<li>之前并没有考虑过显示的三角形之间的遮挡关系，为了解决这个问题：</li>
+<li>最简单的想法就是利用画家算法：由远及近画画，近处画面覆盖远处画面。但是，这种算法无法处理复杂的深度判断，例如三个三角形互相重叠，并不适用。</li>
+<li>Zbuffering算法对每个像素多存一个深度，显示的时候，进行比较来更新显示的像素点。实际编程中，z值越小表示越远。</li>
+</ul>
+<h2 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h2><p><strong>傅里叶级数</strong>：把一个周期函数通过最简单的一系列正弦函数来表示。</p>
+<p>利用<strong>傅里叶变换</strong>和<strong>逆傅里叶变换</strong>，我们可以把一个函数转换为另一个函数。</p>
+<p>不同的正余弦函数都有不同的频率，傅里叶变换可以把一个函数转换为不同频率的正余弦函数之和。</p>
+<p><img src="/GAMES101_Assets/image-20250427111630-tnpvql4.png" alt="">​</p>
+<p><strong>走样的原因：</strong></p>
+<ul>
+<li><p>在进行等距采样的时候，越是高频的函数，越容易丢失原始的信息。</p>
+</li>
+<li><p>采样两种截然不同的函数反而可能会得到相同的结果</p>
+</li>
+</ul>
+<h3 id="滤波—傅里叶变换角度"><a href="#滤波—傅里叶变换角度" class="headerlink" title="滤波—傅里叶变换角度"></a><strong>滤波—傅里叶变换角度</strong></h3><p>滤波可以认为是去掉某些频率。</p>
+<p>对于一张图片，我们可以使用傅里叶变换，把这个图像从时域（其实没有时间信息，只有空间信息，只是叫这个）变换为频域。</p>
+<p>一般的图片进行傅里叶变换之后，得到频谱。中间的是低频信息，四周的是高频信息（下图右）。</p>
+<p><img src="/GAMES101_Assets/image-20250427111717-m0xi8zm.png" alt="">​</p>
+<p>在图像的边界，也就是颜色变化剧烈的地方，就对应的是高频信息，因此<strong>高通滤波</strong>之后得到的是一个图片边缘。</p>
+<p><img src="/GAMES101_Assets/image-20250427111731-ef1pizn.png" alt="">​</p>
+<p>经过低通滤波之后，图片变得模糊​​</p>
+<p><img src="/GAMES101_Assets/image-20250427111748-ab9aro8.png" alt="">​</p>
+<h3 id="滤波—卷积角度"><a href="#滤波—卷积角度" class="headerlink" title="滤波—卷积角度"></a><strong>滤波—卷积角度</strong></h3><p>滤波可以看作是一种卷积。</p>
+<p><strong>结论：时域的卷积=频域的乘积。</strong></p>
+<p><img src="/GAMES101_Assets/image-20250427111830-cb6ahxp.png" alt="">​</p>
+<h2 id="反走样"><a href="#反走样" class="headerlink" title="反走样"></a>反走样</h2><h3 id="SSAA"><a href="#SSAA" class="headerlink" title="SSAA"></a><strong>SSAA</strong></h3><p><strong>SSAA（Supersampling Anti-Aliasing）</strong> ：一个更大的分辨率来渲染场景，然后再把相邻像素值做一个过滤（比如平均等）得到最终的图像。</p>
+<p>SSAA可以说是图形学中最简单粗暴的反走样方法，但同时也最有效，唯一的缺点是性能太差。</p>
+<p>任何类型的走样归根结底都是因为欠采样，那么我们只需要增加采样数，就可以减轻走样现象。这就是SSAA，所以SSAA简单的来说可以分三步：</p>
+<p>（1）在一个像素内取若干个子采样点</p>
+<p>（2）对子像素点进行颜色计算（采样）</p>
+<p>（3）根据子像素的颜色和位置，利用一个称之为resolve的合成阶段，计算当前像素的最终颜色输出</p>
+<p><img src="/GAMES101_Assets/network-asset-v2-940e167efe0b74854cf56082d084fbeb_720w-20250427111943-872wx5e.webp" alt="">​</p>
+<p>SSAA<strong>同时是几何反走样和着色反走样方法</strong>，因为它不但增加了当前几何覆盖函数（Coverage）的采样率，也对渲染方程进行了更高频率的采样（单独计算每个子像素的颜色）。</p>
+<h3 id="MSAA"><a href="#MSAA" class="headerlink" title="MSAA"></a><strong>MSAA</strong></h3><p>由于SSAA在光栅化阶段和片元着色阶段都需要大量的额外计算，开销巨大</p>
+<p><strong>MSAA（Multisample Anti-Aliasing）</strong> 则只在<strong>光栅化阶段</strong>，判断一个三角形是否被像素覆盖的时候会计算多个覆盖样本（Coverage sample），但是在pixel shader着色阶段计算像素颜色的时候每个像素还是只计算一次。</p>
+<p>例如下图是4xMSAA，三角形只覆盖了4个coverage sample中的2个。所以这个三角形需要生成一个fragment在pixel shader里着色，只不过生成的fragment还是在像素中央（位置，法线等信息插值到像素中央）然后只运行一次pixel shader，最后得到的结果在resolve阶段会乘以0.5，因为这个三角形只cover了一半的sample。</p>
+<p><img src="/GAMES101_Assets/image-20250425112057-v5miayu.png" alt="">​</p>
+<p>现代所有GPU都在硬件上实现了这个算法，而且在shading的运算量远大于光栅化的今天，这个方法远比SSAA快很多。顺便提一下之前NV的CSAA，它就是更进一步的把coverage sample和depth，stencil test分开了。</p>
+<p>由于MSAA拥有硬件支持，相对开销比较小，又能很好地解决几何走样问题，在游戏中应用非常广泛（我们在游戏画质选项中常看到的4x/8x/16x抗锯齿一般说的就是MSAA的子采样点数量分别为4/8/16个）。</p>
+<p>MSAA的一个问题就是和延迟渲染并不兼容。延迟渲染的核心是GBuffer（几何缓冲区），它在渲染的第一阶段将颜色、深度、法线等信息存储到多个纹理中。然而，MSAA需要在光栅化阶段对几何信息进行采样，而延迟渲染在光照计算阶段已经丢失了这些几何信息。例如，GBuffer中的深度和法线信息是逐像素存储的，无法直接用于MSAA的子采样处理</p>
+<p>因为MSAA这个问题现代引擎里都用的是Post Processing AA这一类技术。这一类东西包括FXAA，TAA等，不依赖于任何硬件，完全用图像处理的方法来搞。</p>
+<h3 id="FXAA"><a href="#FXAA" class="headerlink" title="FXAA"></a><strong>FXAA</strong></h3><p>FXAA 是由 NVDIA 发明的高效后处理抗锯齿方案，也是目前所有后处理抗锯齿方案里面同等设置下效率最高的抗锯齿算法</p>
+<p>原理：找到边界，换成没有锯齿的边界，（图像匹配）非常快</p>
+<p>方法和采样无关，采样虽然有误，但是这种方法可以弥补</p>
+<h3 id="TAA"><a href="#TAA" class="headerlink" title="TAA"></a><strong>TAA</strong></h3><p>原理：利用时序信息，借助前面帧提供的信息</p>
+<p>静态场景，相邻两帧同一像素用不同的位置来sample</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" class="category-chain-item">计算机图形学</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/GAMES101/" class="category-chain-item">GAMES101</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>03 Rasterization</div>
+      <div>https://enlight3n.github.io/2025/01/06/GAMES101/03 Rasterization/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Enlight3n</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月6日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/06/GAMES101/04%20Shading/" title="04 Shading">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">04 Shading</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/06/GAMES101/02%20Transformation/" title="02 Transformation">
+                        <span class="hidden-mobile">02 Transformation</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

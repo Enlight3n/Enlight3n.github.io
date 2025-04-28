@@ -1,0 +1,838 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Enlight3n">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="UE4GamePlay关键元素游戏世界的规则与状态保持概要 利用GameMode制定和检测胜利规则，并支配世界内的“元素”  通过GameState记录游戏世界的关键状态  使用PlayerState保存玩家的状态。  通过GameState和PlayerState来持久化游戏世界的数据，为对局恢复（断线重连，观战）进行，为世界的重建提供支持。”          游戏模式      &quot;游戏&quot;的概">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02 游戏模式">
+<meta property="og:url" content="https://enlight3n.github.io/2025/04/29/UE_TOC/02-%E6%B8%B8%E6%88%8F%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Enlight3n的博客">
+<meta property="og:description" content="UE4GamePlay关键元素游戏世界的规则与状态保持概要 利用GameMode制定和检测胜利规则，并支配世界内的“元素”  通过GameState记录游戏世界的关键状态  使用PlayerState保存玩家的状态。  通过GameState和PlayerState来持久化游戏世界的数据，为对局恢复（断线重连，观战）进行，为世界的重建提供支持。”          游戏模式      &quot;游戏&quot;的概">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-28T16:27:31.764Z">
+<meta property="article:modified_time" content="2025-04-28T16:28:50.301Z">
+<meta property="article:author" content="Enlight3n">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>02 游戏模式 - Enlight3n的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"enlight3n.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enlight3n</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="02 游戏模式"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-29 00:27" pubdate>
+          2025年4月29日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">02 游戏模式</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="UE4GamePlay关键元素"><a href="#UE4GamePlay关键元素" class="headerlink" title="UE4GamePlay关键元素"></a>UE4GamePlay关键元素</h1><h2 id="游戏世界的规则与状态保持"><a href="#游戏世界的规则与状态保持" class="headerlink" title="游戏世界的规则与状态保持"></a>游戏世界的规则与状态保持</h2><h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><ul>
+<li><p>利用<strong>GameMode</strong>制定和检测胜利规则，并支配世界内的“元素”</p>
+</li>
+<li><p>通过<strong>GameState</strong>记录游戏世界的关键状态</p>
+</li>
+<li><p>使用<strong>PlayerState</strong>保存玩家的状态。</p>
+</li>
+<li><p>通过<strong>GameState</strong>和<strong>PlayerState</strong>来持久化游戏世界的数据，为对局恢复（断线重连，观战）进行，为世界的重建提供支持。”</p>
+</li>
+</ul>
+<table >  
+<tr align="center">  
+<th colspan="1"> 游戏模式</th> 
+    <td>"游戏"的概念分为两类。Game Mode和Game State是游戏的定义，包括游戏规则和获胜条件等内容。它仅存在于服务器上。它通常不应有太多在游戏过程中会发生变化的数据，也绝对不应有客户端需要了解的临时数据。</td> 
+</tr>  
+<tr align="center">  
+<th rowspan="1"> 游戏状态</th> 
+    <td>GameState包含游戏的状态，其中可以包括联网玩家列表、得分、棋类游戏中棋子的位置，或者在开放世界场景中完成的任务列表。游戏状态存在于服务器和所有客户端上，可以自由复制以保持所有机器处于最新状态。。</td> 
+</tr>
+<tr align="center">  
+<th colspan="1"> 玩家状态</th> 
+<td>玩家状态是游戏玩家的状态，例受人类玩家或模拟玩家的机器人。作为游戏的一部分而存在的非玩家AI将不会拥有玩家状态。在玩家状态中适当的示例数据包括玩家姓名或得分、比赛中MOBA等的等级，或玩家当前是否在CTF游戏中携带旗帜。所有玩家的玩家状态存在于所有机器上(与玩家控制器不同)，并且可以自由复制以保持同步。</td> 
+</table>
+
+<h3 id="GameMode"><a href="#GameMode" class="headerlink" title="GameMode"></a>GameMode</h3><h4 id="GameMode-制定的规则"><a href="#GameMode-制定的规则" class="headerlink" title="GameMode 制定的规则"></a>GameMode 制定的规则</h4><ul>
+<li>玩家和观众数量，以及允许的玩家和观众最大数量。</li>
+<li>“玩家进入游戏的方式”，可包含选择生成地点和其他生成/重生成行为的规则。</li>
+<li>基于规则的事件在游戏中发生，需要进行追踪并和所有玩家共享时，信息将通过GameState进行存储和同步。这些信息包括且不限于︰<ol>
+<li>游戏已运行的时间（包括本地玩家加入前的运行时间）。</li>
+<li>每个个体玩家加入游戏的时间和玩家的当前状态。</li>
+<li>游戏是否已开始。</li>
+</ol>
+</li>
+</ul>
+<h4 id="GameMode中的关键方法"><a href="#GameMode中的关键方法" class="headerlink" title="GameMode中的关键方法"></a>GameMode中的关键方法</h4><ul>
+<li>lnitGame<ul>
+<li>在所有Actor激活之前调用（执行PrelnitializeComponents之前）Beginplay。</li>
+</ul>
+</li>
+<li>PreLogin<ul>
+<li>接受或拒绝尝试加入服务器的玩家。如它将ErrorMessage 设为一个非空字符串，会导致Login 函数失败。</li>
+</ul>
+</li>
+<li>PostLogin<ul>
+<li>成功登录后调用。这是首个在PlayerController上安全调用复制函数之处。OnPostLogin 暴露给了蓝图中，用于方便添加额外的逻辑。</li>
+</ul>
+</li>
+<li>HandleStartingNewPlayer<ul>
+<li>在PostLogin后或无缝游历后调用，可在蓝图中覆盖，修改新玩家身上发生的事件。它将默认创建一个玩家pawn</li>
+</ul>
+</li>
+<li>RestartPlayer<ul>
+<li>调用开始生成一个玩家pawn。如需要指定Pawn 生成的地点，还可使用<br>RestartPlayerAtPlayerStart和 RestartPlayerAtTransform 函数。OnRestartPlayer 可在蓝图中实现，在此函数完成后添加逻辑。</li>
+</ul>
+</li>
+<li>SpawnDefaultPawnAtTransform<ul>
+<li>这实际生成玩家Pawn，可在蓝图中覆盖。</li>
+</ul>
+</li>
+<li>Logout<ul>
+<li>玩家离开游戏或被摧毁时调用。可实现OnLogout执行蓝图逻辑。(断线重连）</li>
+</ul>
+</li>
+</ul>
+<h3 id="预置的基础GameMode"><a href="#预置的基础GameMode" class="headerlink" title="预置的基础GameMode"></a>预置的基础GameMode</h3><p>特定的基础（如进行游戏所需要的玩家数量，或玩家加入游戏的方法）在多种类型的游戏中具有共通性。可根据开发的特定游戏进行无穷无尽的规则变化。无论规则如何，GarModes 的任务都是定义和实现规则。Game Modes当前常用的基类有两个。</p>
+<ul>
+<li>AGameModeBase，这是所有Game Mode 的基类，是经典的AGameMode简化版本。简洁高效，是默认的游戏模式。</li>
+<li>AGameMode是AGameModeBase的子类。AGameMode更适用于标准游戏类型<br>（如多人射击游戏），以比赛状态概念作为实现。<h3 id="AGameMode解析"><a href="#AGameMode解析" class="headerlink" title="AGameMode解析"></a>AGameMode解析</h3>AGameMode 包含一个跟踪比赛状态或整体游戏流程的状态机。可使用GetMatchState 或 HasMatchStarted、IsMatchInProgress和HasMatchEnded之类的封装器查询当前的状态。</li>
+</ul>
+<h3 id="设置Game-Mode"><a href="#设置Game-Mode" class="headerlink" title="设置Game Mode"></a>设置Game Mode</h3><h4 id="URL-作为启动参数，指定GameMode"><a href="#URL-作为启动参数，指定GameMode" class="headerlink" title="URL 作为启动参数，指定GameMode"></a>URL 作为启动参数，指定GameMode</h4><ul>
+<li>UE4Editor.exe /Game/Maps/MyMap?game=MyGameMode -game<h4 id="配置默认的GameMode"><a href="#配置默认的GameMode" class="headerlink" title="配置默认的GameMode"></a>配置默认的GameMode</h4></li>
+<li>可在DefaultEngine.ini文件的/Script/Engine.WorldSettings/部分中设置地图前缀(和URL法的别名)。</li>
+<li>这些前缀设置所有拥有特定前缀的地图的默认游戏模式。</li>
+</ul>
+<blockquote>
+<p>[/Script/EngineSettings.GameMapsSettings]<br>+GameModeMapPrefixes=&gt;&gt;(Name=”DM”,GameMode=”/Script/MyGameMode.MyGameMode”)+GameModeClassAliases=(Name=”DM”,GameMode=”/Script/MyGameMode.MyGameMode”)</p>
+</blockquote>
+<h3 id="GameState"><a href="#GameState" class="headerlink" title="GameState"></a>GameState</h3><blockquote>
+<p>包含要复制到游戏中的每个客户端的信息，简而言之，它表示每个联网玩家的”游戏状态。</p>
+<p>它通常包含有关游戏分数、比赛是否已开始和基于世界场景玩家人数要生成的AI数量的信息，以及其他特定于游戏的信息。</p>
+<p>对于多人游戏，每个玩家的机器上都有一个游戏状态实例，而服务器的实例为权威实例。</p>
+<ul>
+<li>GetServerWorldTimeSeconds<ul>
+<li>GetTimeSeconds 的服务器版本，保持客户端和服务器上时间的同步。</li>
+</ul>
+</li>
+<li>PlayerArray<ul>
+<li>存储了所有玩家的APlayerState，方便遍历和获取玩家数据信息。</li>
+</ul>
+</li>
+<li>HasBegunPlay<ul>
+<li>游戏世界中的Actor已执行Beginplay，则返回true。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3 id="PlayerState"><a href="#PlayerState" class="headerlink" title="PlayerState"></a>PlayerState</h3><ul>
+<li><p>游戏玩家的状态，例如人类玩家或模拟玩家的机器人。作为游戏世界场景的一部分而存在的非玩家Al将不会拥有玩家状态。</p>
+</li>
+<li><p>在玩家状态中适当的示例数据包括玩家姓名或得分、当前等级或生命值。</p>
+</li>
+<li><p>对于多人游戏，所有玩家的玩家状态存在于所有机器上（与玩家控制器不同），并且可以将数据从服务器复制到客户端以保持同步。</p>
+</li>
+</ul>
+<h2 id="游戏世界中的“生命体”"><a href="#游戏世界中的“生命体”" class="headerlink" title="游戏世界中的“生命体”"></a>游戏世界中的“生命体”</h2><h2 id="Actor"><a href="#Actor" class="headerlink" title="Actor"></a>Actor</h2><p>存在于游戏世界中最基础最简化的“生命体”。</p>
+<h2 id="Pawn"><a href="#Pawn" class="headerlink" title="Pawn"></a>Pawn</h2><p>可被Controller Possess，且可将其设置接受输入，用于执行各种各样类似于玩家的任务。请注意，Pawn不被认定为具有人的特性。</p>
+<h2 id="Character"><a href="#Character" class="headerlink" title="Character"></a>Character</h2><p>角色是类人式的Pawn。默认情况下，它带有一个用于碰撞的胶囊组件和一个角色移动组件。它可以执行类似人类的基本动作，可以流畅地复制网络上的动作，还具有一些与动画相关的功能。</p>
+<h2 id="其他必不可少的元素"><a href="#其他必不可少的元素" class="headerlink" title="其他必不可少的元素"></a>其他必不可少的元素</h2><h2 id="Movement"><a href="#Movement" class="headerlink" title="Movement"></a>Movement</h2><h2 id="Camera"><a href="#Camera" class="headerlink" title="Camera"></a>Camera</h2><p>玩家摄像机管理器是玩家的”眼球””，负责管理它的行为。通常情况下，每个玩家控制器也有一个此类型的摄像机。请参见摄像机工作流程页面，了解更多信息</p>
+<h2 id="HUD"><a href="#HUD" class="headerlink" title="HUD"></a>HUD</h2><p>HUD是指”抬头显视”或二维屏幕显示，在许多游戏中较为常用。例如显示血条、弹药指示器、枪准星等。每个玩家控制器通常都配有其中一种显示</p>
+<h1 id="网络同步"><a href="#网络同步" class="headerlink" title="网络同步"></a>网络同步</h1><h2 id="网络角色NetRole"><a href="#网络角色NetRole" class="headerlink" title="网络角色NetRole"></a>网络角色NetRole</h2><ul>
+<li>authority</li>
+<li>autonomous</li>
+<li>simulate<h2 id="值复制-server"><a href="#值复制-server" class="headerlink" title="值复制(server)"></a>值复制(server)</h2></li>
+<li>相关性的概念（相关时同步actor+最新状态）</li>
+<li>Actor状态的保持（ActorChannel）</li>
+<li>Server—&gt;Client（可靠的，及时的）<h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2>RPC(server client) valid(damage10000 : 100, return false)</li>
+<li>两种设置<ul>
+<li>Reliable (pitfall)</li>
+<li>Unreliable(server→client,udp)。</li>
+</ul>
+</li>
+<li>类型<ul>
+<li>Multicast</li>
+<li>Run on Server client—&gt;server</li>
+<li>Run on OwningClient：角色+背包（发光） server -&gt; client specific show</li>
+</ul>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Unreal/" class="category-chain-item">Unreal</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Unreal/%E8%85%BE%E8%AE%AF%E5%85%AC%E5%BC%80%E8%AF%BE/" class="category-chain-item">腾讯公开课</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>02 游戏模式</div>
+      <div>https://enlight3n.github.io/2025/04/29/UE_TOC/02-游戏模式/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Enlight3n</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/04/29/UE_TOC/03-C++%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" title="03 C++代码规范">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">03 C++代码规范</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/29/UE_TOC/01-UE%E5%85%A5%E9%97%A8/" title="01 UE入门">
+                        <span class="hidden-mobile">01 UE入门</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

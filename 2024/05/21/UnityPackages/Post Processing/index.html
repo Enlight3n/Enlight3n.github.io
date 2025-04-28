@@ -1,0 +1,1213 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Enlight3n">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Post Processing基础概念使用后期处理有两个主要原因：实现所需的视觉风格和确保视觉保真度  视觉风格是指项目的风格外观和感觉 视觉保真度是指场景反映其所要表示的世界的准确程度。  安装和设置 每个摄像机都可以应用后期处理，要应用后处理，需要勾选Post Processing，以及在Enviroment中的volumn mask要选择volumn文件所在的层  Volume为了实际应用新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Post Processing">
+<meta property="og:url" content="https://enlight3n.github.io/2024/05/21/UnityPackages/Post%20Processing/index.html">
+<meta property="og:site_name" content="Enlight3n的博客">
+<meta property="og:description" content="Post Processing基础概念使用后期处理有两个主要原因：实现所需的视觉风格和确保视觉保真度  视觉风格是指项目的风格外观和感觉 视觉保真度是指场景反映其所要表示的世界的准确程度。  安装和设置 每个摄像机都可以应用后期处理，要应用后处理，需要勾选Post Processing，以及在Enviroment中的volumn mask要选择volumn文件所在的层  Volume为了实际应用新">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240523212057-2lyl5hc.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240523173303-1kyxhpr.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240521154713-72f6bxx.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240523173608-ocw68ll.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240523212927-6re91gv.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240523212959-mis23vb.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240521155553-ublkg65.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528135335-tg2pqf6.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528140504-m0mx9mj.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528160015-xn26oln.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528140723-z1x97wr.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528141156-pfctxc1.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528141027-knfky88.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528141104-j5e0sta.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528142026-phecj3o.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240522094207-dhvw2s6.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528144423-7m2uh1w.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240522094701-q6n6igp.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240522133615-p2j320i.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528151053-yi5isds.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528151436-z2wir9v.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528152608-txby94p.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528152617-f4i4zfu.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528152523-tb8sfh4.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240521160114-ozy2udo.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240521161734-yqc52ac.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-ColorAdjustments-20240528154354-n6smstl.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-SplitToning-20240528155637-vn6m8s0.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-ChannelMixer-20240528155637-66fppxm.png">
+<meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528153025-ggd03dy.png">
+<meta property="article:published_time" content="2024-05-21T07:14:12.000Z">
+<meta property="article:modified_time" content="2025-04-28T15:51:40.490Z">
+<meta property="article:author" content="Enlight3n">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240523212057-2lyl5hc.png">
+  
+  
+  
+  <title>Post Processing - Enlight3n的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"enlight3n.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enlight3n</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Post Processing"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-21 15:14" pubdate>
+          2024年5月21日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          40 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Post Processing</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Post-Processing"><a href="#Post-Processing" class="headerlink" title="Post Processing"></a>Post Processing</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>使用后期处理有两个主要原因：实现所需的<strong>视觉风格</strong>和确保<strong>视觉保真度</strong></p>
+<ul>
+<li>视觉风格是指项目的风格外观和感觉</li>
+<li>视觉保真度是指场景反映其所要表示的世界的准确程度。</li>
+</ul>
+<h3 id="安装和设置"><a href="#安装和设置" class="headerlink" title="安装和设置"></a>安装和设置</h3><p><img src="/UnityPackages_Assets/image-20240523212057-2lyl5hc.png" alt="image"></p>
+<p>每个摄像机都可以应用后期处理，要应用后处理，需要勾选Post Processing，以及在Enviroment中的volumn mask要选择volumn文件所在的层</p>
+<p><img src="/UnityPackages_Assets/image-20240523173303-1kyxhpr.png" alt="image"></p>
+<h3 id="Volume"><a href="#Volume" class="headerlink" title="Volume"></a>Volume</h3><p>为了实际应用新效果，我们需要在场景中添加一个叫做 Volume 的东西。体积指定场景中的特定物理区域。当摄像机位于该体积内时，后期处理将影响摄像机渲染的内容。</p>
+<p><img src="/UnityPackages_Assets/image-20240521154713-72f6bxx.png" alt="image"></p>
+<p>可以使用全局Volume，它将效果应用于整个场景，或者使用较小的局部Volume，仅当摄像机位于特定区域时才应用效果。</p>
+<h3 id="效果一览"><a href="#效果一览" class="headerlink" title="效果一览"></a>效果一览</h3><p><img src="/UnityPackages_Assets/image-20240523173608-ocw68ll.png" alt="image"></p>
+<p>‍</p>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>2020版本及以后，Ambient Occlusion 环境光遮蔽和Screen-space reflections已经不在post processing包中支持，具体可见<a target="_blank" rel="noopener" href="https://docs.unity.cn/Manual/PostProcessingOverview.html">Unity - 手动：后期处理和全屏效果 —- Unity - Manual: Post-processing and full-screen effects</a></p>
+<p>以下只解释含义，具体参数的含义见：<a target="_blank" rel="noopener" href="https://docs.unity.cn/Packages/com.unity.render-pipelines.universal@10.0/manual/integration-with-post-processing.html">Post-processing in the Universal Render Pipeline | Universal RP | 10.0.0-preview.26 (unity.cn)</a></p>
+<h3 id="Ambient-Occlusion-环境光遮蔽"><a href="#Ambient-Occlusion-环境光遮蔽" class="headerlink" title="Ambient Occlusion 环境光遮蔽"></a>Ambient Occlusion 环境光遮蔽</h3><p>环境光遮蔽，顾名思义，指的是场景中的环境光会出现被遮蔽的效果，一般的环境光都是不考虑方向和位置的常量，但是环境光遮蔽会考虑环境光被其他物体遮挡的情况</p>
+<p>环境光遮挡效果可以使挨着折痕线、小孔、相交线和平行表面的地方变暗。在现实世界中，这些区域往往会阻挡或遮挡周围的光线，因此它们会显得更暗。</p>
+<p><img src="/UnityPackages_Assets/image-20240523212927-6re91gv.png" alt="image">​​​</p>
+<p><img src="/UnityPackages_Assets/image-20240523212959-mis23vb.png" alt="image">​</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv677744/">小科普 | 是什么蒙蔽了你的双眼？是环境光遮蔽（一） - 哔哩哔哩 (bilibili.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/400633131">环境光遮蔽综述 - 知乎 (zhihu.com)</a></p>
+<h3 id="Bloom-辉光效果"><a href="#Bloom-辉光效果" class="headerlink" title="Bloom 辉光效果"></a>Bloom 辉光效果</h3><p>泛光：光源周围产生发光效果</p>
+<p><img src="/UnityPackages_Assets/image-20240521155553-ublkg65.png" alt="image">​</p>
+<p>注意：只有在相机的渲染设置中启用了 HDR（高动态范围）并且灯光或自发光材质足够亮时，才能实现泛光。</p>
+<p><img src="/UnityPackages_Assets/image-20240528135335-tg2pqf6.png" alt="image"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Threshold</strong></td>
+<td>Set the gamma space brightness value at which URP applies Bloom. URP does not apply Bloom to any pixels in the Scene that have a brightness lower than this value. The minimum value is 0, where nothing is filtered. The default value is 0.9. There is no maximum value. <br />设置 URP 应用 Bloom 的 Gamma 空间亮度值，URP 只会将“光晕”应用于场景中亮度高于此值的任何像素。最小值为 0，其中不筛选任何内容。默认值为 0.9。没有最大值。<br /></td>
+</tr>
+<tr>
+<td><strong>Intensity</strong></td>
+<td>Set the strength of the Bloom filter, in a range from 0 to 1. The default is 0, which means that the Bloom effect is disabled. <br />在 0 到 1 的范围内设置 Bloom 滤镜的强度。默认值为 0，表示禁用了辉光效果。<br /></td>
+</tr>
+<tr>
+<td><strong>Scatter</strong></td>
+<td>Set the radius of the bloom effect in a range from 0 to 1. Higher values give a larger radius. The default value is 0.7. <br />将光晕效果的半径设置在 0 到 1 的范围内。值越大，半径越大。默认值为 0.7。<br /></td>
+</tr>
+<tr>
+<td><strong>Tint</strong></td>
+<td>Use the color picker to select a color for the Bloom effect to tint to. <br />使用颜色选取器选择要着色的“绽放”效果的颜色。<br /></td>
+</tr>
+<tr>
+<td><strong>Clamp</strong></td>
+<td>Set the maximum intensity that Unity uses to calculate Bloom. If pixels in your Scene are more intense than this, URP renders them at their current intensity, but uses this intensity value for the purposes of Bloom calculations. The default value is 65472. <br />设置 Unity 用于计算 Bloom 的最大强度。如果场景中的像素强度高于此强度，则 URP 会以当前强度渲染它们，但会使用此强度值进行绽放计算。默认值为 65472。<br /></td>
+</tr>
+<tr>
+<td><strong>High Quality Filtering</strong></td>
+<td>Enable this to use high quality sampling. This reduces flickering and improves the overall smoothness, but is more resource-intensive and can affect performance. <br />启用此功能以使用高质量采样。这样可以减少闪烁并改善整体平滑度，但会占用更多资源，并可能影响性能。<br /></td>
+</tr>
+<tr>
+<td><strong>Skip Iterations</strong></td>
+<td>The last iterations in the processing sequence might have little contribution to the appearance of the rendered frame. In this setting you define the number of final iterations to skip. Increasing this value reduces processing load and increases performance, especially on mobile devices. The default value is 1. <br />处理序列中的最后一次迭代可能对渲染帧的外观影响不大。在此设置中，您可以定义要跳过的最终迭代次数。增加此值可减少处理负载并提高性能，尤其是在移动设备上。默认值为 1。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Lens Dirt 镜头污垢</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Texture</strong></td>
+<td>Assign a Texture to apply the effect of dirt (such as smudges or dust) to the lens. <br />指定纹理以将污垢（如污迹或灰尘）的效果应用于镜头。<br /></td>
+</tr>
+<tr>
+<td><strong>Intensity</strong></td>
+<td>Set the strength of the <strong>Lens Dirt</strong> effect. <br />设置镜头污垢效果的强度。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Chromatic-Aberration-色差"><a href="#Chromatic-Aberration-色差" class="headerlink" title="Chromatic Aberration 色差"></a>Chromatic Aberration 色差</h3><p>模拟相机的色彩偏移效果，在屏幕正中心的地方，不会出现偏移，越靠近屏幕四周，就越会发生偏移</p>
+<p>可以用来模拟喝醉酒之后的镜头</p>
+<p><img src="/UnityPackages_Assets/image-20240528140504-m0mx9mj.png" alt="image"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Intensity</strong></td>
+<td>Set the strength of the Chromatic Aberration effect. Values range between 0 and 1. The higher the value, the more intense the effect is. The default value is 0, which disables the effect. <br />设置色差效果的强度。值范围介于 0 和 1 之间。该值越高，效果越强烈。默认值为 0，将禁用效果。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Film-Grain-胶片颗粒"><a href="#Film-Grain-胶片颗粒" class="headerlink" title="Film Grain 胶片颗粒"></a>Film Grain 胶片颗粒</h3><p>胶片颗粒效应模拟了摄影胶片的随机光学纹理，通常是由物理胶片上存在小颗粒引起的。</p>
+<p><img src="/UnityPackages_Assets/image-20240528160015-xn26oln.png" alt="image"></p>
+<p>‍</p>
+<h3 id="Vignette-边角压暗"><a href="#Vignette-边角压暗" class="headerlink" title="Vignette 边角压暗"></a>Vignette 边角压暗</h3><p>在屏幕四周增加变暗的效果，模拟狙击镜，潜行，恐怖气氛，或者残血提示</p>
+<p><img src="/UnityPackages_Assets/image-20240528140723-z1x97wr.png" alt="image">​</p>
+<p><img src="/UnityPackages_Assets/image-20240528141156-pfctxc1.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528141027-knfky88.png" alt="image">​</p>
+<p><img src="/UnityPackages_Assets/image-20240528141104-j5e0sta.png" alt="image"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Color</strong></td>
+<td>Use the color picker to set the color of the vignette. <br />使用颜色选择器设置晕影的颜色。<br /></td>
+</tr>
+<tr>
+<td><strong>Center</strong></td>
+<td>Set the vignette center point. For reference, the screen center is [0.5, 0.5]. <br />设置晕影中心点。作为参考，屏幕中心为 [0.5， 0.5]。<br /></td>
+</tr>
+<tr>
+<td><strong>Intensity</strong></td>
+<td>Set the strength of the vignette effect. <br />设置晕影效果的强度。<br /></td>
+</tr>
+<tr>
+<td><strong>Smoothness</strong></td>
+<td>Use the slider to set the smoothness of the vignette borders. Values range between 0.01 and 1. The higher the value, the smoother the vignette border. The default value is 0.2. <br />使用滑块设置晕影边框的平滑度。取值范围介于 0.01 和 1 之间。该值越高，晕影边框越平滑。默认值为 0.2。<br /></td>
+</tr>
+<tr>
+<td><strong>Rounded</strong></td>
+<td>When enabled, the vignette is perfectly round. When disabled, the vignette matches the shape on the current aspect ratio. <br />启用后，晕影是完全圆形的。禁用后，晕影将与当前纵横比上的形状匹配。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Depth-of-Field-景深"><a href="#Depth-of-Field-景深" class="headerlink" title="Depth of Field 景深"></a>Depth of Field 景深</h3><blockquote>
+<p>景深的原理及shader实现：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/565511249">用Unity实现景深效果 - 知乎 (zhihu.com)</a></p>
+<p>三种渲染管线的自带景深实现：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46146935/article/details/129846132">Unity 景深Depth Of Field-CSDN博客</a></p>
+</blockquote>
+<p>景深效果就是用来虚化背景，在现实生活中，相机只能清晰地聚焦在特定距离的物体上。离相机更近或更远的物体都会失焦。unity支持两种模式</p>
+<p><img src="/UnityPackages_Assets/image-20240528142026-phecj3o.png" alt="image"></p>
+<ul>
+<li><strong>Gaussian</strong>: this mode approximates camera-like effects, but doesn’t imitate them completely. It has a limited blur radius and only does far-field blurring. This mode is the fastest, and is the best mode for lower-end platforms. 高斯：此模式近似于类似相机的效果，但不能完全模仿它们。它的模糊半径有限，只做远场模糊。此模式是最快的，也是低端平台的最佳模式。</li>
+<li><strong>Bokeh</strong>: a slower but higher quality mode that closely imitates the effects of a real-life camera. It can do both near &amp; far-field blurring, and generates bokeh on areas with high luminosity intensity, also known as hot spots. 散景：一种速度较慢但质量较高的模式，与现实生活中的相机效果非常相似。它可以进行近场和远场模糊，并在高光度强度的区域（也称为热点）上产生散景。</li>
+</ul>
+<h4 id="Gaussian-Depth-of-Field"><a href="#Gaussian-Depth-of-Field" class="headerlink" title="Gaussian Depth of Field"></a>Gaussian Depth of Field</h4><p><img src="/UnityPackages_Assets/image-20240522094207-dhvw2s6.png" alt="image"></p>
+<p>近场和远场：在Unity的景深效果中，通常有一个近场（near field）和远场（far field）的概念。近场中的物体是清晰的，而远场中的物体则逐渐变得模糊。</p>
+<p>模糊半径：模糊半径是指物体因景深效果而变得模糊的程度。在Unity中，这个半径通常是通过算法计算得出的，它基于物体到相机的距离、相机的焦距、光圈大小等因素。模糊半径的大小决定了模糊效果的强弱。半径越大，模糊效果越强烈；半径越小，模糊效果越轻微。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Start</strong></td>
+<td>Set the distance from the Camera at which the far field starts blurring. <br />设置远场开始模糊时，离相机的距离。<br /></td>
+<td>这个参数定义了从相机开始，远场（far field）中的哪些物体开始变得模糊。</td>
+</tr>
+<tr>
+<td><strong>End</strong></td>
+<td>Set the distance from the Camera at which the far field blur reaches its maximum blur radius. <br />设置远场模糊达到其最大模糊半径时，离相机的距离。<br /></td>
+<td>这个参数定义了远场中的物体在距离相机多远时，其模糊效果达到最大。也就是说，超过这个距离的物体，其模糊效果将不会变得更加强烈，而是保持在一个固定的模糊半径。<br /><br />如果End值小于Start，那么无事发生<br />如果End值大于Start，那么模糊会分为两部分<br />    在Start到End之间，模糊逐渐增加<br />    超过End，模糊达到最大<br /></td>
+</tr>
+<tr>
+<td><strong>Max Radius</strong></td>
+<td>Set the maximum radius the far blur can reach. The default value is 1. <br />设置远处模糊可以达到的最大半径。默认值为 1。<br /><strong>Note:</strong>  Values above 1 can cause visual under-sampling artifacts to appear in your Scene. If your blur effects are not smooth or appear to have static noise in them, try decreasing the value back to 1 or lower. <br />注： 大于 1 的值可能会导致场景中出现视觉采样不足伪影。如果您的模糊效果不平滑或看起来有静态噪点，请尝试将该值减小回 1 或更低。<br /></td>
+<td>从相机开始，远场中的物体在模糊时可以达到的最大模糊程度</td>
+</tr>
+<tr>
+<td><strong>High Quality Sampling</strong></td>
+<td>Use higher quality sampling to reduce flickering and improve the overall blur smoothness. This can cause some performance cost. <br />使用更高质量的采样来减少闪烁并改善整体模糊平滑度。这可能会导致一些性能损失。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>画个图就是这样的</p>
+<p><img src="/UnityPackages_Assets/image-20240528144423-7m2uh1w.png" alt="image">​</p>
+<p>所以，高斯模式虽然能够产生景深，性能花销也小，但是效果一般</p>
+<h4 id="Bokeh-Depth-of-Field"><a href="#Bokeh-Depth-of-Field" class="headerlink" title="Bokeh Depth of Field"></a>Bokeh Depth of Field</h4><p><img src="/UnityPackages_Assets/image-20240522094701-q6n6igp.png" alt="image"></p>
+<p>散景模糊，会使相机所看的某个立方体区域之外的地方变得模糊，这个立方体如下</p>
+<p><img src="/UnityPackages_Assets/image-20240522133615-p2j320i.png" alt="image"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Focus Distance 焦距</strong></td>
+<td>Set the distance from the Camera to the focus point. <br />设置从相机到焦距点的距离。<br /></td>
+<td>这个立方体离相机的距离</td>
+</tr>
+<tr>
+<td><strong>Focal Length 焦距</strong></td>
+<td>Set the distance, in millimeters, between the Camera sensor and the Camera lens. The larger the value is, the shallower the depth of field. <br />设置相机传感器和相机镜头之间的距离（以毫米为单位）。该值越大，景深越浅。<br /></td>
+<td>值越大，立方体越窄</td>
+</tr>
+<tr>
+<td><strong>Aperture 光圈数</strong></td>
+<td>Set the ratio of aperture (known as f-stop or f-number). The smaller the value is, the shallower the depth of field is. <br />设置光圈比（称为光圈值或f值）。该值越小，景深越浅。<br /></td>
+<td>值越小，立方体越窄</td>
+</tr>
+<tr>
+<td><strong>Blade Count 叶片数</strong></td>
+<td>Use the slider to set the number of diaphragm blades the Camera uses to form the aperture. The more blades you use, the rounder the bokeh appear. <br />使用滑块设置相机用于形成光圈的光圈叶片数量。您使用的叶片越多，散景就越圆。<br /></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Blade Curvature 叶片曲率</strong></td>
+<td>Use the slider to set the curvature of diaphragm blades the Camera uses to form the aperture. <br />使用滑块设置相机用于形成光圈的光圈叶片的曲率。<br />The smaller the value is, the more visible aperture blades are. A value of 1 makes the bokeh perfectly circular. <br />该值越小，孔径叶片的可见度越高。值为 1 可使散景完全呈圆形。<br /></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Blade Rotation 叶片旋转</strong></td>
+<td>Use the slider to set the rotation of diaphragm blades in degrees. <br />使用滑块设置隔膜叶片的旋转（以度为单位）。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Motion-Blur-运动模糊"><a href="#Motion-Blur-运动模糊" class="headerlink" title="Motion Blur 运动模糊"></a>Motion Blur 运动模糊</h3><p>“运动模糊”效果模拟当真实世界的摄像机拍摄移动速度快于摄像机曝光时间的物体时图像中发生的模糊。这通常是由于快速移动的物体或曝光时间长造成的。</p>
+<p><img src="/UnityPackages_Assets/image-20240528151053-yi5isds.png" alt="image"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Quality</strong></td>
+<td>Set the quality of the effect. Lower presets give better performance, but at a lower visual quality. <br />设置效果的质量。较低的预设可提供更好的性能，但视觉质量较低。<br /></td>
+</tr>
+<tr>
+<td><strong>Intensity</strong></td>
+<td>Set the strength of the motion blur filter to a value from 0 to 1. Higher values give a stronger blur effect, but can cause lower performance, depending on the <strong>Clamp</strong> parameter. <br />将运动模糊滤镜的强度设置为介于 0 到 1 之间的值。较高的值可提供更强的模糊效果，但可能会导致性能降低，具体取决于 Clamp 参数。<br /></td>
+</tr>
+<tr>
+<td><strong>Clamp</strong></td>
+<td>Set the maximum length that the velocity resulting from Camera rotation can have. This limits the blur at high velocity, to avoid excessive performance costs. The value is measured as a fraction of the screen’s full resolution. The value range is 0 to 0.2. The default value is 0.05. <br />设置相机旋转产生的速度可以具有的最大长度。这限制了高速下的模糊，以避免过高的性能成本。该值是以屏幕全分辨率的一小部分来衡量的。取值范围为 0 到 0.2。默认值为 0.05。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Lens-Distortion-镜头畸变"><a href="#Lens-Distortion-镜头畸变" class="headerlink" title="Lens Distortion 镜头畸变"></a>Lens Distortion 镜头畸变</h3><p>镜头失真效果会扭曲最终渲染的图片，以模拟真实世界相机镜头的形状，比如鱼眼，离镜头过近时的变形</p>
+<p><img src="/UnityPackages_Assets/image-20240528151436-z2wir9v.png" alt="image"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Intensity</strong></td>
+<td>Use the slider to set the overall strength of the distortion effect. <br />使用滑块设置失真效果的整体强度。<br /></td>
+</tr>
+<tr>
+<td><strong>X Multiplier</strong></td>
+<td>Use the slider to set the distortion intensity on the x-axis. This value acts as a multiplier so you can set this value to 0 to disable distortion on this axis, <br />使用滑块在 x 轴上设置失真强度。此值充当乘数，因此您可以将此值设置为 0 以禁用此轴上的失真，<br /></td>
+</tr>
+<tr>
+<td><strong>Y Multiplier</strong></td>
+<td>Use the slider to set the distortion intensity on the y-axis. This value acts as a multiplier so you can set this value to 0 to disable distortion on this axis, <br />使用滑块在 y 轴上设置失真强度。此值充当乘数，因此您可以将此值设置为 0 以禁用此轴上的失真，<br /></td>
+</tr>
+<tr>
+<td><strong>Center</strong></td>
+<td>Set the center point of the distortion effect on the screen. <br />在屏幕上设置失真效果的中心点。<br /></td>
+</tr>
+<tr>
+<td><strong>Scale</strong></td>
+<td>Use the slider to set the value for global screen scaling. This zooms the render to hide the borders of the screen. When you use a high distortion, pixels on the borders of the screen can break because they rely on information from pixels outside the screen boundaries that don’t exist. This property is useful for hiding these broken pixels around the screen border. <br />使用滑块设置全局屏幕缩放的值。这将缩放渲染以隐藏屏幕的边框。当您使用高失真时，屏幕边框上的像素可能会断裂，因为它们依赖于来自屏幕边界之外不存在的像素的信息。此属性可用于隐藏屏幕边框周围的这些损坏的像素。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="——以下组件需要结合使用——"><a href="#——以下组件需要结合使用——" class="headerlink" title="——以下组件需要结合使用——"></a>——以下组件需要结合使用——</h3><h3 id="Panini-Projection-帕尼尼投影"><a href="#Panini-Projection-帕尼尼投影" class="headerlink" title="Panini Projection 帕尼尼投影"></a>Panini Projection 帕尼尼投影</h3><p>帕尼尼投影也是一种镜头畸变，但可以保证四周的位置不变</p>
+<p><img src="/UnityPackages_Assets/image-20240528152608-txby94p.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528152617-f4i4zfu.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528152523-tb8sfh4.png" alt="image"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Distance</strong></td>
+<td>Use the slider to set the strength of the distortion. <br />使用滑块设置失真强度。<br /></td>
+</tr>
+<tr>
+<td><strong>Crop to Fit 裁剪以适应</strong></td>
+<td>Use the slider to crop the distortion to fit the screen. A value of 1 crops the distortion to the edge of the screen, but results in a loss of precision in the center if you set <strong>Distance</strong> to a high value. <br />使用滑块裁剪失真以适合屏幕。值为 1 会将失真裁剪到屏幕边缘，但如果将“距离”设置为较高值，则会导致中心精度损失。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Tonemapping-色调映射"><a href="#Tonemapping-色调映射" class="headerlink" title="Tonemapping 色调映射"></a>Tonemapping 色调映射</h3><blockquote>
+<p><strong>HDR(High-Dynamic Range)</strong> ，简单来说就是一种提高影像亮度和对比度的处理技术，它可以将每个暗部的细节变亮，暗的地方更暗，丰富更多细节色彩，让电影，图片都能呈现出极佳的效果。让你在观影时更接近真实环境中的视觉感受。</p>
+<p> 传统SDR（标准对比度）最高亮度只有100nit，画面中高于100nit的部分将被失真（丢失），最低调试为0.1nit，画面中低于0.1nit的部分将被丢失。HDR技术的出现，让最高亮度达到数千nit，，最低亮度达到了0.0005nit，极大的拓展了画面中亮度高于100nit以及低于0.1nit部分的细节，同时让整幅画面看上去更加通透明快、细节丰富。</p>
+<p>如果启用了 HDR（高动态范围），则可以在场景中实现更大范围的亮度值（或亮度）。例如，使用正常的 LDR（低动态范围），您也许能够显示最大亮度值为 1.0 的灯光。但是使用 HDR，您可以显示 1.5 的亮度值（如果需要，也可以显示更高的亮度值！）</p>
+<p>HDR所做的，实际上就是暗的更暗，亮的更亮。</p>
+<p>然而，HDR仍然会有一些问题。尽管我们可以将场景中物体的亮度调高到与太阳一样亮，但普通屏幕无法显示该亮度，当您有限的屏幕硬件试图表现真正明亮的物体时，它会达到其物理能力的极限，并且只会将整个区域变成白色，从而冲刷掉其路径上的所有细节。色调映射，可以解决这个问题。</p>
+</blockquote>
+<p><img src="/UnityPackages_Assets/image-20240521160114-ozy2udo.png" alt="image"></p>
+<p><strong>色调映射会获取那些非常极端的亮度值，并将它们重新“映射”到较低的值，从而恢复那些被冲淡的区域的细节</strong>，否则这些区域会丢失在白色斑点中。</p>
+<p>色调映射会让屏幕更暗，色调映射有两种，Neutral和ACES</p>
+<p><img src="/UnityPackages_Assets/image-20240521161734-yqc52ac.png" alt="image"></p>
+<p>ACES更偏影片的画质感，会更暗</p>
+<h3 id="White-Balance-白平衡"><a href="#White-Balance-白平衡" class="headerlink" title="White Balance 白平衡"></a>White Balance 白平衡</h3><p>使用白平衡在最终渲染中创建整体更冷或更暖的感觉</p>
+<p>主要是偏黄到偏蓝之间的转换</p>
+<h3 id="Color-Adjustments-色彩调整"><a href="#Color-Adjustments-色彩调整" class="headerlink" title="Color Adjustments 色彩调整"></a>Color Adjustments 色彩调整</h3><p>可以调整最终渲染图像的整体色调、亮度和对比度</p>
+<p><img src="/UnityPackages_Assets/network-asset-ColorAdjustments-20240528154354-n6smstl.png" alt=""></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Post Exposure 曝光后</strong></td>
+<td>Adjusts the overall exposure of the Scene in EV (not EV~100~). URP applies this after the HDR effect and before tonemapping, which means that it does not affect previous effects in the chain. <br />调整EV（而非EV）中场景的整体曝光 100 。URP 在 HDR 效果之后和色调映射之前应用此功能，这意味着它不会影响链中的先前效果。<br /></td>
+</tr>
+<tr>
+<td><strong>Contrast</strong></td>
+<td>Use the slider to expand or shrink the overall range of tonal values. Larger positive values expand the tonal range and lower negative values shrink the tonal range. <br />使用滑块来扩展或缩小色调值的整体范围。较大的正值会扩展色调范围，而较低的负值会缩小色调范围。<br /></td>
+</tr>
+<tr>
+<td><strong>Color Filter</strong></td>
+<td>Use the color picker to select which color the Color Adjustment effect should use to multiply the render and tint the result. <br />使用颜色选取器选择颜色调整效果应使用哪种颜色来增加渲染和着色结果。<br /></td>
+</tr>
+<tr>
+<td><strong>Hue Shift</strong></td>
+<td>Use the slider to shift the hue of all colors. <br />使用滑块偏移所有颜色的色调。<br /></td>
+</tr>
+<tr>
+<td><strong>Saturation</strong></td>
+<td>Use the slider to push the intensity of all colors. <br />使用滑块推动所有颜色的强度。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Split-Tone-色调分离"><a href="#Split-Tone-色调分离" class="headerlink" title="Split Tone 色调分离"></a>Split Tone 色调分离</h3><p>此效果根据亮度值为图像的不同区域着色，以帮助您获得更独特的外观。您可以使用它为场景中的阴影和高光添加不同的色调</p>
+<p>在颜色选取器中为每个属性调整颜色时，只应调整“色相”和“饱和度”。值也会改变整体图像亮度。</p>
+<p><img src="/UnityPackages_Assets/network-asset-SplitToning-20240528155637-vn6m8s0.png" alt=""></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shadows</strong></td>
+<td>Use the color picker to select the color that URP uses for tinting shadows. <br />使用颜色选取器选择 URP 用于着色阴影的颜色。<br /></td>
+</tr>
+<tr>
+<td><strong>Highlights</strong></td>
+<td>Use the color picker to select the color that URP uses for tinting highlights. <br />使用颜色选取器选择 URP 用于着色高光的颜色。<br /></td>
+</tr>
+<tr>
+<td><strong>Balance</strong></td>
+<td>Use the slider to set the balance between <strong>Shadows</strong> and <strong>Highlights</strong>. Lower values result in more pronounced shadow toning is compared to highlight toning. Higher values result in the opposite effect, with more pronounced highlight toning compared to shadow toning. <br />使用滑块设置阴影和高光之间的平衡。与高光色调相比，较低的值会导致更明显的阴影色调。较高的值会导致相反的效果，与阴影色调相比，高光色调更明显。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Channel-Mixer-通道混合器"><a href="#Channel-Mixer-通道混合器" class="headerlink" title="Channel Mixer 通道混合器"></a>Channel Mixer 通道混合器</h3><p>通道混音器可修改每个输入颜色通道对输出通道整体混音的影响。例如，如果增加绿色通道对红色通道整体混合的影响，则最终图像的所有绿色区域（包括中性/单色）都会变为更红的色调。</p>
+<p><img src="/UnityPackages_Assets/network-asset-ChannelMixer-20240528155637-66fppxm.png" alt=""></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Property</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Red</strong></td>
+<td>Use the slider to set the influence of the red channel on the selected output channel. <br />使用滑块设置红色通道对所选输出通道的影响。<br /></td>
+</tr>
+<tr>
+<td><strong>Green</strong></td>
+<td>Use the slider to set the influence of the green channel on the selected output channel. <br />使用滑块设置绿色通道对所选输出通道的影响。<br /></td>
+</tr>
+<tr>
+<td><strong>Blue</strong></td>
+<td>Use the slider to set the influence of the blue channel on the selected output channel. <br />使用滑块设置蓝色通道对所选输出通道的影响。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Color-Curves-颜色曲线"><a href="#Color-Curves-颜色曲线" class="headerlink" title="Color Curves 颜色曲线"></a>Color Curves 颜色曲线</h3><p>颜色曲线是调整色相、饱和度或亮度特定范围的高级方法。您可以调整八个可用图形中的曲线，以实现特定色调替换或降低某些亮度等效果。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>Curve</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Master</strong></td>
+<td>This curve affects the luminance across the whole image. The x-axis of the graph represents input luminance and the y-axis represents output luminance. You can use this to further adjust the appearance of basic attributes such as contrast and brightness across all color channels at the same time. <br />这条曲线会影响整个图像的亮度。图形的 x 轴表示输入亮度，y 轴表示输出亮度。您可以使用它同时进一步调整所有颜色通道的对比度和亮度等基本属性的外观。<br /></td>
+</tr>
+<tr>
+<td><strong>Red</strong></td>
+<td>This curve affects the red channel intensity across the whole image. The x-axis of the graph represents input intensity and the y-axis represents output intensity for the red channel. <br />此曲线会影响整个图像的红色通道强度。图形的 x 轴表示红色通道的输入强度，y 轴表示输出强度。<br /></td>
+</tr>
+<tr>
+<td><strong>Green</strong></td>
+<td>This curve affects the green channel intensity across the whole image. The x-axis of the graph represents input intensity and the y-axis represents output intensity for the green channel. <br />此曲线会影响整个图像的绿色通道强度。图的 x 轴表示输入强度，y 轴表示绿色通道的输出强度。<br /></td>
+</tr>
+<tr>
+<td><strong>Blue</strong></td>
+<td>This curve affects the blue channel intensity across the whole image. The x-axis of the graph represents input intensity and the y-axis represents output intensity for the blue channel. <br />此曲线会影响整个图像的蓝色通道强度。图的 x 轴表示蓝色通道的输入强度，y 轴表示蓝色通道的输出强度。<br /></td>
+</tr>
+<tr>
+<td><strong>Hue Vs Hue</strong></td>
+<td>This curve shifts the input hue (x-axis) according to the output hue (y-axis). You can use this to fine tune hues of specific ranges or perform color replacement. <br />此曲线根据输出色相（y 轴）移动输入色相（x 轴）。您可以使用它来微调特定范围的色调或执行颜色替换。<br /></td>
+</tr>
+<tr>
+<td><strong>Hue Vs Sat</strong></td>
+<td>This curve adjusts saturation (y-axis) according to the input hue (x-axis). You can use this to tone down particularly bright areas or create artistic effects such as monochromatic except a single dominant color. 此曲线根据输入色调（x 轴）调整饱和度（y 轴）。您可以使用它来淡化特别明亮的区域或创建艺术效果，例如单色（单一主色除外）。</td>
+</tr>
+<tr>
+<td><strong>Sat Vs Sat</strong></td>
+<td>This curve adjusts saturation (y-axis) according to the input saturation (x-axis). You can use this to fine tune saturation adjustments made with Color Adjustments. <br />此曲线根据输入饱和度（x 轴）调整饱和度（y 轴）。您可以使用它来微调通过“颜色调整”进行的饱和度调整。<br /></td>
+</tr>
+<tr>
+<td><strong>Lum Vs Sat</strong></td>
+<td>This curve adjusts saturation (y-axis) according to the input luminance (x-axis). You can use this to desaturate areas of darkness to provide an interesting visual contrast.<br /> 此曲线根据输入亮度（x 轴）调整饱和度（y 轴）。您可以使用它来降低黑暗区域的饱和度，以提供有趣的视觉对比。<br /></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Shadows，Midtones，-Highlights-阴影、中间色调、高光"><a href="#Shadows，Midtones，-Highlights-阴影、中间色调、高光" class="headerlink" title="Shadows，Midtones， Highlights 阴影、中间色调、高光"></a>Shadows，Midtones， Highlights 阴影、中间色调、高光</h3><p>分别控制渲染的阴影、中间色调和高光。与“提升”、“伽玛”、“增益”不同，您可以使用此效果来精确定义阴影、中间色调和高光的色调范围。</p>
+<h3 id="Lift，Gamma，Gain"><a href="#Lift，Gamma，Gain" class="headerlink" title="Lift，Gamma，Gain"></a>Lift，Gamma，Gain</h3><p>Lift Gamma Gain 轨迹球遵循 ASC CDL 标准。当您调整轨迹球上点的位置时，它会将图像的色调向给定色调范围内的该颜色移动。使用不同的轨迹球来影响图像中的不同范围。调整轨迹球下方的滑块以偏移该范围的颜色亮度。</p>
+<p>具体这些东西是干嘛的就偏美术了</p>
+<h2 id="其他相机效果"><a href="#其他相机效果" class="headerlink" title="其他相机效果"></a>其他相机效果</h2><h3 id="Dithering-抖色"><a href="#Dithering-抖色" class="headerlink" title="Dithering 抖色"></a>Dithering 抖色</h3><p>通过插值，来消除色阶，直接在Camera组件勾选即可</p>
+<p><img src="/UnityPackages_Assets/image-20240528153025-ggd03dy.png" alt="image"></p>
+<h3 id="抗锯齿"><a href="#抗锯齿" class="headerlink" title="抗锯齿"></a>抗锯齿</h3><p>FXAA</p>
+<p>SMAA</p>
+<p>TAA</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://learn.unity.com/tutorial/get-started-with-post-processing?uv=2022.3&amp;projectId=61b9faa0edbc2a24a5bbc579#64cb67abedbc2a37c3d090c0">后处理入门 - Unity Learn —- Get started with post-processing - Unity Learn</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1SK4y187jj/?t=0h32m32s&amp;vd_source=fa868a89c47131bf7faa4e6af78a3a9e">[Unity 活动]-社区直播 Post Processing 后处理的介绍和使用_哔哩哔哩_bilibili</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Unity/" class="category-chain-item">Unity</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Unity/%E6%8F%92%E4%BB%B6/" class="category-chain-item">插件</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Post Processing</div>
+      <div>https://enlight3n.github.io/2024/05/21/UnityPackages/Post Processing/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Enlight3n</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/21/UnitySummary/%E7%BC%96%E8%BE%91%E5%99%A8%E6%89%A9%E5%B1%95/" title="编辑器扩展">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">编辑器扩展</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

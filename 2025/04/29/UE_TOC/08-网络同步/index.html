@@ -1,0 +1,980 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Enlight3n">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机网络基础计算机网络体系结构Socket 通信流程：Socket是“打开―读&#x2F;写一关闭”模式的实现，UDP模式服务器端没有Listen、Accept，客户端没有Connect流程。  TCP&amp;UDPP2P连接 P2P又称点对点，是无中心服务器、依靠用户群（ peers）交换信息的互联网体系。对等网络的每个用户端既是一个节点，也有服务器的功能。  C&#x2F;S架构 C&#x2F;s架构也称主从式架构，架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="08 网络同步">
+<meta property="og:url" content="https://enlight3n.github.io/2025/04/29/UE_TOC/08-%E7%BD%91%E7%BB%9C%E5%90%8C%E6%AD%A5/index.html">
+<meta property="og:site_name" content="Enlight3n的博客">
+<meta property="og:description" content="计算机网络基础计算机网络体系结构Socket 通信流程：Socket是“打开―读&#x2F;写一关闭”模式的实现，UDP模式服务器端没有Listen、Accept，客户端没有Connect流程。  TCP&amp;UDPP2P连接 P2P又称点对点，是无中心服务器、依靠用户群（ peers）交换信息的互联网体系。对等网络的每个用户端既是一个节点，也有服务器的功能。  C&#x2F;S架构 C&#x2F;s架构也称主从式架构，架">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-28T16:27:31.816Z">
+<meta property="article:modified_time" content="2025-04-28T16:39:36.576Z">
+<meta property="article:author" content="Enlight3n">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>08 网络同步 - Enlight3n的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"enlight3n.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enlight3n</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="08 网络同步"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-29 00:27" pubdate>
+          2025年4月29日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">08 网络同步</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机网络基础"><a href="#计算机网络基础" class="headerlink" title="计算机网络基础"></a>计算机网络基础</h1><h2 id="计算机网络体系结构"><a href="#计算机网络体系结构" class="headerlink" title="计算机网络体系结构"></a>计算机网络体系结构</h2><h2 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h2><ul>
+<li>通信流程：Socket是“打开―读/写一关闭”模式的实现，UDP模式服务器端没有Listen、<br>Accept，客户端没有Connect流程。</li>
+</ul>
+<h2 id="TCP-amp-UDP"><a href="#TCP-amp-UDP" class="headerlink" title="TCP&amp;UDP"></a>TCP&amp;UDP</h2><h2 id="P2P连接"><a href="#P2P连接" class="headerlink" title="P2P连接"></a>P2P连接</h2><ul>
+<li>P2P又称点对点，是无中心服务器、依靠用户群（ peers）交换信息的互联网体系。对等网络的每个用户端既是一个节点，也有服务器的功能。</li>
+</ul>
+<h2 id="C-S架构"><a href="#C-S架构" class="headerlink" title="C/S架构"></a>C/S架构</h2><ul>
+<li>C/s架构也称主从式架构，架构分为客户端和服务器，所有客户端只和服务器对连，客户端之间的通信必须通过服务器。软件开发简单，可控性好。但是服务器性能压力大。</li>
+</ul>
+<h1 id="数据同步基础"><a href="#数据同步基础" class="headerlink" title="数据同步基础"></a>数据同步基础</h1><h2 id="RPC（Remote-Procedure-Call）"><a href="#RPC（Remote-Procedure-Call）" class="headerlink" title="RPC（Remote Procedure Call）"></a>RPC（Remote Procedure Call）</h2><ul>
+<li><p>RPC，即远程过程调用。本地调用远端提供的函数方法，因为不是一个内存空间，不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。</p>
+</li>
+<li><p>RPC调用带来的问题</p>
+<ul>
+<li>在远程调用时，我们需要执行的函数体是在远程的机器上的。也就是执行是在另一个进程中。另一端是不知道函数指针和堆栈数据的。这就带来了几个新问题:<ul>
+<li>Call ID映射</li>
+<li>序列化和反序列化</li>
+<li>网络传输 </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="对象序列化"><a href="#对象序列化" class="headerlink" title="对象序列化"></a>对象序列化</h2><ul>
+<li><p>像函数ID映射一样，本地用到对象实例想要在另一端也能够直接使用，这样会大大简化上层业务逻辑开发，这就需要对象序列化。</p>
+</li>
+<li><p>对象序列化是将对象转换成一系列字节，这样对象就可以很容易地保存到持久存储中，或者通过通信链路传输。然后将字节流反序列化――转换为原始对象的副本。</p>
+</li>
+</ul>
+<h2 id="属性同步"><a href="#属性同步" class="headerlink" title="属性同步"></a>属性同步</h2><ul>
+<li>属性同步是对象序列化带来的额外福利，对象A的某个属性更改了，其他端的镜像A对象对应的属性也需要更改，这就是属性同步。属性同步一般是服务器更改，同步到其他所有客户端，主要是为了解决数据冲突和安全性考虑</li>
+</ul>
+<h2 id="网络同步"><a href="#网络同步" class="headerlink" title="网络同步"></a>网络同步</h2><ul>
+<li>所谓同步，就是要多个客户端表现效果一致</li>
+</ul>
+<h3 id="帧同步"><a href="#帧同步" class="headerlink" title="帧同步"></a>帧同步</h3><ul>
+<li>帧同步技术是早期RTS游戏常用的一种同步技术。帧同步只同步操作，其大部分游戏逻辑都在客户端上实现，服务器主要负责广播和验证操作，有着逻辑直观易实现、数据量少、可重播，一致性好等优点。</li>
+</ul>
+<h3 id="状态同步"><a href="#状态同步" class="headerlink" title="状态同步"></a>状态同步</h3><ul>
+<li><p>状态同步同步的是游戏中的各种状态。</p>
+</li>
+<li><p>一般的流程是客户端上传操作到服务器，服务器收到后计算游戏行为的结果，然后以广播的方式下发游戏中各种状态，客户端收到状态后再根据状态显示内容。</p>
+</li>
+<li><p>状态同步其实是一种不严谨的同步。不同玩家屏幕上的表现的一致性并不是重要指标，只要每次操作的结果相同即可。所以状态同步对网络延迟的要求并不高。像玩RPG游戏，200-300ms的延迟也可以接受。但是在RTS游戏中，50ms的延迟也会很受伤。</p>
+</li>
+</ul>
+<h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">状态同步</th>
+<th style="text-align:center">帧同步</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">客户端一致性</td>
+<td style="text-align:center">最终一致，中间可能拉扯</td>
+<td style="text-align:center">一直保持一致</td>
+</tr>
+<tr>
+<td style="text-align:center">网络延迟要求</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">高</td>
+</tr>
+<tr>
+<td style="text-align:center">网络流量</td>
+<td style="text-align:center">与物体数量成正比</td>
+<td style="text-align:center">与操作数量成正比</td>
+</tr>
+<tr>
+<td style="text-align:center">服务器任务</td>
+<td style="text-align:center">接受输入、全局仿真、状态复制</td>
+<td style="text-align:center">同步操作</td>
+</tr>
+<tr>
+<td style="text-align:center">客户端任务</td>
+<td style="text-align:center">局部游戏世界的展示</td>
+<td style="text-align:center">全局仿真</td>
+</tr>
+<tr>
+<td style="text-align:center">玩家断线或中途加入</td>
+<td style="text-align:center">容易</td>
+<td style="text-align:center">困难，如需从第一帧重新运算</td>
+</tr>
+<tr>
+<td style="text-align:center">开发效率</td>
+<td style="text-align:center">低，前后台联合开发</td>
+<td style="text-align:center">高，接近于单机游戏</td>
+</tr>
+<tr>
+<td style="text-align:center">安全性</td>
+<td style="text-align:center">服务器逻辑安全性高，部分功能在客户端实现较容易作弊</td>
+<td style="text-align:center">安全性低，但可事后验证</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="网络延迟和抖动"><a href="#网络延迟和抖动" class="headerlink" title="网络延迟和抖动"></a>网络延迟和抖动</h2><ul>
+<li><p>网络延迟高或者抖动，会影响游戏体验，常见的表现有拉扯，瞬移，攻击敌方没有伤害等</p>
+</li>
+<li><p>对抗网络延迟的方法：</p>
+<ul>
+<li>平滑算法<ul>
+<li>插值</li>
+<li>预测</li>
+<li>缓存</li>
+</ul>
+</li>
+<li>延迟补偿</li>
+</ul>
+</li>
+</ul>
+<h1 id="UE网络同步"><a href="#UE网络同步" class="headerlink" title="UE网络同步"></a>UE网络同步</h1><h2 id="Unreal网络架构"><a href="#Unreal网络架构" class="headerlink" title="Unreal网络架构"></a>Unreal网络架构</h2><ul>
+<li><p>以“客户端-服务器”模型为基础</p>
+</li>
+<li><p>实现面向对象式封装</p>
+</li>
+<li><p>实现网络代码和游戏逻辑完全分离</p>
+</li>
+<li><p>网络同步支持可视化编程</p>
+</li>
+<li><p>网络协议使用UDP通讯</p>
+</li>
+</ul>
+<blockquote>
+<p>Unreal为何使用纯UDP协议?</p>
+<ul>
+<li>TCP协议的可靠性无法定制<ul>
+<li>所有数据都是可靠的（游戏中很多数据是可以丢失的)</li>
+<li>为了保证数据的时序性，牺牲了时效性（一旦出现丢包，会阻塞后面数据的发送）</li>
+</ul>
+</li>
+<li>TCP协议与UDP协议混合使用?<ul>
+<li>对于时序性要求很高的数据，通过TCP协议传输</li>
+<li>对于时效性要求很高的数据，通过UDP协议传输</li>
+<li>增加了设计的复杂度</li>
+<li>TCP与UDP都是基于IP协议，它们在底层会互相干扰</li>
+</ul>
+</li>
+<li>纯UDP协议的好处<ul>
+<li>可以自己定制丢包时的处理逻辑</li>
+<li>可以同时兼顾时序性数据和时效性数据<h2 id="Unreal网络模式"><a href="#Unreal网络模式" class="headerlink" title="Unreal网络模式"></a>Unreal网络模式</h2></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">网络模式类型</th>
+<th style="text-align:center">功能/理想用例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">NM_Standalone</td>
+<td style="text-align:center">此类型说明服务器在本地计算机上运行且不接受来自远程计算机的客户端。此类型最适合单人游戏或本地多人游戏。</td>
+</tr>
+<tr>
+<td style="text-align:center">NM_DedicatedServer</td>
+<td style="text-align:center">专属服务器没有本地玩家，可以通过丢弃声音、图形、用户输入和其他面向玩家的功能来更高效地运行。此类型服务器用于托管在受信任服务器上的多人游戏，如竞赛性MOBA游戏、MMO游戏或需要高性能可靠服务器的在线射击游戏。</td>
+</tr>
+<tr>
+<td style="text-align:center">NM_ListenServer</td>
+<td style="text-align:center">监听服务器是一个既托管本地玩家，同时也对来自远程玩家的连接开放的服务器。此类型服务器适合于不需要专属服务器，且用户可以在没有第三方服务器的情况下设置和玩自己的游戏的竞争或合作类游戏。由于主机没有网络延迟，此类型网络模式可能会给主机带来一些优势，并且可以在没有主机警告的情况下终止游戏。</td>
+</tr>
+<tr>
+<td style="text-align:center">NM_Client</td>
+<td style="text-align:center">这是唯一为非服务器的模式。在此模式下，本地计算机是专属或监听服务器的客户端，因此不会运行服务器端逻辑。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Actor的复制"><a href="#Actor的复制" class="headerlink" title="Actor的复制"></a>Actor的复制</h2><ul>
+<li><p>Actor是UE网络同步核心。所有的数据同步都是围绕Actor展开的。服务器将保留一份Actor列表并定期更新客户端，以便客户端保留每个Actor（那些需要被同步的Actor）的近似复本。</p>
+</li>
+<li><p>Actor主要通过两种方式进行更新:</p>
+<ul>
+<li>Replicate属性更新</li>
+<li>RPC（远程过程调用） </li>
+</ul>
+</li>
+<li>可以在蓝图或者在通过C++代码设置Actor可以被复制。组件也可以进行类似的设置</li>
+</ul>
+<h2 id="属性复制的规则"><a href="#属性复制的规则" class="headerlink" title="属性复制的规则"></a>属性复制的规则</h2><ul>
+<li><p>只支持从服务器复制到客户端，且都是Reliable的</p>
+</li>
+<li><p>在每帧更新完所有Actor的属性状态会执行一遍所有Actor的属性复制</p>
+</li>
+<li><p>只复制那些与上一帧对比发生过变化的属性</p>
+</li>
+<li><p>如果是第一次复制，则复制跟默认值对比不一致的属性</p>
+</li>
+<li><p>只支持复制静态数组，并且只复制数组中与上一帧对比发生过变化的那一项</p>
+</li>
+<li><p>支持复制结构体，结构体中任意属性与上一帧对比发生过变化，都会导致复制结构体的所有属性</p>
+</li>
+<li><p>属性复制支持回调事件</p>
+</li>
+</ul>
+<h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2><ul>
+<li>支持服务器和客户端双向复制</li>
+<li>可以被标记为：Client、Server、 NetMulticast·可以是Reliable或者UnReliable的</li>
+<li>函数复制是没有返回值的，也不支持输出型参数</li>
+</ul>
+<h3 id="RPC要求和注意事项"><a href="#RPC要求和注意事项" class="headerlink" title="RPC要求和注意事项"></a>RPC要求和注意事项</h3><ul>
+<li>它们必须从Actor上调用。</li>
+<li>如果RPC是从服务器调用并在客户端上执行，则只有实际拥有这个Actor的客户端才会执行函数。</li>
+<li>如果RPC是从客户端调用并在服务器上执行，客户端就必须拥有调用RPC的Actor。</li>
+<li>多播RPC则是个例外：<ul>
+<li>如果它们是从服务器调用，服务器将在本地和所有已连接的客户端上执行它们。</li>
+<li>如果它们是从客户端调用，则只在本地而非服务器上执行。</li>
+<li>现在，我们有了一个简单的多播事件限制机制:在特定Actor的网络更新期内，多播函数将不会复制两次以上。按长期计划，我们会对此进行改善，同时更好的支持跨通道流量管理与限制。</li>
+</ul>
+</li>
+</ul>
+<h2 id="UE网络的实现"><a href="#UE网络的实现" class="headerlink" title="UE网络的实现"></a>UE网络的实现</h2><h3 id="NetDriver-——网络管理类"><a href="#NetDriver-——网络管理类" class="headerlink" title="NetDriver ——网络管理类"></a>NetDriver ——网络管理类</h3><ul>
+<li>管理网络连接，驱动整个网络收发逻辑</li>
+<li>创建和管理NetConnection</li>
+<li>收发网络Packet</li>
+<li>除了GameNetDriver，还有DemoNetDriver专门处理录像回放的逻辑</li>
+</ul>
+<h3 id="NetConnection-——抽象的网络连接-amp-Packet——数据包"><a href="#NetConnection-——抽象的网络连接-amp-Packet——数据包" class="headerlink" title="NetConnection ——抽象的网络连接  &amp; Packet——数据包"></a>NetConnection ——抽象的网络连接  &amp; Packet——数据包</h3><ul>
+<li>客户端与服务器之间的连接</li>
+<li>服务器会有多个NetConnection，每一个对应一个客户端连接</li>
+<li>客户端会有一个ServerConnection</li>
+<li>创建和管理Channel</li>
+<li>每个通信包是一个Packet，每个Packet有一个唯一的Seq，Seq自增且不会重复利用</li>
+<li>Packet 网络不稳定可能出现丢包，丢包时Connection不会重发，但会通知Channel</li>
+</ul>
+<h3 id="Channel——数据传输的管道"><a href="#Channel——数据传输的管道" class="headerlink" title="Channel——数据传输的管道"></a>Channel——数据传输的管道</h3><ul>
+<li>每个NetConnection管理着自己的Channel集合</li>
+<li>Channel以Bunch为单位进行数据的接收和发送</li>
+<li>发送时，Channel将Bunch数据交给NetConnection以Packet发送</li>
+<li>接收时，NetConnetion将Bunch分发给对应的Channel进行处理。</li>
+<li>Channel有4种类型<ul>
+<li>ActorChannel</li>
+<li>ControlChannel</li>
+<li>FileChannel</li>
+<li>VoiceChannel</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>ActorChannel</p>
+<ul>
+<li>实现数据传输的面向对象式的封装</li>
+<li>每个ActorChannel绑定一个与玩家相关的Actor</li>
+<li>每个ActorChannel只传输绑定的Actor所需要同步的数据</li>
+</ul>
+</blockquote>
+<h3 id="Bunch——管道中传输的数据串"><a href="#Bunch——管道中传输的数据串" class="headerlink" title="Bunch——管道中传输的数据串"></a>Bunch——管道中传输的数据串</h3><ul>
+<li><p>数据流通的基本单位</p>
+</li>
+<li><p>位流，充分利用了每一个Bit</p>
+<ul>
+<li>对于bool型的数据，使用一个Bit来存储</li>
+<li>对于其他类型的数据，会根据数据的范围选择最节省的若干个Bit来存储</li>
+</ul>
+</li>
+<li><p>Reliable(可靠) &amp; UnReliable（不可靠)</p>
+<ul>
+<li>Reliable Bunch，保证一定会发送到远端，并且按发送的顺序进行处理</li>
+<li>UnReliable Bunch，网络丢包有可能导致Bunch不能发送到远端</li>
+</ul>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Unreal/" class="category-chain-item">Unreal</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Unreal/%E8%85%BE%E8%AE%AF%E5%85%AC%E5%BC%80%E8%AF%BE/" class="category-chain-item">腾讯公开课</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>08 网络同步</div>
+      <div>https://enlight3n.github.io/2025/04/29/UE_TOC/08-网络同步/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Enlight3n</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/04/29/UE_TOC/09-AI%E6%8A%80%E6%9C%AF/" title="09 AI技术">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">09 AI技术</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/29/UE_TOC/07-%E6%B8%B2%E6%9F%93%E5%9F%BA%E7%A1%80/" title="07 渲染基础">
+                        <span class="hidden-mobile">07 渲染基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
