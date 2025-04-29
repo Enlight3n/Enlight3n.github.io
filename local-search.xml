@@ -4,27 +4,6 @@
   
   
   <entry>
-    <title>生命周期函数</title>
-    <link href="/2025/04/29/UnitySummary/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0/"/>
-    <url>/2025/04/29/UnitySummary/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0/</url>
-    
-    <content type="html"><![CDATA[<h1 id="生命周期函数"><a href="#生命周期函数" class="headerlink" title="生命周期函数"></a>生命周期函数</h1><h2 id="单脚本调用顺序"><a href="#单脚本调用顺序" class="headerlink" title="单脚本调用顺序"></a>单脚本调用顺序</h2><p><img src="/assets/image-20240529135621-74o4cb8.png" alt="image">​</p><h2 id="多脚本的调用顺序"><a href="#多脚本的调用顺序" class="headerlink" title="多脚本的调用顺序"></a>多脚本的调用顺序</h2><p>总的来说，游戏开始时，会遍历场景中<strong>所有显示的物体</strong>（不包含隐藏的物体）上的<strong>全部挂载的脚本</strong>（包括启用的和停用的），然后逐一遍历处理（这个遍历的顺序是随机的）</p><ol><li>如果当前脚本有Awake方法，就执行</li><li><p>接着看脚本是否被启用</p><ul><li>如果被启用，并且有OnEnable方法就执行</li><li>如果未被启用，就不管</li></ul></li></ol><p>接着再根据之前的那个遍历顺序，再逐个执行启用脚本的Start方法，也就是说，如果脚本A的Awake方法执行完了之后执行脚本B的Awake方法，那么脚本A的Start方法执行完了之后也会接着执行脚本B的Start方法</p><p>Awake方法和Start方法都只会执行一次，</p><ul><li>只要物体第一次显示，Awake方法就会调用</li><li>只要物体显示且脚本第一次启用，Start方法就会调用，之后再隐藏和显示物体，停用和启用脚本都不会再调用这两个方法</li></ul><p>OnEnable和OnDisable</p><ul><li>物体从显示状态转为隐藏状态时，其上所有启用的脚本会执行OnDisable方法，</li><li>物体从隐藏状态转为显示状态时，其上所有启用的脚本都会执行OnEnable方法</li><li>物体处于隐藏状态时，脚本状态切换都不会执行OnEnable方法和OnDisable方法</li><li>物体处于启用状态时，脚本状态切换才会执行OnEnable方法和OnDisable方法</li></ul>]]></content>
-    
-    
-    <categories>
-      
-      <category>Unity</category>
-      
-      <category>总结</category>
-      
-    </categories>
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>10 FPS游戏开发基础</title>
     <link href="/2025/04/29/UE_TOC/10-FPS%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/"/>
     <url>/2025/04/29/UE_TOC/10-FPS%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/</url>
@@ -541,6 +520,27 @@
       <category>Unity</category>
       
       <category>插件</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>生命周期函数</title>
+    <link href="/2023/04/29/UnitySummary/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0/"/>
+    <url>/2023/04/29/UnitySummary/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="生命周期函数"><a href="#生命周期函数" class="headerlink" title="生命周期函数"></a>生命周期函数</h1><h2 id="单脚本调用顺序"><a href="#单脚本调用顺序" class="headerlink" title="单脚本调用顺序"></a>单脚本调用顺序</h2><p><img src="/assets/image-20240529135621-74o4cb8.png" alt="image">​</p><h2 id="多脚本的调用顺序"><a href="#多脚本的调用顺序" class="headerlink" title="多脚本的调用顺序"></a>多脚本的调用顺序</h2><p>总的来说，游戏开始时，会遍历场景中<strong>所有显示的物体</strong>（不包含隐藏的物体）上的<strong>全部挂载的脚本</strong>（包括启用的和停用的），然后逐一遍历处理（这个遍历的顺序是随机的）</p><ol><li>如果当前脚本有Awake方法，就执行</li><li><p>接着看脚本是否被启用</p><ul><li>如果被启用，并且有OnEnable方法就执行</li><li>如果未被启用，就不管</li></ul></li></ol><p>接着再根据之前的那个遍历顺序，再逐个执行启用脚本的Start方法，也就是说，如果脚本A的Awake方法执行完了之后执行脚本B的Awake方法，那么脚本A的Start方法执行完了之后也会接着执行脚本B的Start方法</p><p>Awake方法和Start方法都只会执行一次，</p><ul><li>只要物体第一次显示，Awake方法就会调用</li><li>只要物体显示且脚本第一次启用，Start方法就会调用，之后再隐藏和显示物体，停用和启用脚本都不会再调用这两个方法</li></ul><p>OnEnable和OnDisable</p><ul><li>物体从显示状态转为隐藏状态时，其上所有启用的脚本会执行OnDisable方法，</li><li>物体从隐藏状态转为显示状态时，其上所有启用的脚本都会执行OnEnable方法</li><li>物体处于隐藏状态时，脚本状态切换都不会执行OnEnable方法和OnDisable方法</li><li>物体处于启用状态时，脚本状态切换才会执行OnEnable方法和OnDisable方法</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Unity</category>
+      
+      <category>总结</category>
       
     </categories>
     
