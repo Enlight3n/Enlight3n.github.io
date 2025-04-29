@@ -50,7 +50,7 @@
 <meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528104110-nxcpzag.png">
 <meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/1716864118552-20240528104210-1xegif3.gif">
 <meta property="article:published_time" content="2024-05-24T02:41:10.000Z">
-<meta property="article:modified_time" content="2025-04-28T15:56:47.472Z">
+<meta property="article:modified_time" content="2025-04-29T14:35:37.736Z">
 <meta property="article:author" content="Enlight3n">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240524162937-j8pcrc8.png">
@@ -352,7 +352,7 @@
 </ol>
 <p>在track中的每一个物体，都对应一个clip来控制</p>
 <p><strong>参数</strong></p>
-<p><img src="/UnityPackages_Assets/image-20240524162937-j8pcrc8.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240524162937-j8pcrc8.png" alt=""></p>
 <p>通用属性跳过，看两眼就知道怎么用了</p>
 <p>SourceGameObject：此 clip 要控制的物体</p>
 <p>Prefab：此clip要生成并控制的prefab，当这里赋予了一个Assets下的prefab时，SourceGameObject会变成ParentObject，ParentObject指定的物体将为Prefab生成时的父物体。</p>
@@ -456,9 +456,9 @@
 </code></pre><p>处理逻辑的脚本，我们可以重写多个生命周期函数，以进行调用</p>
 <p>以text脚本为例，我们可以写成如下形式，在<code>TextPlayableAsset</code>​中配置数据，然后传到<code>TextPlayableBehaviour</code>​进行逻辑处理</p>
 <p>逻辑处理的部分如下</p>
-<p><img src="/UnityPackages_Assets/image-20240723155345-ohpczel.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240723155345-ohpczel.png" alt=""></p>
 <p>为了获得这些数据，我们在<code>TextPlayableAsset</code>​中配置数据，再传递到<code>TextPlayableBehaviour</code>​</p>
-<p><img src="/UnityPackages_Assets/image-20240527154904-4ghb610.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240527154904-4ghb610.png" alt=""></p>
 <p>代码</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TextPlayableAsset</span> : <span class="hljs-title">PlayableAsset</span><br>&#123;<br>    <span class="hljs-comment">//配置的数据</span><br>    <span class="hljs-keyword">public</span> ExposedReference&lt;TextMeshProUGUI&gt; textMeshPro;<br>    <span class="hljs-keyword">public</span> Color color = Color.white;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> fontSize = <span class="hljs-number">14</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> text = <span class="hljs-string">&quot;&quot;</span>;<br>  <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> Playable <span class="hljs-title">CreatePlayable</span>(<span class="hljs-params">PlayableGraph graph, GameObject owner</span>)</span><br>    &#123;<br>        TextMeshProUGUI textMeshProUGUI = textMeshPro.Resolve(graph.GetResolver());<br><br>        ScriptPlayable&lt;TextPlayableBehaviour&gt; playable = ScriptPlayable&lt;TextPlayableBehaviour&gt;.Create(graph);<br>      <br>        TextPlayableBehaviour playableBehaviour = playable.GetBehaviour();<br><br>        playableBehaviour.textMeshPro = textMeshProUGUI;<br>        playableBehaviour.color = color;<br>        playableBehaviour.fontSize = fontSize;<br>        playableBehaviour.text = text;<br>      <br>        <span class="hljs-keyword">return</span> playable;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> 逻辑处理：将指定的text格式配置给指定的TextMeshProUGUI</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TextPlayableBehaviour</span> : <span class="hljs-title">PlayableBehaviour</span><br>&#123;<br>   <span class="hljs-keyword">public</span> TextMeshProUGUI textMeshPro;<br>   <span class="hljs-keyword">public</span> Color color = Color.white;<br>   <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> fontSize = <span class="hljs-number">14</span>;<br>   <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> text = <span class="hljs-string">&quot;&quot;</span>;<br><br>   <span class="hljs-comment">//clip开始时执行</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnBehaviourPlay</span>(<span class="hljs-params">Playable playable, FrameData info</span>)</span><br>   &#123;<br>      textMeshPro.color = color;<br>      textMeshPro.fontSize = fontSize;<br>      textMeshPro.text = text;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="ExposedReference类"><a href="#ExposedReference类" class="headerlink" title="ExposedReference类"></a>ExposedReference类</h3><p>在上面创建playable的相关脚本中，如果使用了继承自MonoBehaviour的字段，那么需要注意的是，</p>
@@ -478,19 +478,19 @@
 <p>但实际书写时，就会发现很多不便，因为我们需要在两个脚本中都写上同样的成员变量，再进行传递</p>
 <p>我们可以利用<code>[serializable]</code>​特性直接进行成员传递，让继承自<code>PlayableBehaviour</code>​的脚本的成员出现在inpector上</p>
 <p>上面的例子可以改成如下</p>
-<p><img src="/UnityPackages_Assets/image-20240527160210-7tcdn0z.png" alt="image"></p>
-<p><img src="/UnityPackages_Assets/image-20240527160308-y27vey2.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240527160210-7tcdn0z.png" alt=""></p>
+<p><img src="/UnityPackages_Assets/image-20240527160308-y27vey2.png" alt=""></p>
 <p>如此，我们可以进行间接配置，从而略去中间的传递数据的过程</p>
 <h3 id="自定义轨道"><a href="#自定义轨道" class="headerlink" title="自定义轨道"></a>自定义轨道</h3><p>使用player track，我们可以更改许多自定义的东西，比如text， transform。但是，player track只能创建clip，我们需要在每一个clip上绑定对应数据，如果我们希望对同一个东西进行频繁修改的话，创建的每一个clip都绑定到了同样的对象上</p>
 <p>通过自定义轨道，能够让数据绑定到轨道上，这样，每一个clip就无需再绑定数据了</p>
 <p>要自定义新轨道，需要继承自<code>TrackAsset</code>​，这个类里面可以什么都不写，如果要实现混合需要酌情重载<code>CreateTrackMixer</code>​和<code>GatherProperties</code>​方法</p>
 <p>要拿到绑定的数据，需要在<code>TextPlayableBehaviour</code>​类中重写方法<code>ProcessFrame</code>​，使用playerData即可</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ProcessFrame</span>(<span class="hljs-params">Playable playable, FrameData info, <span class="hljs-built_in">object</span> playerData</span>)</span><br>&#123;<br>    <span class="hljs-keyword">var</span> textMeshProUGUI = playerData <span class="hljs-keyword">as</span> TextMeshProUGUI;<br><br>    <span class="hljs-keyword">if</span> (textMeshProUGUI == <span class="hljs-literal">null</span>)<br>        <span class="hljs-keyword">return</span>;<br>      <br><br>    textMeshProUGUI.color = color;<br>    textMeshProUGUI.fontSize = fontSize;<br>    textMeshProUGUI.text = text;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p><img src="/UnityPackages_Assets/image-20240528095855-x938tcn.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528095855-x938tcn.png" alt=""></p>
 <p>这个时候右击timeline的菜单中就出现自定义的轨道了</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_52626549/article/details/131415151">【Unity学习笔记】ExposedReference类的初识 + 自定义Timeline轨道初识-CSDN博客</a></p>
 <h3 id="TimelineMixer"><a href="#TimelineMixer" class="headerlink" title="TimelineMixer"></a>TimelineMixer</h3><p>可以这么理解，Mixer是整条track的底层，它用来处理不同clip之间的混合，包括那些空白的部分的状况（是沿用最后的非空白的状态还是回到默认的状态）</p>
-<p><img src="/UnityPackages_Assets/image-20240528105509-slp383o.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528105509-slp383o.png" alt=""></p>
 <p>要实现Mixer，需要另写一个继承自<code>PlayableBehaviour</code>​的脚本，然后在<code>TrackAsset</code>​中实现<code>CreaterTrackMixer</code>​方法，并绑定到这个脚本</p>
 <ol>
 <li>在这个Mixer脚本中，也需要实现<code>ProcessFrame</code>​方法，并且Mixer的优先级更高，是覆盖执行。也就是说，当Mixer脚本中的重写了<code>ProcessFrame</code>​方法，此前的脚本也重写了<code>ProcessFrame</code>​方法，Mixer脚本中的<code>ProcessFrame</code>​方法会后调用</li>
@@ -500,19 +500,19 @@
 </ol>
 <p>还是以卡拉OK为例，之前的做法，在两个clip之间，歌词会沿用上一个clip的歌词，现在我们希望空白部分的歌词为空（最快的做法其实是直接创建clip替代空白，然后歌词不填）</p>
 <p>在<code>TrackAsset</code>​中实现<code>CreaterTrackMixer</code>​方法</p>
-<p><img src="/UnityPackages_Assets/image-20240528111627-u9vviws.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528111627-u9vviws.png" alt=""></p>
 <p>实现Mixer脚本，因为两个clip在设计上是不会重叠的，所以不用管插值的部分，而每个clip自己实现了显示歌词的方法，那么在这个脚本里，我们只需要判断是不是当前没有播放到任何一个clip中，是的话就将歌词设置为默认值即可</p>
-<p><img src="/UnityPackages_Assets/image-20240528112929-6v4lg03.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528112929-6v4lg03.png" alt=""></p>
 <h2 id="实战：卡拉OK轨"><a href="#实战：卡拉OK轨" class="headerlink" title="实战：卡拉OK轨"></a>实战：卡拉OK轨</h2><p>来源：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1F54y1a73Q/?spm_id_from=333.788.recommend_more_video.-1&amp;vd_source=fa868a89c47131bf7faa4e6af78a3a9e">Timeline 3 | 卡拉OK轨 | 自定义轨道 | Unity3d 教程_哔哩哔哩_bilibili</a></p>
 <p>要实现卡拉OK轨，首先要弄明白它的原理</p>
 <p>我们可以使用两个叠加的歌词，一个白色，一个绿色，设置二者的轴心都在左侧边缘，然后将绿色歌词的TextMeshPro组件中的，wrapping设置为disabled，将overflow设置为截断，wrapping启用时，会自动换行，overlfow则是对溢出的处理</p>
 <p>然后修改绿色歌词的RectTransform组件的宽度即可实现想要的功能</p>
-<p><img src="/UnityPackages_Assets/image-20240528103320-l1usjhl.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528103320-l1usjhl.png" alt=""></p>
 <p>然后就是书写代码，我们使用四个脚本来实现</p>
-<p><img src="/UnityPackages_Assets/image-20240528104025-gmuwdkv.png" alt="image"></p>
-<p><img src="/UnityPackages_Assets/image-20240528104040-ec6hcgr.png" alt="image"></p>
-<p><img src="/UnityPackages_Assets/image-20240528104058-nb625ix.png" alt="image"></p>
-<p><img src="/UnityPackages_Assets/image-20240528104110-nxcpzag.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528104025-gmuwdkv.png" alt=""></p>
+<p><img src="/UnityPackages_Assets/image-20240528104040-ec6hcgr.png" alt=""></p>
+<p><img src="/UnityPackages_Assets/image-20240528104058-nb625ix.png" alt=""></p>
+<p><img src="/UnityPackages_Assets/image-20240528104110-nxcpzag.png" alt=""></p>
 <p>表现</p>
 <p><img src="/UnityPackages_Assets/1716864118552-20240528104210-1xegif3.gif" alt="1716864118552">​</p>
 <p>注意：这里的显示其实是一个字符一个字符显示的，更好的滑动效果是逐渐显示，可以使用<code>Rect Mask 2D</code>​组件来实现，不控制TextMeshPro转而控制这个组件的属性即可</p>

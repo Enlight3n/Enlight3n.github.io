@@ -57,7 +57,7 @@
 <meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/network-asset-ChannelMixer-20240528155637-66fppxm.png">
 <meta property="og:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240528153025-ggd03dy.png">
 <meta property="article:published_time" content="2024-05-21T07:14:12.000Z">
-<meta property="article:modified_time" content="2025-04-28T15:51:40.490Z">
+<meta property="article:modified_time" content="2025-04-29T14:35:37.736Z">
 <meta property="article:author" content="Enlight3n">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://enlight3n.github.io/UnityPackages_Assets/image-20240523212057-2lyl5hc.png">
@@ -315,26 +315,26 @@
 <li>视觉风格是指项目的风格外观和感觉</li>
 <li>视觉保真度是指场景反映其所要表示的世界的准确程度。</li>
 </ul>
-<h3 id="安装和设置"><a href="#安装和设置" class="headerlink" title="安装和设置"></a>安装和设置</h3><p><img src="/UnityPackages_Assets/image-20240523212057-2lyl5hc.png" alt="image"></p>
+<h3 id="安装和设置"><a href="#安装和设置" class="headerlink" title="安装和设置"></a>安装和设置</h3><p><img src="/UnityPackages_Assets/image-20240523212057-2lyl5hc.png" alt=""></p>
 <p>每个摄像机都可以应用后期处理，要应用后处理，需要勾选Post Processing，以及在Enviroment中的volumn mask要选择volumn文件所在的层</p>
-<p><img src="/UnityPackages_Assets/image-20240523173303-1kyxhpr.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240523173303-1kyxhpr.png" alt=""></p>
 <h3 id="Volume"><a href="#Volume" class="headerlink" title="Volume"></a>Volume</h3><p>为了实际应用新效果，我们需要在场景中添加一个叫做 Volume 的东西。体积指定场景中的特定物理区域。当摄像机位于该体积内时，后期处理将影响摄像机渲染的内容。</p>
-<p><img src="/UnityPackages_Assets/image-20240521154713-72f6bxx.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240521154713-72f6bxx.png" alt=""></p>
 <p>可以使用全局Volume，它将效果应用于整个场景，或者使用较小的局部Volume，仅当摄像机位于特定区域时才应用效果。</p>
-<h3 id="效果一览"><a href="#效果一览" class="headerlink" title="效果一览"></a>效果一览</h3><p><img src="/UnityPackages_Assets/image-20240523173608-ocw68ll.png" alt="image"></p>
+<h3 id="效果一览"><a href="#效果一览" class="headerlink" title="效果一览"></a>效果一览</h3><p><img src="/UnityPackages_Assets/image-20240523173608-ocw68ll.png" alt=""></p>
 <p>‍</p>
 <h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p>2020版本及以后，Ambient Occlusion 环境光遮蔽和Screen-space reflections已经不在post processing包中支持，具体可见<a target="_blank" rel="noopener" href="https://docs.unity.cn/Manual/PostProcessingOverview.html">Unity - 手动：后期处理和全屏效果 —- Unity - Manual: Post-processing and full-screen effects</a></p>
 <p>以下只解释含义，具体参数的含义见：<a target="_blank" rel="noopener" href="https://docs.unity.cn/Packages/com.unity.render-pipelines.universal@10.0/manual/integration-with-post-processing.html">Post-processing in the Universal Render Pipeline | Universal RP | 10.0.0-preview.26 (unity.cn)</a></p>
 <h3 id="Ambient-Occlusion-环境光遮蔽"><a href="#Ambient-Occlusion-环境光遮蔽" class="headerlink" title="Ambient Occlusion 环境光遮蔽"></a>Ambient Occlusion 环境光遮蔽</h3><p>环境光遮蔽，顾名思义，指的是场景中的环境光会出现被遮蔽的效果，一般的环境光都是不考虑方向和位置的常量，但是环境光遮蔽会考虑环境光被其他物体遮挡的情况</p>
 <p>环境光遮挡效果可以使挨着折痕线、小孔、相交线和平行表面的地方变暗。在现实世界中，这些区域往往会阻挡或遮挡周围的光线，因此它们会显得更暗。</p>
-<p><img src="/UnityPackages_Assets/image-20240523212927-6re91gv.png" alt="image">​​​</p>
-<p><img src="/UnityPackages_Assets/image-20240523212959-mis23vb.png" alt="image">​</p>
+<p><img src="/UnityPackages_Assets/image-20240523212927-6re91gv.png" alt="">​​​</p>
+<p><img src="/UnityPackages_Assets/image-20240523212959-mis23vb.png" alt="">​</p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv677744/">小科普 | 是什么蒙蔽了你的双眼？是环境光遮蔽（一） - 哔哩哔哩 (bilibili.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/400633131">环境光遮蔽综述 - 知乎 (zhihu.com)</a></p>
 <h3 id="Bloom-辉光效果"><a href="#Bloom-辉光效果" class="headerlink" title="Bloom 辉光效果"></a>Bloom 辉光效果</h3><p>泛光：光源周围产生发光效果</p>
-<p><img src="/UnityPackages_Assets/image-20240521155553-ublkg65.png" alt="image">​</p>
+<p><img src="/UnityPackages_Assets/image-20240521155553-ublkg65.png" alt="">​</p>
 <p>注意：只有在相机的渲染设置中启用了 HDR（高动态范围）并且灯光或自发光材质足够亮时，才能实现泛光。</p>
-<p><img src="/UnityPackages_Assets/image-20240528135335-tg2pqf6.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528135335-tg2pqf6.png" alt=""></p>
 <div class="table-container">
 <table>
 <thead>
@@ -398,7 +398,7 @@
 </div>
 <h3 id="Chromatic-Aberration-色差"><a href="#Chromatic-Aberration-色差" class="headerlink" title="Chromatic Aberration 色差"></a>Chromatic Aberration 色差</h3><p>模拟相机的色彩偏移效果，在屏幕正中心的地方，不会出现偏移，越靠近屏幕四周，就越会发生偏移</p>
 <p>可以用来模拟喝醉酒之后的镜头</p>
-<p><img src="/UnityPackages_Assets/image-20240528140504-m0mx9mj.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528140504-m0mx9mj.png" alt=""></p>
 <div class="table-container">
 <table>
 <thead>
@@ -416,13 +416,13 @@
 </table>
 </div>
 <h3 id="Film-Grain-胶片颗粒"><a href="#Film-Grain-胶片颗粒" class="headerlink" title="Film Grain 胶片颗粒"></a>Film Grain 胶片颗粒</h3><p>胶片颗粒效应模拟了摄影胶片的随机光学纹理，通常是由物理胶片上存在小颗粒引起的。</p>
-<p><img src="/UnityPackages_Assets/image-20240528160015-xn26oln.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528160015-xn26oln.png" alt=""></p>
 <p>‍</p>
 <h3 id="Vignette-边角压暗"><a href="#Vignette-边角压暗" class="headerlink" title="Vignette 边角压暗"></a>Vignette 边角压暗</h3><p>在屏幕四周增加变暗的效果，模拟狙击镜，潜行，恐怖气氛，或者残血提示</p>
-<p><img src="/UnityPackages_Assets/image-20240528140723-z1x97wr.png" alt="image">​</p>
-<p><img src="/UnityPackages_Assets/image-20240528141156-pfctxc1.png" alt="image"></p>
-<p><img src="/UnityPackages_Assets/image-20240528141027-knfky88.png" alt="image">​</p>
-<p><img src="/UnityPackages_Assets/image-20240528141104-j5e0sta.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528140723-z1x97wr.png" alt="">​</p>
+<p><img src="/UnityPackages_Assets/image-20240528141156-pfctxc1.png" alt=""></p>
+<p><img src="/UnityPackages_Assets/image-20240528141027-knfky88.png" alt="">​</p>
+<p><img src="/UnityPackages_Assets/image-20240528141104-j5e0sta.png" alt=""></p>
 <div class="table-container">
 <table>
 <thead>
@@ -460,12 +460,12 @@
 <p>三种渲染管线的自带景深实现：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46146935/article/details/129846132">Unity 景深Depth Of Field-CSDN博客</a></p>
 </blockquote>
 <p>景深效果就是用来虚化背景，在现实生活中，相机只能清晰地聚焦在特定距离的物体上。离相机更近或更远的物体都会失焦。unity支持两种模式</p>
-<p><img src="/UnityPackages_Assets/image-20240528142026-phecj3o.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528142026-phecj3o.png" alt=""></p>
 <ul>
 <li><strong>Gaussian</strong>: this mode approximates camera-like effects, but doesn’t imitate them completely. It has a limited blur radius and only does far-field blurring. This mode is the fastest, and is the best mode for lower-end platforms. 高斯：此模式近似于类似相机的效果，但不能完全模仿它们。它的模糊半径有限，只做远场模糊。此模式是最快的，也是低端平台的最佳模式。</li>
 <li><strong>Bokeh</strong>: a slower but higher quality mode that closely imitates the effects of a real-life camera. It can do both near &amp; far-field blurring, and generates bokeh on areas with high luminosity intensity, also known as hot spots. 散景：一种速度较慢但质量较高的模式，与现实生活中的相机效果非常相似。它可以进行近场和远场模糊，并在高光度强度的区域（也称为热点）上产生散景。</li>
 </ul>
-<h4 id="Gaussian-Depth-of-Field"><a href="#Gaussian-Depth-of-Field" class="headerlink" title="Gaussian Depth of Field"></a>Gaussian Depth of Field</h4><p><img src="/UnityPackages_Assets/image-20240522094207-dhvw2s6.png" alt="image"></p>
+<h4 id="Gaussian-Depth-of-Field"><a href="#Gaussian-Depth-of-Field" class="headerlink" title="Gaussian Depth of Field"></a>Gaussian Depth of Field</h4><p><img src="/UnityPackages_Assets/image-20240522094207-dhvw2s6.png" alt=""></p>
 <p>近场和远场：在Unity的景深效果中，通常有一个近场（near field）和远场（far field）的概念。近场中的物体是清晰的，而远场中的物体则逐渐变得模糊。</p>
 <p>模糊半径：模糊半径是指物体因景深效果而变得模糊的程度。在Unity中，这个半径通常是通过算法计算得出的，它基于物体到相机的距离、相机的焦距、光圈大小等因素。模糊半径的大小决定了模糊效果的强弱。半径越大，模糊效果越强烈；半径越小，模糊效果越轻微。</p>
 <div class="table-container">
@@ -501,11 +501,11 @@
 </table>
 </div>
 <p>画个图就是这样的</p>
-<p><img src="/UnityPackages_Assets/image-20240528144423-7m2uh1w.png" alt="image">​</p>
+<p><img src="/UnityPackages_Assets/image-20240528144423-7m2uh1w.png" alt="">​</p>
 <p>所以，高斯模式虽然能够产生景深，性能花销也小，但是效果一般</p>
-<h4 id="Bokeh-Depth-of-Field"><a href="#Bokeh-Depth-of-Field" class="headerlink" title="Bokeh Depth of Field"></a>Bokeh Depth of Field</h4><p><img src="/UnityPackages_Assets/image-20240522094701-q6n6igp.png" alt="image"></p>
+<h4 id="Bokeh-Depth-of-Field"><a href="#Bokeh-Depth-of-Field" class="headerlink" title="Bokeh Depth of Field"></a>Bokeh Depth of Field</h4><p><img src="/UnityPackages_Assets/image-20240522094701-q6n6igp.png" alt=""></p>
 <p>散景模糊，会使相机所看的某个立方体区域之外的地方变得模糊，这个立方体如下</p>
-<p><img src="/UnityPackages_Assets/image-20240522133615-p2j320i.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240522133615-p2j320i.png" alt=""></p>
 <div class="table-container">
 <table>
 <thead>
@@ -549,7 +549,7 @@
 </table>
 </div>
 <h3 id="Motion-Blur-运动模糊"><a href="#Motion-Blur-运动模糊" class="headerlink" title="Motion Blur 运动模糊"></a>Motion Blur 运动模糊</h3><p>“运动模糊”效果模拟当真实世界的摄像机拍摄移动速度快于摄像机曝光时间的物体时图像中发生的模糊。这通常是由于快速移动的物体或曝光时间长造成的。</p>
-<p><img src="/UnityPackages_Assets/image-20240528151053-yi5isds.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528151053-yi5isds.png" alt=""></p>
 <div class="table-container">
 <table>
 <thead>
@@ -575,7 +575,7 @@
 </table>
 </div>
 <h3 id="Lens-Distortion-镜头畸变"><a href="#Lens-Distortion-镜头畸变" class="headerlink" title="Lens Distortion 镜头畸变"></a>Lens Distortion 镜头畸变</h3><p>镜头失真效果会扭曲最终渲染的图片，以模拟真实世界相机镜头的形状，比如鱼眼，离镜头过近时的变形</p>
-<p><img src="/UnityPackages_Assets/image-20240528151436-z2wir9v.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528151436-z2wir9v.png" alt=""></p>
 <div class="table-container">
 <table>
 <thead>
@@ -609,9 +609,9 @@
 </table>
 </div>
 <h3 id="——以下组件需要结合使用——"><a href="#——以下组件需要结合使用——" class="headerlink" title="——以下组件需要结合使用——"></a>——以下组件需要结合使用——</h3><h3 id="Panini-Projection-帕尼尼投影"><a href="#Panini-Projection-帕尼尼投影" class="headerlink" title="Panini Projection 帕尼尼投影"></a>Panini Projection 帕尼尼投影</h3><p>帕尼尼投影也是一种镜头畸变，但可以保证四周的位置不变</p>
-<p><img src="/UnityPackages_Assets/image-20240528152608-txby94p.png" alt="image"></p>
-<p><img src="/UnityPackages_Assets/image-20240528152617-f4i4zfu.png" alt="image"></p>
-<p><img src="/UnityPackages_Assets/image-20240528152523-tb8sfh4.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528152608-txby94p.png" alt=""></p>
+<p><img src="/UnityPackages_Assets/image-20240528152617-f4i4zfu.png" alt=""></p>
+<p><img src="/UnityPackages_Assets/image-20240528152523-tb8sfh4.png" alt=""></p>
 <div class="table-container">
 <table>
 <thead>
@@ -639,10 +639,10 @@
 <p>HDR所做的，实际上就是暗的更暗，亮的更亮。</p>
 <p>然而，HDR仍然会有一些问题。尽管我们可以将场景中物体的亮度调高到与太阳一样亮，但普通屏幕无法显示该亮度，当您有限的屏幕硬件试图表现真正明亮的物体时，它会达到其物理能力的极限，并且只会将整个区域变成白色，从而冲刷掉其路径上的所有细节。色调映射，可以解决这个问题。</p>
 </blockquote>
-<p><img src="/UnityPackages_Assets/image-20240521160114-ozy2udo.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240521160114-ozy2udo.png" alt=""></p>
 <p><strong>色调映射会获取那些非常极端的亮度值，并将它们重新“映射”到较低的值，从而恢复那些被冲淡的区域的细节</strong>，否则这些区域会丢失在白色斑点中。</p>
 <p>色调映射会让屏幕更暗，色调映射有两种，Neutral和ACES</p>
-<p><img src="/UnityPackages_Assets/image-20240521161734-yqc52ac.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240521161734-yqc52ac.png" alt=""></p>
 <p>ACES更偏影片的画质感，会更暗</p>
 <h3 id="White-Balance-白平衡"><a href="#White-Balance-白平衡" class="headerlink" title="White Balance 白平衡"></a>White Balance 白平衡</h3><p>使用白平衡在最终渲染中创建整体更冷或更暖的感觉</p>
 <p>主要是偏黄到偏蓝之间的转换</p>
@@ -782,7 +782,7 @@
 <h3 id="Lift，Gamma，Gain"><a href="#Lift，Gamma，Gain" class="headerlink" title="Lift，Gamma，Gain"></a>Lift，Gamma，Gain</h3><p>Lift Gamma Gain 轨迹球遵循 ASC CDL 标准。当您调整轨迹球上点的位置时，它会将图像的色调向给定色调范围内的该颜色移动。使用不同的轨迹球来影响图像中的不同范围。调整轨迹球下方的滑块以偏移该范围的颜色亮度。</p>
 <p>具体这些东西是干嘛的就偏美术了</p>
 <h2 id="其他相机效果"><a href="#其他相机效果" class="headerlink" title="其他相机效果"></a>其他相机效果</h2><h3 id="Dithering-抖色"><a href="#Dithering-抖色" class="headerlink" title="Dithering 抖色"></a>Dithering 抖色</h3><p>通过插值，来消除色阶，直接在Camera组件勾选即可</p>
-<p><img src="/UnityPackages_Assets/image-20240528153025-ggd03dy.png" alt="image"></p>
+<p><img src="/UnityPackages_Assets/image-20240528153025-ggd03dy.png" alt=""></p>
 <h3 id="抗锯齿"><a href="#抗锯齿" class="headerlink" title="抗锯齿"></a>抗锯齿</h3><p>FXAA</p>
 <p>SMAA</p>
 <p>TAA</p>
