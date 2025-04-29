@@ -26,25 +26,25 @@
 <meta property="og:site_name" content="Enlight3n的博客">
 <meta property="og:description" content="04 ShadingBlinn-Phong光照模型着色：对不同的物体应用不同材质的过程 对于某一点，只考虑光线方向和观测方向，不考虑光源是否被其他物体遮挡，也就是说，不考虑这一点在其他物体的阴影内的情况。 某一点的光照 &#x3D; 漫反射 + 高光 + 环境光 漫反射首先，同样的光，照射到物体表面上，依据入射角度的不同，获得的能量有区别，因而导致了明暗的不同。 其次，对于一个点光源，我们认为，某个时刻传播">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427133738-0lze640.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210172031-bbkqtdw.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210172031-9nff5mt.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210172031-suuwzs4.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210172031-lix35k8.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427135327-97fo2qn.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427135420-zgl99kz.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427135439-0yun1fd.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427135632-xhedd9i.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210172031-m52rv43.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210172031-tldxvh1.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210172031-ly8od2j.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250425112904-4yktztk.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250425112944-c77jp3u.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427133738-0lze640.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210172031-bbkqtdw.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210172031-9nff5mt.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210172031-suuwzs4.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210172031-lix35k8.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427135327-97fo2qn.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427135420-zgl99kz.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427135439-0yun1fd.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427135632-xhedd9i.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210172031-m52rv43.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210172031-tldxvh1.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210172031-ly8od2j.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250425112904-4yktztk.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250425112944-c77jp3u.png">
 <meta property="article:published_time" content="2025-01-06T12:04:24.000Z">
-<meta property="article:modified_time" content="2025-04-28T15:46:43.810Z">
+<meta property="article:modified_time" content="2025-04-29T14:52:01.856Z">
 <meta property="article:author" content="Enlight3n">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427133738-0lze640.png">
+<meta name="twitter:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427133738-0lze640.png">
   
   
   
@@ -299,7 +299,7 @@
 <p><strong>某一点的光照 = 漫反射 + 高光 + 环境光</strong></p>
 <h3 id="漫反射"><a href="#漫反射" class="headerlink" title="漫反射"></a><strong>漫反射</strong></h3><p>首先，同样的光，照射到物体表面上，依据入射角度的不同，获得的能量有区别，因而导致了明暗的不同。</p>
 <p>其次，对于一个点光源，我们认为，某个时刻传播出的能量是不变的。如下图，每次传播形成的球壳的总能量不变，但是随着时间推移，球壳的大小越来越大。于是，单位面积接收到的光源的能量与到光源的距离成平方反比。</p>
-<p><img src="/GAMES101_Assets/image-20250427133738-0lze640.png" alt=""></p>
+<p><img src="/assets/GAMES101/image-20250427133738-0lze640.png" alt=""></p>
 <p>于是，我们可以得到单个点光源照射下，某个点的总漫反射的强度</p>
 <p>$L_d = K_d \left( \frac{I}{r^2} \right) \max(0, \mathbf{n} \cdot \mathbf{l})$</p>
 <ul>
@@ -310,14 +310,14 @@
 </ul>
 <h3 id="高光"><a href="#高光" class="headerlink" title="高光"></a><strong>高光</strong></h3><p>比较光滑的表面，其入射光的反射方向接近镜面反射方向。</p>
 <p>观测方向越接近反射光的方向，等价于观测向量和入射向量相加得到的半程向量和法线向量夹角越小。</p>
-<p><img src="/GAMES101_Assets/image-20240210172031-bbkqtdw.png" alt=""></p>
+<p><img src="/assets/GAMES101/image-20240210172031-bbkqtdw.png" alt=""></p>
 <ul>
 <li>$k_s$表示表示镜面反射系数。​</li>
 <li>这里没有考虑入射光和表面因为夹角，导致部分能量未被吸收的问题，漫反射项中考虑了。</li>
 <li>指数p是为了强化夹角余弦的差异，凸显夹角的影响。所以p可以控制高光的大小，p越大，高光越小。</li>
 </ul>
 <h3 id="环境光"><a href="#环境光" class="headerlink" title="环境光"></a><strong>环境光</strong></h3><p>假设任何一点接收到环境光的大小都相同，是常数。</p>
-<p><img src="/GAMES101_Assets/image-20240210172031-9nff5mt.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210172031-9nff5mt.png" alt="">​</p>
 <h2 id="着色频率"><a href="#着色频率" class="headerlink" title="着色频率"></a>着色频率</h2><p>Shading Frequencies</p>
 <h3 id="着色方式"><a href="#着色方式" class="headerlink" title="着色方式"></a>着色方式</h3><p><strong>Flat Shading（平面着色）</strong></p>
 <pre><code class="hljs">以三角面为单位进行着色，借助于平面的法线进行运算。对于光滑的几何体效果很差
@@ -329,7 +329,7 @@
 可以在减少三角面数的情况下达到相同的效果（插值后法向量会光滑变化），当然，性能开销也非常大
 </code></pre><h3 id="法线计算"><a href="#法线计算" class="headerlink" title="法线计算"></a>法线计算</h3><p><strong>顶点的法线计算：</strong></p>
 <pre><code class="hljs">一般是该顶点相邻面上的法线求平均，也可以是按照相邻面的面积求加权平均
-</code></pre><p><img src="/GAMES101_Assets/image-20240210172031-suuwzs4.png" alt="">​</p>
+</code></pre><p><img src="/assets/GAMES101/image-20240210172031-suuwzs4.png" alt="">​</p>
 <p><strong>像素法线的计算：</strong></p>
 <pre><code class="hljs">利用顶点的属性（法线，颜色）来对三角形内部的像素点进行插值，都使用同样的方法。
 </code></pre><h3 id="三角形的重心坐标"><a href="#三角形的重心坐标" class="headerlink" title="三角形的重心坐标"></a><strong>三角形的重心坐标</strong></h3><p>对于三角形所在平面上的任意一点坐标，都可以用三角形的三个顶点坐标的线性组合来表示</p>
@@ -341,35 +341,35 @@
 <li>注意：在三维空间投影到二维空间时，投影前后的重心坐标会改变，所以要应用逆变换在三维空间中进行插值，再投影回去。</li>
 </ul>
 <h2 id="图形管线"><a href="#图形管线" class="headerlink" title="图形管线"></a>图形管线</h2><p>Graphics Pipline</p>
-<p><img src="/GAMES101_Assets/image-20240210172031-lix35k8.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210172031-lix35k8.png" alt="">​</p>
 <h2 id="纹理映射"><a href="#纹理映射" class="headerlink" title="纹理映射"></a>纹理映射</h2><p>Texture  Mapping</p>
 <p><strong>纹理映射</strong>是将纹理空间中的纹理像素映射到屏幕空间中的像素的过程</p>
 <p>三维图形的每个三角面顶点都可以对应一个<strong>uv坐标系下的坐标</strong>，uv坐标范围约定在[0,1]之间，至于三角形中的点的uv坐标，可以通过插值计算出来。</p>
 <p><strong>可复用纹理：</strong> 纹理本身可以被设计为无缝衔接（tilable）</p>
 <h3 id="纹理过小"><a href="#纹理过小" class="headerlink" title="纹理过小"></a><strong>纹理过小</strong></h3><p>屏幕的pixel太高，纹理的texel太小，多个pixel映射到了同一个texel</p>
-<p><img src="/GAMES101_Assets/image-20250427135327-97fo2qn.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427135327-97fo2qn.png" alt="">​</p>
 <ul>
 <li><strong>Nearest：</strong> 直接四舍五入</li>
 <li><strong>Bilinear</strong>：考虑这个pixel周围的4个texel，应用双线性插值</li>
 </ul>
-<p><img src="/GAMES101_Assets/image-20250427135420-zgl99kz.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427135420-zgl99kz.png" alt="">​</p>
 <ul>
 <li><strong>BiCubic：</strong> 考虑这个pixel周围的16个texel，应用双三次插值</li>
 </ul>
-<p><img src="/GAMES101_Assets/image-20250427135439-0yun1fd.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427135439-0yun1fd.png" alt="">​</p>
 <p>如上图，红点是pixel，黑点是texel，pixel没有直接对应的texel。Nearest就是找最近的texel，但是这样会导致不够平滑，锯齿严重。BiCubic效果要比Bilinear更好，但更耗费性能。</p>
 <h3 id="纹理过大"><a href="#纹理过大" class="headerlink" title="纹理过大"></a><strong>纹理过大</strong></h3><p>屏幕的pixel太小，纹理的texel太大，特别是看向远处的时候，一个pixel映射到了多个texel，这时候因采样频率不足而导致摩尔纹+锯齿（走样）</p>
 <p>我们可以用上面提到的超采样方法进行范围查询，比如一个pixel对应的是512个texel的区域，我们可以对这些texel进行加权，但是这样性能要求高，我们可以采用Mipmap算法</p>
 <p><strong>Mipmap算法</strong></p>
 <p>事先准备多张不同级别（D）的纹理贴图，每升一个级别，横纵纹素各减小一半，最后显存消耗仅为原来的4/3</p>
-<p><img src="/GAMES101_Assets/image-20250427135632-xhedd9i.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427135632-xhedd9i.png" alt="">​</p>
 <p>如此分级之后，设屏幕空间下采样像素与相邻像素中心点之间的距离为L，在u-v坐标系找到这些像素的中心点对应的坐标</p>
-<p><img src="/GAMES101_Assets/image-20240210172031-m52rv43.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210172031-m52rv43.png" alt="">​</p>
 <p>如上图，左侧为屏幕空间，右侧为纹理空间。红色的点即是屏幕空间中的点在纹理空间中的对应。我们通过对这个点和相邻点连线的垂直平分线，可以获得一个粉色的多边形区域。接着用一个正方形框来近似这个多边形区域，这个正方形区域就是pixel对应的覆盖区域，根据这个区域的大小，选择相应的层数进行查询，如果没有合适的层数，进行三线性插值即可。</p>
 <p>但是，Mipmap算法只能在u-v坐标系下做正方形块的查询，有时候会造成过度模糊的情况，为了避免这种情况，引入各向异性过滤</p>
 <p><strong>各向异性过滤</strong></p>
 <p>在准备不同级别的纹理贴图时，不再是简简单单横纵纹素各减小一半进行分级，而是长减半宽不变 or 宽减半长不变  or 长和宽各减半三种情况各进行一次分级，显存消耗为原来的三倍，但性能方面并没有多少影响，这种方法就可以实现在u-v坐标系下进行矩形查询。</p>
-<p><img src="/GAMES101_Assets/image-20240210172031-tldxvh1.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210172031-tldxvh1.png" alt="">​</p>
 <p>在显存足够的情况下，各向异性过滤级别开越高越好</p>
 <h2 id="贴图"><a href="#贴图" class="headerlink" title="贴图"></a>贴图</h2><p><strong>环境光贴图</strong></p>
 <ul>
@@ -391,7 +391,7 @@
 <ul>
 <li>与凹凸贴图类似，但位移贴图是真的改变了几何信息，对模型的顶点做位移，比凹凸贴图更加逼真，但是对模型的精度（三角面数量）要求更高，并且运算量也会随之上升</li>
 </ul>
-<p><img src="/GAMES101_Assets/image-20240210172031-ly8od2j.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210172031-ly8od2j.png" alt="">​</p>
 <p><strong>程序纹理</strong></p>
 <ul>
 <li>三维的纹理，并非真正生成了纹理的图，而是定义空间中任意点的颜色，具体来说，就是定义三维空间中的噪声函数，再通过映射，得到预想的效果</li>
@@ -411,14 +411,14 @@
 <p>参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/384446688">图形学基础 - 阴影 - ShadowMap及其延伸 - 知乎</a></p>
 <p>核心思想：如果一个点不在阴影里，那么这个点可以被摄像机和光源都看到</p>
 <p>具体实现：</p>
-<p><img src="/GAMES101_Assets/image-20250425112904-4yktztk.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250425112904-4yktztk.png" alt="">​</p>
 <p>黄色区域为点光源光照示意范围，绿色区域为相机视锥体范围，很明显，红线处是阴影部分，实际操作时怎样确定这个红线位置呢？有以下步骤：</p>
 <p>1） 第一次 pass，生成阴影贴图。</p>
 <p>将相机放在光源位置，用 z-buffer 的方式存一张深度缓冲，称之为阴影贴图 (Shadow Map)，并记录此时的投影变换矩阵 M，点光源对应透视投影，定向光对应正交投影</p>
 <p>2） 第二次 pass，正式渲染场景。</p>
 <p>将相机放到“人眼”的位置，考察每个片元处是否处于阴影。方法为：用第一次 pass 里面的矩阵 M 将三维点 $(P_x,P_y,P_z)$ 变换为二维坐标 $(p_x,p_y)$ 和深度 $p_z$ ，将 $p_z$ 与第一次 pass 存下来的阴影贴图对应点的深度 $c(p_x,p_y)$ 进行对比，若 $p_z&gt; c(p_x,p_y)$ ，则认为此片元处于阴影中</p>
 <p>此过程如下图所示：</p>
-<p><img src="/GAMES101_Assets/image-20250425112944-c77jp3u.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250425112944-c77jp3u.png" alt="">​</p>
 <p>但是存在一些问题：</p>
 <p>1） 点光源应该是各个方向都有光，而上图中表现得更像是聚光灯，如果要实现点光源的效果，一个常用的方法是：<strong>分别朝六个方向生成阴影贴图，然后构成一个立方体贴图</strong></p>
 <p>2） 由于深度的数值精度和阴影贴图分辨率都有限，所以在进行深度比较的时候，有可能会出现 Z-fighting 的现象，所以需要在比较时添加偏差，称之为 Depth Bias</p>

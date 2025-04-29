@@ -26,16 +26,16 @@
 <meta property="og:site_name" content="Enlight3n的博客">
 <meta property="og:description" content="05 Geometry三维几何表示隐式几何 用空间中的满足一定条件的点的集合来表示面，隐式几何不会表示点的具体位置信息，而是告诉我们这些点满足的函数关系 我们很难看出隐式想表达的形状是什么，但对于判断点的位置关系（在内，在外还是在表面）会很方便 显式几何 直接给出点的位置，或者可以进行参数映射；然而想要判断内外时，显式的表达就很难进行表示 点云 用空间中一堆点的集合来表示物体，只要点足够密集，就看">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427144017-l3qhqml.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427144100-ux89kb9.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210173834-qvaoud6.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427144228-jyg5np9.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210173834-upft5c2.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427144017-l3qhqml.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427144100-ux89kb9.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210173834-qvaoud6.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427144228-jyg5np9.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210173834-upft5c2.png">
 <meta property="article:published_time" content="2025-01-06T12:05:23.000Z">
-<meta property="article:modified_time" content="2025-04-28T15:46:43.810Z">
+<meta property="article:modified_time" content="2025-04-29T14:52:01.856Z">
 <meta property="article:author" content="Enlight3n">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427144017-l3qhqml.png">
+<meta name="twitter:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427144017-l3qhqml.png">
   
   
   
@@ -298,9 +298,9 @@
 <p>用一系列给定的控制点来定义一个曲线</p>
 <p>n阶贝塞尔曲线有n+1个控制点</p>
 <p><strong>2阶贝塞尔曲线如下：</strong></p>
-<p><img src="/GAMES101_Assets/image-20250427144017-l3qhqml.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427144017-l3qhqml.png" alt="">​</p>
 <p><strong>3阶贝塞尔曲线如下：</strong></p>
-<p><img src="/GAMES101_Assets/image-20250427144100-ux89kb9.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427144100-ux89kb9.png" alt="">​</p>
 <p><strong>性质：</strong></p>
 <ul>
 <li>过起点终点，起始切线方向为前两个点连接的方向，终止切线方向为结尾两个点连接的方向</li>
@@ -308,7 +308,7 @@
 </ul>
 <p><strong>凸包性质：</strong> 贝塞尔曲线始终会在包含了所有控制点的最小凸多边形中，而不是按照控制点的顺序围成的最小多边形</p>
 <p><strong>逐段贝塞尔曲线</strong>将一个完整的曲线划分为多段贝塞尔曲线，一般每段贝塞尔曲线用四个点来控制</p>
-<p><img src="/GAMES101_Assets/image-20240210173834-qvaoud6.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210173834-qvaoud6.png" alt="">​</p>
 <h3 id="B样条曲线"><a href="#B样条曲线" class="headerlink" title="B样条曲线"></a><strong>B样条曲线</strong></h3><p>贝塞尔曲线适合表示简单的曲线，但对于更复杂的曲线来说，由于贝塞尔曲线连续性较差，拼接多段贝塞尔曲线时，需要特别设置控制点以保证连续性。</p>
 <p>B样条曲线的优势：</p>
 <ul>
@@ -318,7 +318,7 @@
 </ul>
 <p>具体有点复杂，没讲</p>
 <h3 id="贝塞尔曲面"><a href="#贝塞尔曲面" class="headerlink" title="贝塞尔曲面"></a><strong>贝塞尔曲面</strong></h3><p>u方向上画出四条贝塞尔曲线后，在这四个线上再取四个点，并认为这是个点是一组新的贝塞尔曲线的控制点，这些点在空间内向v方向扫描，便形成了贝塞尔曲面</p>
-<p><img src="/GAMES101_Assets/image-20250427144228-jyg5np9.png" alt="">​​​</p>
+<p><img src="/assets/GAMES101/image-20250427144228-jyg5np9.png" alt="">​​​</p>
 <p>如上图，蓝色的线滑动，就形成了相应曲面</p>
 <p>更复杂的问题，比如不同贝塞尔曲面之间的无缝衔接，没有讲</p>
 <h2 id="曲面细分与简化"><a href="#曲面细分与简化" class="headerlink" title="曲面细分与简化"></a>曲面细分与简化</h2><h3 id="曲面细分（网格细分）"><a href="#曲面细分（网格细分）" class="headerlink" title="曲面细分（网格细分）"></a><strong>曲面细分（网格细分）</strong></h3><p>Mesh Subdivision</p>
@@ -344,7 +344,7 @@
 <p><strong>边坍缩</strong></p>
 <p>可以这样想象，边坍缩就是将一条边的两个端点靠近到一起，在这个过程中，这条边邻接的面会坍缩成边</p>
 <p>二次误差度量：坍缩后的点和原本几个边（面）的距离的平方和最小</p>
-<p><img src="/GAMES101_Assets/image-20240210173834-upft5c2.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210173834-upft5c2.png" alt="">​</p>
 <p>如上图，五个顶点简化为三个顶点，用蓝色的点来代替三个顶点，使得替代后的三角形和原来的五边形近似。</p>
 <p>我们就可以采用二次度量误差的方法，计算蓝色顶点的最优位置，使得蓝色顶点到原来各条边距离平方和值最小</p>
 <p>二次度量误差要更新</p>

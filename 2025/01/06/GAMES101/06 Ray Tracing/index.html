@@ -26,39 +26,39 @@
 <meta property="og:site_name" content="Enlight3n的博客">
 <meta property="og:description" content="06 Ray Tracing光线追踪光栅化的局限 光栅化并做不好全局的效果，如软阴影，反射，环境光照，渲染的质量不高。相比之下，光线追踪处理速度虽慢，渲染质量却很高。此外，光栅化很容易做到实时，而光线追踪更多的应用于离线渲染。 图形学中的光线假设——光线沿直线传播   光线之间彼此不会发生碰撞 从光源发出光线到达人眼，经过了多次反射与折射，由于光是可逆的，我们可以认为是从人眼发出光线，最终到达了光">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427145739-cfjqixo.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427155115-5pzis5z.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427155413-0ylixkc.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427155427-5ph3zgp.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427155502-1469lnx.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427170555-vz22mo5.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174342-vvm4dl2.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174342-sn62kyf.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174342-4jp8oaa.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174342-go9mp5o.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-07hst5z.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427181257-tb6qocm.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427181345-ob9l8rb.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427181634-dzh5t8u.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-w5h00tg.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-mnjtj1c.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-kc8hfy3.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427181856-39usvwy.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-mryjp2a.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427181918-1r14x51.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-wteq8zd.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-ffsea1h.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-30ss2br.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-xau2756.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250425172645-r3b2uc3.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250425172446-5b9bm41.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250425172426-55bj1wm.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20240210174353-rqfkiej.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427145739-cfjqixo.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427155115-5pzis5z.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427155413-0ylixkc.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427155427-5ph3zgp.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427155502-1469lnx.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427170555-vz22mo5.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174342-vvm4dl2.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174342-sn62kyf.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174342-4jp8oaa.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174342-go9mp5o.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174353-07hst5z.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427181257-tb6qocm.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427181345-ob9l8rb.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427181634-dzh5t8u.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174353-w5h00tg.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174353-mnjtj1c.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174353-kc8hfy3.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427181856-39usvwy.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174353-mryjp2a.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427181918-1r14x51.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174353-wteq8zd.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174353-ffsea1h.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174353-30ss2br.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174353-xau2756.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250425172645-r3b2uc3.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250425172446-5b9bm41.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250425172426-55bj1wm.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20240210174353-rqfkiej.png">
 <meta property="article:published_time" content="2025-01-06T12:06:23.000Z">
-<meta property="article:modified_time" content="2025-04-28T15:46:43.810Z">
+<meta property="article:modified_time" content="2025-04-29T14:52:01.855Z">
 <meta property="article:author" content="Enlight3n">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427145739-cfjqixo.png">
+<meta name="twitter:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427145739-cfjqixo.png">
   
   
   
@@ -318,7 +318,7 @@
 <p><strong>光线追踪的基本思想</strong></p>
 <p>因为光路是可逆的，那么就让光线从眼睛出发，沿屏幕每个像素投射出去，判断与场景物体的交点，然后计算该交点的受光照情况。形成一个屏幕图像就需要投射出屏幕分辨率个光线出去，这种计算量无疑是巨大的，但是图像质量极高。</p>
 <h2 id="递归式光线追踪"><a href="#递归式光线追踪" class="headerlink" title="递归式光线追踪"></a>递归式光线追踪</h2><p><strong>Whitted-Style  Ray Tracing（Recursive Ray Tracing）</strong></p>
-<p><img src="/GAMES101_Assets/image-20250427145739-cfjqixo.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427145739-cfjqixo.png" alt="">​</p>
 <ol>
 <li>从相机出发，发射出屏幕像素个数的光线，穿过每一个像素点，打到物体。由于一条光线可能穿过多个物体，取取光路与物体最近的交点（涉及深度测试），这个点称为着色点。</li>
 <li><p>在这个着色点上，可能发生两种情况：</p>
@@ -337,24 +337,24 @@
 </ul>
 <p><strong>漫反射表面（diffuse surface）</strong> ：粗糙的表面，可以认为它会向各个方向等强度地反射光，因此光线投射到该表面时，本应该会有无数条光线反射出去，但是为了减少计算量，Whitted-Style  则直接对该交点进行 Blinn Phong 着色后就终止递归。</p>
 <h2 id="光线与物体求交"><a href="#光线与物体求交" class="headerlink" title="光线与物体求交"></a>光线与物体求交</h2><p>为了研究光线与物体求交问题，我们需要先定义光线：一个光线可以有一个点（光源）和一个方向（光线方向）确定，则可设光线上的点的表达式：</p>
-<p><img src="/GAMES101_Assets/image-20250427155115-5pzis5z.png" alt="">​</p>
-<h3 id="与球体求交"><a href="#与球体求交" class="headerlink" title="与球体求交"></a><strong>与球体求交</strong></h3><p><img src="/GAMES101_Assets/image-20250427155413-0ylixkc.png" alt="">​</p>
-<h3 id="隐式表面求交"><a href="#隐式表面求交" class="headerlink" title="隐式表面求交"></a><strong>隐式表面求交</strong></h3><p><img src="/GAMES101_Assets/image-20250427155427-5ph3zgp.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427155115-5pzis5z.png" alt="">​</p>
+<h3 id="与球体求交"><a href="#与球体求交" class="headerlink" title="与球体求交"></a><strong>与球体求交</strong></h3><p><img src="/assets/GAMES101/image-20250427155413-0ylixkc.png" alt="">​</p>
+<h3 id="隐式表面求交"><a href="#隐式表面求交" class="headerlink" title="隐式表面求交"></a><strong>隐式表面求交</strong></h3><p><img src="/assets/GAMES101/image-20250427155427-5ph3zgp.png" alt="">​</p>
 <h3 id="显示表面求交"><a href="#显示表面求交" class="headerlink" title="显示表面求交"></a><strong>显示表面求交</strong></h3><p>显示表面中最常见的就是三角形，因此最重要的就是判断与三角形求交的问题</p>
 <p><strong>判断点是否在物体内部</strong>：判断该点发射的光线与物体的交点数量是奇数还是偶数。</p>
 <p><strong>判断三角形与光线的交点：先判断是否与三角面所在平面相交，求出交点，再判断交点是否在三角形内</strong></p>
 <p><strong>光线和平面求交</strong></p>
-<p><img src="/GAMES101_Assets/image-20250427155502-1469lnx.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427155502-1469lnx.png" alt="">​</p>
 <p><strong>判断交点在不在三角形内部</strong></p>
 <p>Möller  Trumbore Algorithm——MT算法：利用重心坐标，交点可以被重心坐标表示出来，三个未知数三个方程，可求解</p>
-<p><img src="/GAMES101_Assets/image-20250427170555-vz22mo5.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427170555-vz22mo5.png" alt="">​</p>
 <h2 id="加速光线追踪"><a href="#加速光线追踪" class="headerlink" title="加速光线追踪"></a><strong>加速光线追踪</strong></h2><p>对于每一个屏幕像素点投射出来的光线，我们都要计算光线与空间中的所有三角形是否有交点，计算次数=像素数×三角形数×弹射次数。显然这是一个十分巨大的开销。</p>
 <p>我们可以利用<strong>轴对齐包围盒（AABB）</strong> 来优化这个过程。</p>
 <p>我们引入包围盒的概念，将一个复杂的物体用简单的形状围起来。如果光线连包围盒都碰不到，那肯定碰不到包围盒里的物体。对于三维的情况，我们一般用特殊的长方体包围盒——轴对齐包围盒，即包围盒的每一个边都对应和一个坐标轴平行。</p>
-<p><img src="/GAMES101_Assets/image-20240210174342-vvm4dl2.png" alt=""></p>
+<p><img src="/assets/GAMES101/image-20240210174342-vvm4dl2.png" alt=""></p>
 <p>如上图，可以得出：只有当光线进入了三组对面，才能说明光线进入了包围盒，同理，只要光线离开了任一对面，就说明光线离开了包围盒。</p>
 <h3 id="光线与包围盒求交算法"><a href="#光线与包围盒求交算法" class="headerlink" title="光线与包围盒求交算法"></a><strong>光线与包围盒求交算法</strong></h3><p>对于任一对面，我们计算出光线进入对面的最小时间tmin和最大时间tmax（负数也无所谓），接着即可求出光线进入和离开包围盒的时间。</p>
-<p><img src="/GAMES101_Assets/image-20240210174342-sn62kyf.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210174342-sn62kyf.png" alt="">​</p>
 <ul>
 <li>如果$t_{enter}$&lt;$t_{exit}$，说明光线进入了这个盒子里，反之就是没有</li>
 <li><p>总的来说</p>
@@ -381,7 +381,7 @@
 <h3 id="确定包围盒的位置——空间划分"><a href="#确定包围盒的位置——空间划分" class="headerlink" title="确定包围盒的位置——空间划分"></a><strong>确定包围盒的位置——空间划分</strong></h3><p>在网格均匀划分中划分出来的都是大小相同的格子，但场景中的物体一般不会是均匀分布，空旷的地方不需要进行这样划分</p>
 <p>我们希望在没有物体的地方用大的包围盒，有物体的地方用小的包围盒，这也就引出了空间划分的方法。</p>
 <p>注意：这里提到的空间划分，不是物体划分。比如说一个物体，可以划分到多个包围盒里</p>
-<p><img src="/GAMES101_Assets/image-20240210174342-4jp8oaa.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210174342-4jp8oaa.png" alt="">​</p>
 <p><strong>八叉树</strong></p>
 <ul>
 <li>每一次把空间划分成八份（三维上），直到满足一定的停止规则（比如某一次划分8个子空间中7个为空）</li>
@@ -396,7 +396,7 @@
 <li>一种对空间二分的划分方法，每次选一个方向进行划分，与KD树的区别在于它不是横平竖直地切，且它会有越高维越不好计算的问题（用线切开二维，用面切开三维，维度越高越复杂）</li>
 </ul>
 <p><strong>KD树如何进行划分</strong></p>
-<p><img src="/GAMES101_Assets/image-20240210174342-go9mp5o.png" alt=""></p>
+<p><img src="/assets/GAMES101/image-20240210174342-go9mp5o.png" alt=""></p>
 <p>如果一条光线与当前结点空间有交点，则继续寻找该结点的子节点，直到找到叶子结点，再与其中物体求交</p>
 <p><strong>KD树的局限：</strong></p>
 <p>给出一个节点的包围盒，要判断他与物体哪些三角形有交集，才能进行后续着色，这种算法确实存在，但不太好写</p>
@@ -407,13 +407,13 @@
 <p>KD树的包围盒不会发生重合，而BVHs会发生相交</p>
 <h2 id="辐射度量学"><a href="#辐射度量学" class="headerlink" title="辐射度量学"></a>辐射度量学</h2><p>Blinn-Phong着色模型中会设置一个数当做光照强度，但我们都不清楚这个数的真实的物理意义，甚至连单位是什么也不知道，研究过程中我们只是将这些物理量简化为一个数，另外Whitted风格的光线追踪所得到的结果也不是我们所想要的真实的效果（路径追踪会提到），而所有的这些都会被辐射度量学解决，这同样也是后面学习路径追踪的基础。</p>
 <p>辐射度量学给出了一系列度量方法和单位去定义光照，它定义了光照在空间中的属性，并且这在物理上是完全正确的</p>
-<p><img src="/GAMES101_Assets/image-20240210174353-07hst5z.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210174353-07hst5z.png" alt="">​</p>
 <p>关于这个Radiance，我们认为它的物理意义是，从dA面积上，向某个方向辐射出的能量；或者说某个方向的能量照射到dA上，作为dA吸收到总能量的一部分。</p>
-<p><img src="/GAMES101_Assets/image-20250427181257-tb6qocm.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427181257-tb6qocm.png" alt="">​</p>
 <p>相比于Irradiance的单位面积上的能量，Radiance可以看作是单位面积上吸收到的单个方向上的能量，于是我们有</p>
 <p>$dE(\mathbf{p}, \omega) = L_i(\mathbf{p}, \omega) \cos \theta \, d\omega \qquad E(\mathbf{p}) = \int_{H^2} L_i(\mathbf{p}, \omega) \cos \theta \, d\omega$  </p>
 <p>即dA面积上的能量 = 所有方向的能量之和，因为是连续的方向，所以是求积分。</p>
-<h3 id="BRDF"><a href="#BRDF" class="headerlink" title="BRDF"></a><strong>BRDF</strong></h3><p><img src="/GAMES101_Assets/image-20250427181345-ob9l8rb.png" alt="">​</p>
+<h3 id="BRDF"><a href="#BRDF" class="headerlink" title="BRDF"></a><strong>BRDF</strong></h3><p><img src="/assets/GAMES101/image-20250427181345-ob9l8rb.png" alt="">​</p>
 <p>由上式，BRDF就是吸收能量后往某一方向反射时取的比例，即某个角度入射到dA面积上的能量，乘以比例fr后反射到另一个角度。</p>
 <p>于是我们只考虑某一个出射方向，毫无疑问的，这个出射方向的能量 = 全部光线打到dA上时，反射到该被考虑方向上的能量之和。</p>
 <p>渲染方程与反射方程相比，加上了物体自发光的项，渲染方程如下：</p>
@@ -431,22 +431,22 @@ L_o(\mathbf{x}, \mathbf{\omega}_o) = L_e(\mathbf{x}, \mathbf{\omega}_o) + \int_{
 <li><strong>自身发光</strong>：物体自身发出的光（如灯泡、荧光屏等）。</li>
 <li><strong>反射光</strong>：其他物体或光源发出的光照射到该点后，经过表面反射而产生的光。</li>
 </ul>
-<p><img src="/GAMES101_Assets/image-20250427181634-dzh5t8u.png" alt="">​</p>
-<h3 id="蒙特卡洛积分"><a href="#蒙特卡洛积分" class="headerlink" title="蒙特卡洛积分"></a><strong>蒙特卡洛积分</strong></h3><p><img src="/GAMES101_Assets/image-20240210174353-w5h00tg.png" alt="">​</p>
-<p><img src="/GAMES101_Assets/image-20240210174353-mnjtj1c.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427181634-dzh5t8u.png" alt="">​</p>
+<h3 id="蒙特卡洛积分"><a href="#蒙特卡洛积分" class="headerlink" title="蒙特卡洛积分"></a><strong>蒙特卡洛积分</strong></h3><p><img src="/assets/GAMES101/image-20240210174353-w5h00tg.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210174353-mnjtj1c.png" alt="">​</p>
 <p>在这之中，$F_N = \int_{a}^{b} f(x) \, dx$</p>
 <p>蒙特卡洛方法可以通过随机采样的方式求解数学问题，对于求解定积分问题，可以通过蒙特卡洛方法估计出一个近似数值解。</p>
 <p>我们把积分变量看成连续型随机变量，每次采样，就用采样所得变量映射得到的函数值，代表所有积分区间内所有变量对应的函数值，多次采样逐渐逼近真实函数的在积分域内所得积分值。</p>
-<h3 id="路径追踪"><a href="#路径追踪" class="headerlink" title="路径追踪"></a><strong>路径追踪</strong></h3><p><img src="/GAMES101_Assets/image-20240210174353-kc8hfy3.png" alt="">​</p>
+<h3 id="路径追踪"><a href="#路径追踪" class="headerlink" title="路径追踪"></a><strong>路径追踪</strong></h3><p><img src="/assets/GAMES101/image-20240210174353-kc8hfy3.png" alt="">​</p>
 <p>Whitted-Style光线追踪的做法是，光线在镜面反射表面弹射，而在漫反射表面停止，这显然是不符合现实的</p>
 <p>其中一个问题，拿经典的Utah teaport为例，whitted光追只能做左图的光照效果，而对于那种有光泽但不全是镜面反射的glossy材质（右图），whitted做出来的效果并不尽如人意</p>
 <p>第二个问题，whitted风格光线追踪不考虑漫反射，虽然递归的思想是正确的，但就像下图（康奈尔盒子）所示，whitted的天花板由于接收不到来自环境光照，呈现一个全黑的状态，并且whitted渲染出的长方体并没有表现红墙和绿墙上反射过来的带有色彩的光，相比之下，路径追踪的结果就真实很多</p>
-<p><img src="/GAMES101_Assets/image-20250427181856-39usvwy.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427181856-39usvwy.png" alt="">​</p>
 <h2 id="求解渲染方程"><a href="#求解渲染方程" class="headerlink" title="求解渲染方程"></a><strong>求解渲染方程</strong></h2><p>对于之前的渲染方程，我们可以用蒙特卡洛积分法进行求解，忽略自发光项（仅计算直接光照），简单考虑均匀采样的情况</p>
-<p><img src="/GAMES101_Assets/image-20240210174353-mryjp2a.png" alt="">​</p>
-<p><img src="/GAMES101_Assets/image-20250427181918-1r14x51.png" alt="">​​​</p>
+<p><img src="/assets/GAMES101/image-20240210174353-mryjp2a.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427181918-1r14x51.png" alt="">​​​</p>
 <p>接着引入间接光照：要知道着色点P因Q的反射获得多少能量，其实就相当于摄像机在P点处计算Q的直接光照</p>
-<p><img src="/GAMES101_Assets/image-20240210174353-wteq8zd.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210174353-wteq8zd.png" alt="">​</p>
 <p>那么就只需要在上述算法中加一条判断，看看从P点反射出来的光线有没有打到其他物体</p>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>至此，基本的求解渲染方程已经有了大概的架构，但依然存在一些不可忽视的问题</p>
 <p><strong>问题传递的可行性</strong></p>
@@ -456,12 +456,12 @@ L_o(\mathbf{x}, \mathbf{\omega}_o) = L_e(\mathbf{x}, \mathbf{\omega}_o) + \int_{
 <p><strong>递归结束条件</strong></p>
 <p>很容易看出，上述算法的递归没有终止条件，放到现实中这也是非常合理的，因为现实中的光并不会弹射一定次数后终止弹射，而会一直弹射下去，在算法中强行设置终止次数结束递归不满足现实情况的能量守恒定律，会有一定亮度差异（弹射3次和弹射17次的亮度差异是非常明显的），为了解决这一问题，我们需要用到与俄罗斯轮盘赌类似的思想</p>
 <p>这个思想其实就是一个伯努利分布（均匀分布）概念，让光线在每个弹射点都有一定概率继续弹射，设这个概率为p，那么光线停止弹射的概率为（1-p），为了得到相同的路径追踪结果，意味着这个伯努利实验的期望值必须保持Lo不变，那么我们可以巧妙的认为p概率继续弹射得到的能量是L_0/P（终止弹射的结果很自然就是0）</p>
-<p><img src="/GAMES101_Assets/image-20240210174353-ffsea1h.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210174353-ffsea1h.png" alt="">​</p>
 <p>这样一来，我们就有了一个合理的递归终止条件</p>
 <p>思考：闫老师上课提了一个问题，对于分布式光线追踪，这个期望值是多少</p>
-<p><img src="/GAMES101_Assets/image-20240210174353-30ss2br.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210174353-30ss2br.png" alt="">​</p>
 <h3 id="优化算法"><a href="#优化算法" class="headerlink" title="优化算法"></a><strong>优化算法</strong></h3><p>至此，我们的路径追踪算法已经做到完全正确，但又出现了一个矛盾点，即像素的采样率</p>
-<p><img src="/GAMES101_Assets/image-20240210174353-xau2756.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20240210174353-xau2756.png" alt="">​</p>
 <p>在路径追踪算法中，采样率（Samples Per Pixel，SPP）决定了每个像素的光线追踪次数。如果采样率过低，可能会出现以下问题：</p>
 <ul>
 <li><strong>光源太小，采样可能错过光源</strong>：如果光源面积很小，而采样率不高，那么从着色点（被照亮的点）发出的随机光线可能完全错过光源，导致该点看起来过暗，即使它理论上应该被照亮。</li>
@@ -480,11 +480,11 @@ L_o(\mathbf{x}, \mathbf{\omega}_o) = L_e(\mathbf{x}, \mathbf{\omega}_o) + \int_{
 </ul>
 <p>先不考虑光源和着色点之间有物体阻挡这种情况，把光源视为一个矩形表面，直接在光源上采样，就不会发生这种浪费</p>
 <h3 id="改写蒙特卡洛积分"><a href="#改写蒙特卡洛积分" class="headerlink" title="改写蒙特卡洛积分"></a>改写蒙特卡洛积分</h3><p>在基于光源采样的情况下，蒙特卡洛积分的公式需要改写。原本的积分是基于着色点的随机采样，现在改为在光源上采样。</p>
-<p><img src="/GAMES101_Assets/image-20250425172645-r3b2uc3.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250425172645-r3b2uc3.png" alt="">​</p>
 <p>光源贡献的公式可以表示为：</p>
-<p><img src="/GAMES101_Assets/image-20250425172446-5b9bm41.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250425172446-5b9bm41.png" alt="">​</p>
 <p>对于非光源的贡献，仍然使用传统的路径追踪方法</p>
-<p><img src="/GAMES101_Assets/image-20250425172426-55bj1wm.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250425172426-55bj1wm.png" alt="">​</p>
 <h3 id="整体思路总结"><a href="#整体思路总结" class="headerlink" title="整体思路总结"></a><strong>整体思路总结</strong></h3><p>路径追踪的整体思路可以概括为以下步骤：</p>
 <ol>
 <li><strong>像素采样</strong>：从每个像素出发，生成多条光线（根据SPP）。</li>
@@ -506,7 +506,7 @@ L_o(\mathbf{x}, \mathbf{\omega}_o) = L_e(\mathbf{x}, \mathbf{\omega}_o) + \int_{
 <li><strong>路径追踪的整体思路</strong>：从像素采样到着色点计算，再到光源采样和非光源贡献的合并，最终返回像素值。</li>
 </ul>
 <p>下图是真实光线和路径追踪的比较</p>
-<p><img src="/GAMES101_Assets/image-20240210174353-rqfkiej.png" alt=""></p>
+<p><img src="/assets/GAMES101/image-20240210174353-rqfkiej.png" alt=""></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av756164342/?vd_source=fa868a89c47131bf7faa4e6af78a3a9e">【RTX光线追踪-2】细说光栅化与光线追踪的区别_哔哩哔哩_bilibili</a></p>
 
                 

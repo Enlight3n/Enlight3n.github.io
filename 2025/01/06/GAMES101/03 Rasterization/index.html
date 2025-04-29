@@ -26,18 +26,18 @@
 <meta property="og:site_name" content="Enlight3n的博客">
 <meta property="og:description" content="03 Rasterization视口变换上一节中，已经将物体变换到裁剪空间$[-1,1]^3$中，接下来，需要完成到屏幕空间的映射 其变换矩阵如下： $\mathbf{M_{\text{viewport}}} &#x3D;  \begin{bmatrix} \frac{\text{width}}{2} &amp; 0 &amp; 0 &amp; \frac{\text{width}}{2} \\ 0 &amp;am">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111630-tnpvql4.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111717-m0xi8zm.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111731-ef1pizn.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111748-ab9aro8.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111830-cb6ahxp.png">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/network-asset-v2-940e167efe0b74854cf56082d084fbeb_720w-20250427111943-872wx5e.webp">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250425112057-v5miayu.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427111630-tnpvql4.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427111717-m0xi8zm.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427111731-ef1pizn.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427111748-ab9aro8.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427111830-cb6ahxp.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/network-asset-v2-940e167efe0b74854cf56082d084fbeb_720w-20250427111943-872wx5e.webp">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250425112057-v5miayu.png">
 <meta property="article:published_time" content="2025-01-06T12:03:24.000Z">
-<meta property="article:modified_time" content="2025-04-28T15:46:43.810Z">
+<meta property="article:modified_time" content="2025-04-29T14:52:01.856Z">
 <meta property="article:author" content="Enlight3n">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427111630-tnpvql4.png">
+<meta name="twitter:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427111630-tnpvql4.png">
   
   
   
@@ -319,7 +319,7 @@
 <h2 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h2><p><strong>傅里叶级数</strong>：把一个周期函数通过最简单的一系列正弦函数来表示。</p>
 <p>利用<strong>傅里叶变换</strong>和<strong>逆傅里叶变换</strong>，我们可以把一个函数转换为另一个函数。</p>
 <p>不同的正余弦函数都有不同的频率，傅里叶变换可以把一个函数转换为不同频率的正余弦函数之和。</p>
-<p><img src="/GAMES101_Assets/image-20250427111630-tnpvql4.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427111630-tnpvql4.png" alt="">​</p>
 <p><strong>走样的原因：</strong></p>
 <ul>
 <li><p>在进行等距采样的时候，越是高频的函数，越容易丢失原始的信息。</p>
@@ -330,26 +330,26 @@
 <h3 id="滤波—傅里叶变换角度"><a href="#滤波—傅里叶变换角度" class="headerlink" title="滤波—傅里叶变换角度"></a><strong>滤波—傅里叶变换角度</strong></h3><p>滤波可以认为是去掉某些频率。</p>
 <p>对于一张图片，我们可以使用傅里叶变换，把这个图像从时域（其实没有时间信息，只有空间信息，只是叫这个）变换为频域。</p>
 <p>一般的图片进行傅里叶变换之后，得到频谱。中间的是低频信息，四周的是高频信息（下图右）。</p>
-<p><img src="/GAMES101_Assets/image-20250427111717-m0xi8zm.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427111717-m0xi8zm.png" alt="">​</p>
 <p>在图像的边界，也就是颜色变化剧烈的地方，就对应的是高频信息，因此<strong>高通滤波</strong>之后得到的是一个图片边缘。</p>
-<p><img src="/GAMES101_Assets/image-20250427111731-ef1pizn.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427111731-ef1pizn.png" alt="">​</p>
 <p>经过低通滤波之后，图片变得模糊​​</p>
-<p><img src="/GAMES101_Assets/image-20250427111748-ab9aro8.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427111748-ab9aro8.png" alt="">​</p>
 <h3 id="滤波—卷积角度"><a href="#滤波—卷积角度" class="headerlink" title="滤波—卷积角度"></a><strong>滤波—卷积角度</strong></h3><p>滤波可以看作是一种卷积。</p>
 <p><strong>结论：时域的卷积=频域的乘积。</strong></p>
-<p><img src="/GAMES101_Assets/image-20250427111830-cb6ahxp.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427111830-cb6ahxp.png" alt="">​</p>
 <h2 id="反走样"><a href="#反走样" class="headerlink" title="反走样"></a>反走样</h2><h3 id="SSAA"><a href="#SSAA" class="headerlink" title="SSAA"></a><strong>SSAA</strong></h3><p><strong>SSAA（Supersampling Anti-Aliasing）</strong> ：一个更大的分辨率来渲染场景，然后再把相邻像素值做一个过滤（比如平均等）得到最终的图像。</p>
 <p>SSAA可以说是图形学中最简单粗暴的反走样方法，但同时也最有效，唯一的缺点是性能太差。</p>
 <p>任何类型的走样归根结底都是因为欠采样，那么我们只需要增加采样数，就可以减轻走样现象。这就是SSAA，所以SSAA简单的来说可以分三步：</p>
 <p>（1）在一个像素内取若干个子采样点</p>
 <p>（2）对子像素点进行颜色计算（采样）</p>
 <p>（3）根据子像素的颜色和位置，利用一个称之为resolve的合成阶段，计算当前像素的最终颜色输出</p>
-<p><img src="/GAMES101_Assets/network-asset-v2-940e167efe0b74854cf56082d084fbeb_720w-20250427111943-872wx5e.webp" alt="">​</p>
+<p><img src="/assets/GAMES101/network-asset-v2-940e167efe0b74854cf56082d084fbeb_720w-20250427111943-872wx5e.webp" alt="">​</p>
 <p>SSAA<strong>同时是几何反走样和着色反走样方法</strong>，因为它不但增加了当前几何覆盖函数（Coverage）的采样率，也对渲染方程进行了更高频率的采样（单独计算每个子像素的颜色）。</p>
 <h3 id="MSAA"><a href="#MSAA" class="headerlink" title="MSAA"></a><strong>MSAA</strong></h3><p>由于SSAA在光栅化阶段和片元着色阶段都需要大量的额外计算，开销巨大</p>
 <p><strong>MSAA（Multisample Anti-Aliasing）</strong> 则只在<strong>光栅化阶段</strong>，判断一个三角形是否被像素覆盖的时候会计算多个覆盖样本（Coverage sample），但是在pixel shader着色阶段计算像素颜色的时候每个像素还是只计算一次。</p>
 <p>例如下图是4xMSAA，三角形只覆盖了4个coverage sample中的2个。所以这个三角形需要生成一个fragment在pixel shader里着色，只不过生成的fragment还是在像素中央（位置，法线等信息插值到像素中央）然后只运行一次pixel shader，最后得到的结果在resolve阶段会乘以0.5，因为这个三角形只cover了一半的sample。</p>
-<p><img src="/GAMES101_Assets/image-20250425112057-v5miayu.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250425112057-v5miayu.png" alt="">​</p>
 <p>现代所有GPU都在硬件上实现了这个算法，而且在shading的运算量远大于光栅化的今天，这个方法远比SSAA快很多。顺便提一下之前NV的CSAA，它就是更进一步的把coverage sample和depth，stencil test分开了。</p>
 <p>由于MSAA拥有硬件支持，相对开销比较小，又能很好地解决几何走样问题，在游戏中应用非常广泛（我们在游戏画质选项中常看到的4x/8x/16x抗锯齿一般说的就是MSAA的子采样点数量分别为4/8/16个）。</p>
 <p>MSAA的一个问题就是和延迟渲染并不兼容。延迟渲染的核心是GBuffer（几何缓冲区），它在渲染的第一阶段将颜色、深度、法线等信息存储到多个纹理中。然而，MSAA需要在光栅化阶段对几何信息进行采样，而延迟渲染在光照计算阶段已经丢失了这些几何信息。例如，GBuffer中的深度和法线信息是逐像素存储的，无法直接用于MSAA的子采样处理</p>

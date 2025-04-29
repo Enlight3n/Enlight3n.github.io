@@ -26,12 +26,12 @@
 <meta property="og:site_name" content="Enlight3n的博客">
 <meta property="og:description" content="08 Advanced Topics in Rendering高级光线传播光线追踪中大部分情况下都使用蒙特卡洛估计。 对于蒙特卡洛估计来说：  如果无论采用多少样本，期望均等于真实值，那么这种估计称为无偏估计 如果期望和真实值不一致，则称为有偏估计  特别地，如果在样本趋近于无穷多时为无偏的，即期望值收敛到正确值，称之为一致的    双向路径追踪Bidirectional Path Tracing">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427202817-m406dxj.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427202817-m406dxj.png">
 <meta property="article:published_time" content="2025-01-09T12:08:43.000Z">
-<meta property="article:modified_time" content="2025-04-28T15:46:43.810Z">
+<meta property="article:modified_time" content="2025-04-29T14:52:01.854Z">
 <meta property="article:author" content="Enlight3n">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://enlight3n.github.io/GAMES101_Assets/image-20250427202817-m406dxj.png">
+<meta name="twitter:image" content="https://enlight3n.github.io/assets/GAMES101/image-20250427202817-m406dxj.png">
   
   
   
@@ -294,7 +294,7 @@
 <h3 id="双向路径追踪"><a href="#双向路径追踪" class="headerlink" title="双向路径追踪"></a>双向路径追踪</h3><p><strong>Bidirectional Path Tracing ，BDPT （无偏）</strong></p>
 <p>BDPT 利用光向可逆性，从光源和相机分别发出半路径，将端点连接起来则形成一条路径。</p>
 <p>特别适用于光线传播复杂的环境，尤其是环境中大部分被漫反射光照亮的情况，此时从相机出发的路径很难正确达到光源（漫反射难以反射到光源的位置）</p>
-<p><img src="/GAMES101_Assets/image-20250427202817-m406dxj.png" alt="">​</p>
+<p><img src="/assets/GAMES101/image-20250427202817-m406dxj.png" alt="">​</p>
 <p>如上图所示，右侧的双向路径追踪效果更好，因为侧面墙壁上很难漫反射到光源的位置，从光源出发的光线更容易计算</p>
 <p>BDPT实现难度很高，并且运行慢很多</p>
 <h3 id="Metropolis光线传播"><a href="#Metropolis光线传播" class="headerlink" title="Metropolis光线传播"></a>Metropolis光线传播</h3><p><strong>Metropolis Light Transport ，MLT（无偏）</strong></p>
