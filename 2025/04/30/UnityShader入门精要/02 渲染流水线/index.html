@@ -1,0 +1,887 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Enlight3n">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="02 渲染流水线概述渲染流水线的最终目的在于生成或渲染一张二维纹理。  《Real-Time Rendering, Third Edition》 一书将渲染流程分为三个阶段：应用阶段，几何阶段，光栅化阶段。 应用阶段： 应用阶段通常由CPU负责，也就是说，开发者具有绝对的控制权。 在应用阶段有3个主要任务：  准备好场景数据，如摄像机的位置，视锥体，场景中使用的模型，使用的光源等等。 粗粒度剔除（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02 渲染流水线">
+<meta property="og:url" content="https://enlight3n.github.io/2025/04/30/UnityShader%E5%85%A5%E9%97%A8%E7%B2%BE%E8%A6%81/02%20%E6%B8%B2%E6%9F%93%E6%B5%81%E6%B0%B4%E7%BA%BF/index.html">
+<meta property="og:site_name" content="Enlight3n的博客">
+<meta property="og:description" content="02 渲染流水线概述渲染流水线的最终目的在于生成或渲染一张二维纹理。  《Real-Time Rendering, Third Edition》 一书将渲染流程分为三个阶段：应用阶段，几何阶段，光栅化阶段。 应用阶段： 应用阶段通常由CPU负责，也就是说，开发者具有绝对的控制权。 在应用阶段有3个主要任务：  准备好场景数据，如摄像机的位置，视锥体，场景中使用的模型，使用的光源等等。 粗粒度剔除（">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://enlight3n.github.io/assets/UnityShader%E5%85%A5%E9%97%A8%E7%B2%BE%E8%A6%81/image-20240211214043-cy7hmge.png">
+<meta property="og:image" content="https://enlight3n.github.io/assets/UnityShader%E5%85%A5%E9%97%A8%E7%B2%BE%E8%A6%81/image-20250430130711-ewjc9px.png">
+<meta property="article:published_time" content="2025-04-30T02:55:08.000Z">
+<meta property="article:modified_time" content="2025-04-30T05:52:52.786Z">
+<meta property="article:author" content="Enlight3n">
+<meta property="article:tag" content="性能优化">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://enlight3n.github.io/assets/UnityShader%E5%85%A5%E9%97%A8%E7%B2%BE%E8%A6%81/image-20240211214043-cy7hmge.png">
+  
+  
+  
+  <title>02 渲染流水线 - Enlight3n的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"enlight3n.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Enlight3n</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="02 渲染流水线"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-04-30 10:55" pubdate>
+          2025年4月30日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          38 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">02 渲染流水线</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="02-渲染流水线"><a href="#02-渲染流水线" class="headerlink" title="02 渲染流水线"></a>02 渲染流水线</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>渲染流水线的最终目的在于生成或渲染一张二维纹理。</p>
+<p> <strong>《Real-Time Rendering, Third Edition》</strong> 一书将渲染流程分为三个阶段：<strong>应用阶段</strong>，<strong>几何阶段</strong>，<strong>光栅化阶段</strong>。</p>
+<p><strong>应用阶段：</strong> 应用阶段通常由CPU负责，也就是说，开发者具有绝对的控制权。</p>
+<p>在应用阶段有3个主要任务：</p>
+<ol>
+<li>准备好场景数据，如摄像机的位置，视锥体，场景中使用的模型，使用的光源等等。</li>
+<li>粗粒度剔除（culling）：包括视锥体剔除（Frustum Culling）和遮挡剔除（ Occlusion Culling）两种，前者用于剔除视锥体之外的物体，后者根据场景中Static物体的位置剔除其遮挡的物体。</li>
+<li>设置好每个模型的渲染状态，这些渲染状态包括使用的材质，纹理，shader。</li>
+</ol>
+<p>在应用阶段，最重要的输出是渲染所需的几何信息，即渲染图元（点、线、面等）。</p>
+<p><strong>几何阶段</strong>：几何阶段用于处理所有和要绘制的几何相关的事，主要负责把顶点坐标变换到屏幕空间中，再交由光栅器进行处理。这一阶段通常在GPU上运行。</p>
+<p><strong>光栅化阶段</strong>：主要决定每个渲染图元中的哪些像素应该被绘制在屏幕上，它需要对上一个阶段得到的逐顶点数据（纹理坐标，顶点颜色等等）进行插值，然后再进行逐像素处理。这一阶段也是在GPU上进行</p>
+<h2 id="渲染流水线"><a href="#渲染流水线" class="headerlink" title="渲染流水线"></a>渲染流水线</h2><h3 id="CPU流水线"><a href="#CPU流水线" class="headerlink" title="CPU流水线"></a><strong>CPU流水线</strong></h3><p>应用阶段由CPU负责，大致分为3个阶段</p>
+<ul>
+<li><p>把数据加载到显存中</p>
+<ul>
+<li>所有渲染所需数据都从硬盘加载到内存中，网格和纹理数据被加载到显存中</li>
+</ul>
+</li>
+<li><p>设置渲染状态</p>
+<ul>
+<li>渲染状态就是定义场景中网格如何被渲染，需要指定顶点着色器/片元着色器，光源属性，材质等</li>
+</ul>
+</li>
+<li><p>调用Draw Call</p>
+<ul>
+<li>Draw Call是一个CPU发起，GPU接收的命令，指向一个需要被渲染的图元列表，但不包含材质信息（上个步骤已经完成）</li>
+</ul>
+</li>
+</ul>
+<p>GPU根据渲染状态和输入的顶点数据进行计算，输出为像素（GPU流水线）</p>
+<h3 id="GPU流水线"><a href="#GPU流水线" class="headerlink" title="GPU流水线"></a><strong>GPU流水线</strong></h3><p><img src="/assets/UnityShader入门精要/image-20240211214043-cy7hmge.png" alt="image">​</p>
+<ul>
+<li>几何阶段的处理建立在顶点上</li>
+<li>光栅化阶段的处理建立在三角形上</li>
+</ul>
+<h3 id="几何阶段"><a href="#几何阶段" class="headerlink" title="几何阶段"></a>几何阶段</h3><p><strong>几何阶段：准备好几何图元，输出的信息是屏幕坐标系下的顶点位置以及与之相关的额外信息（深度值，法线方向，视角方向等）</strong></p>
+<p><strong>顶点着色器</strong></p>
+<ul>
+<li>顶点着色器处理输入的每一个顶点，不创建或者销毁顶点。</li>
+<li>每两个顶点都是独立的，无法得到顶点间的关系（如判断两个顶点是否属于同一个三角形网格），因此可以并行处理。</li>
+<li><p>顶点着色器主要负责<strong>坐标变换</strong>和<strong>逐顶点光照</strong>，同时输出后续阶段的数据。</p>
+<ul>
+<li><p>坐标变换：</p>
+<ul>
+<li>对顶点的位置进行某种变换，可以模拟水面或布料等。</li>
+<li>把顶点坐标从模型空间转换到齐次裁剪空间（模型空间-&gt;世界空间-&gt;相机空间-&gt;裁剪空间（视锥体的空间)）。</li>
+</ul>
+</li>
+<li>输出每个顶点对应的纹理坐标。</li>
+</ul>
+</li>
+</ul>
+<p><strong>曲面细分着色器</strong></p>
+<ul>
+<li>细分图元</li>
+</ul>
+<p><strong>几何着色器</strong></p>
+<ul>
+<li>逐图元（点，线，三角形面等）的着色操作或者用于产生更多图元。</li>
+<li>顶点着色器以顶点数据作为输入数据，而几何着色器则以完整的图元（Primitive）作为输入数据。例如，以三角形的三个顶点作为输入，然后输出对应的图元。</li>
+<li>与顶点着色器不能销毁或创建顶点不同，几何着色器的主要亮点就是可以创建或销毁几何图元，此功能让GPU可以实现一些有趣的效果。例如，根据输入图元类型扩展为一个或更多其他类型的图元，或者不输出任何图元。</li>
+<li>需要注意的是，几何着色器的输出图元不一定和输入图元相同。几何着色器的一个拿手好戏就是将一个点扩展为一个四边形（即两个三角形)。</li>
+</ul>
+<p><strong>裁剪</strong></p>
+<ul>
+<li>将不在摄像机视野内的图元裁掉，将部分在摄像机视野内的图元裁剪处理。</li>
+<li>几何阶段的裁剪不同于应用阶段的剔除，前者是剔除顶点，后者是剔除物体。</li>
+<li>这一步是不可编程的，但是可以自定义一个裁剪操作。</li>
+</ul>
+<p><strong>屏幕映射</strong></p>
+<ul>
+<li>把图元的坐标转换到屏幕坐标中。</li>
+</ul>
+<h3 id="光栅化阶段"><a href="#光栅化阶段" class="headerlink" title="光栅化阶段"></a><strong>光栅化阶段</strong></h3><p><strong>光栅化阶段：根据图元及相关信息着色</strong></p>
+<p><strong>三角形设置</strong></p>
+<ul>
+<li>计算光栅化一个三角形网格所需的信息。</li>
+<li>计算每条边上的像素坐标。</li>
+</ul>
+<p><strong>三角形遍历</strong></p>
+<ul>
+<li>逐一检查像素是否被三角形网格所覆盖，如果被覆盖，生成一个片元。</li>
+<li>输出的是一个片元序列（一个片元=用于生成一个像素的状态合集，包括屏幕坐标、深度信息，以及其他从几何阶段输出的顶点信息，如法线，纹理坐标等）。</li>
+</ul>
+<p><strong>片元着色器</strong></p>
+<ul>
+<li>在DX中也称为像素着色器。</li>
+<li>片元着色器的输入是由顶点着色器输出的数据插值得到的。</li>
+<li>进行纹理采样，由顶点着色器输出的顶点对应的纹理坐标，经过三角形遍历和三角形设置的插值，得到片元对应的纹理坐标。</li>
+<li>片元着色器也局限于单个片元，除了访问导数信息以外，单个片元不能与其邻居通信。</li>
+</ul>
+<p><strong>逐片元操作</strong></p>
+<ul>
+<li>在DX中称作输出合并阶段。</li>
+<li><p>这一阶段涉及的任务有</p>
+<ul>
+<li><p>决定每个片元的可见性，如模板测试、深度测试。</p>
+<ul>
+<li>模板测试：片元的参考值和模板缓冲区中的值进行比较，从而决定片元的舍弃与否，同时自定义模板缓冲区的修改。通常用于限制渲染的区域，还可以实现渲染阴影，轮廓渲染等高级用法。</li>
+<li>深度测试：片元的深度值和深度缓冲区中的值进行比较，从而决定片元的舍弃与否。通常用于实现可视和透明效果</li>
+</ul>
+</li>
+<li><p>如果一个片元通过了所有测试，就把它的颜色和颜色缓冲区中存储的颜色进行混合。</p>
+<ul>
+<li>不透明的物体可以不进行混合，直接覆盖。</li>
+<li>半透明物体需要使用混合。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>这一阶段是可高度配置的。</li>
+</ul>
+<h2 id="其他技术"><a href="#其他技术" class="headerlink" title="其他技术"></a>其他技术</h2><h3 id="Early-Z"><a href="#Early-Z" class="headerlink" title="Early-Z"></a><strong>Early-Z</strong></h3><p>Unity使用的是Early-Z技术，在片元着色器之前进行深度测试。</p>
+<ul>
+<li>但深度测试提前的话，其检验结果可能会与片元着色器中的一些操作冲突。</li>
+<li>例如，我们在片元着色器进行了透明度测试，而这个片元没有通过透明度测试，我们会在着色器中调用API来手动将其舍弃。这就导致GPU无法提前执行各种测试。</li>
+</ul>
+<p>现代的GPU会判断片元着色器中的操作是否和提前测试发生冲突，如果有冲突，就禁用提前测试。</p>
+<h3 id="双重缓冲"><a href="#双重缓冲" class="headerlink" title="双重缓冲"></a><strong>双重缓冲</strong></h3><p>当模型的图元经过以上的计算和测试后，我们的屏幕显示的就是颜色缓冲区中的颜色值。</p>
+<p>但是，为了避免我们看到那些正在进行光栅化的图元，GPU会使用<strong>双重缓冲</strong>的策略。</p>
+<p>这意味着场景的渲染是在在后置缓冲中发生的，当场景已经被渲染到了后置缓冲中，GPU就会交换<strong>后置缓冲区</strong>和<strong>前置缓冲区</strong>，前置缓冲区是之前显示在屏幕上的图像。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="OpenGL-DirectX"><a href="#OpenGL-DirectX" class="headerlink" title="OpenGL/DirectX"></a>OpenGL/DirectX</h3><p>开发者直接访问GPU是一件非常麻烦的事情，我们可能需要和各种寄存器、显存打交道。图像编程接口在硬件的基础上实现了一层<strong>抽象</strong>。</p>
+<p>应用程序运行在CPU上。应用程序可以通过<strong>调用OpenGL或DirectX的图形接口</strong>将渲染所需的数据，如顶点数据、纹理数据、材质参数等数据存储在显存中的特定区域。</p>
+<p>GPU可以在显存中存储任何数据，但对于渲染来说一些数据类型是必需的，例如用于屏幕显示的图像缓冲、深度缓冲等。</p>
+<p>OpenGL和 DirectX就是这些<strong>图像应用编程接口</strong>，这些接口用于渲染二维或三维图形。可以说，这些接口架起了上层应用程序和底层GPU的沟通桥梁。</p>
+<p>一个应用程序向这些接口<strong>发送渲染命令</strong>，而这些接口会依次向<strong>显卡驱动（Graphics Driver）</strong> 发送渲染命令，这些显卡驱动是真正知道如何和GPU通信的角色，正是它们把OpenGL或者DirectX的函数调用翻译成了GPU能够听懂的语言，同时它们也负责把纹理等数据转换成<strong>GPU</strong>所支持的格式。</p>
+<p><img src="/assets/UnityShader入门精要/image-20250430130711-ewjc9px.png" alt="image">​</p>
+<p>开发者可以通过图像编程接口发出渲染命令，这些渲染命令也被称为<strong>Draw Call</strong>，它们将会被显卡驱动翻译成GPU能够理解的代码，进行真正的绘制。</p>
+<h3 id="HLSL、GLSL、CG"><a href="#HLSL、GLSL、CG" class="headerlink" title="HLSL、GLSL、CG"></a>HLSL、GLSL、CG</h3><p>着色语言是专门用于编写着色器的，常见的着色语言有</p>
+<ul>
+<li>DirectX 的 HLSL （High Level Shading Language)</li>
+<li>OpenGL 的 GLSL（OpenGL Shading Language）</li>
+<li>NVIDIA 的 CG （C for Graphic)。</li>
+</ul>
+<p>HLSL、GLSL、CG都是“高级（High-Level)”语言，但这种高级是相对于汇编语言来说的，而不是像C#相对于C的高级那样。这些着色语言会被编译成与机器无关的汇编语言，也被称为中间语言（Intermediate Language，IL)。这些<strong>中间语言再交给显卡驱动来翻译成真正的机器语言</strong>，即GPU可以理解的语言。</p>
+<p>对于一个初学者来说，一个最常见的问题就是，他应该选择哪种语言？</p>
+<p>GLSL 的优点在于它的跨平台性，它可以在 Windows、Linux、Mac甚至移动平台等多种平台上工作，但这种跨平台性是由于OpenGL 没有提供着色器编译器，而是由显卡驱动来完成着色器的编译工作。也就是说，只要显卡驱动支持对GLSL 的编译它就可以运行。这种做法的好处在于，由于供应商完全了解自己的硬件构造，他们知道怎样做可以发挥出最大的作用。换句话说，<strong>GLSL是依赖硬件，而非操作系统层级的</strong>。但这也意味着GLSL的编译结果将取决于硬件供应商。要知道，世界上有很多硬件供应商——NVIDIA、ATI等，他们对GLSL 的编译实现不尽相同，这可能会造成编译结果不一致的情况，因为这完全取决于供应商的做法。</p>
+<p>而对于HLSL，是由微软控制着色器的编译，就算使用了不同的硬件，同一个着色器的编译结果也是一样的（前提是版本相同)。但也因此支持HLSL 的平台相对比较有限，几乎完全是微软自已的产品，如 Windows、Xbox 360、PS3等。这是因为在其他平台上没有可以编译HLSL 的编译器。</p>
+<p>CG则是真正意义上的跨平台。它会根据平台的不同，编译成相应的中间语言。CG 语言的跨平台性很大原因取决于与微软的合作，这也导致CG 语言的语法和HLSL 非常相像，CG语言可以无缝移植成HLSL代码。但缺点是可能无法完全发挥出OpenGL 的最新特性。</p>
+<p>对于Unity平台，我们同样可以选择使用哪种语言。在Unity Shader 中，我们可以选择使用“CG/HLSL”或者“GLSL”。带引号是因为Unity里的这些着色语言并不是真正意义上的对应的着色语言，尽管它们的语法几乎一样。以 Unity CG为例，你有时会发现有些CG语法在Unity Shader中是不支持的。</p>
+<h3 id="Draw-Call"><a href="#Draw-Call" class="headerlink" title="Draw Call"></a>Draw Call</h3><p>在前面的章节中,我们已经了解了Draw Call 的含义。</p>
+<p>Draw Call：CPU调用<strong>图像编程接口，</strong> 如OpenGL 中的gIDrawElements命令或者DirectX中的 DrawIndexedPrimitive命令，以命令 GPU进行渲染的操作。</p>
+<p><strong>CPU和GPU的并行工作</strong></p>
+<p>如果没有流水线化，那么CPU需要等到GPU完成上一个渲染任务才能再次发送渲染命令。但这种方法显然会造成效率低下。因此，我们使用一个命令缓冲区（Command Buffer），让CPU和 GPU可以并行工作。</p>
+<p>命令缓冲区包含了一个命令队列，由 CPU向其中添加命令，而由GPU从中读取命令，添加和读取的过程是互相独立的。命令缓冲区使得CPU和 GPU可以相互独立工作。当CPU需要渲染一些对象时，它可以向命令缓冲区中添加命令，而当GPU完成了上一次的渲染任务后，它就可以从命令队列中再取出一个命令并执行它。</p>
+<p>命令缓冲区中的命令有很多种类，而 Draw Call是其中一种，其他命令还有改变渲染状态等（例如改变使用的着色器，使用不同的纹理等）。</p>
+<p><strong>为什么Draw Call多了会影响帧率</strong></p>
+<p>在每次调用 DrawCall之前，CPU需要向GPU发送很多内容，包括<strong>数据、状态和命令</strong>等。在这一阶段，CPU需要完成很多工作，例如检查渲染状态等。而一旦CPU完成了这些准备工作，GPU 就可以开始本次的渲染。</p>
+<p>GPU的渲染能力是很强的，渲染200个还是2000个三角网格通常没有什么区别，因此渲染速度往往快于CPU提交命令的速度。如果 Draw Call 的数量太多，CPU就会把大量时间花费在提交Draw Call上，造成CPU的过载。</p>
+<p><strong>如何减少 Draw Call</strong></p>
+<p>减少 Draw Call 的方法有很多，但我们这里仅讨论使用<strong>批处理（Batching）</strong> 的方法。</p>
+<p>提交大量很小的Draw Call会造成CPU的性能瓶颈，即 CPU把时间都花费在准备Draw Call 的工作上了。那么，一个很显然的优化想法就是把很多小的 DrawCall 合并成一个大的Draw Call，这就是批处理的思想。</p>
+<p>需要注意的是，由于我们需要在CPU 的内存中合并网格，而合并的过程是需要消耗时间的。因此，批处理技术更加适合于那些静态的物体，例如不会移动的大地、石头等，对于这些静态物体我们只需要合并一次即可。</p>
+<p>当然，我们也可以对动态物体进行批处理。但是，由于这些物体是不断运动的，因此每一帧都需要重新进行合并然后再发送给GPU，这对空间和时间都会造成一定的影响。</p>
+<p>在游戏开发过程中，为了减少Draw Call的开销，有两点需要注意。</p>
+<ul>
+<li><p>避免使用大量很小的网格。当不可避免地需要使用很小的网格结构时，考虑是否可以合并它们。</p>
+</li>
+<li><p>避免使用过多的材质。尽量在不同的网格之间共用同一个材质。</p>
+</li>
+</ul>
+<h3 id="固定管线渲染"><a href="#固定管线渲染" class="headerlink" title="固定管线渲染"></a>固定管线渲染</h3><p>固定函数的流水线（Fixed-Function Pipeline），也简称为固定管线，通常是指在较旧的GPU上实现的渲染流水线。这种流水线只给开发者提供一些配置操作，但开发者没有对流水线阶段的完全控制权。</p>
+<p>固定管线通常提供了一系列接口，这些接口包含了一个函数入口点（Function Entry Points）集合，这些函数入口点会匹配GPU上的一个特定的逻辑功能。开发者们通过这些接口来控制渲染流水线。换句话说，固定渲染管线是只可配置的管线。一个形象的比喻是，我们在使用固定管线进行渲染时，就好像在控制电路上的多个开关，我们可以选择打开或者关闭一个开关，但永远无法控制整个电路的排布。</p>
+<p>随着时代的发展，GPU流水线越来越朝着更高的灵活性和可控性方向发展，可编程渲染管线应运而生。我们在上面看到了许多可编程的流水线阶段，如顶点着色器、片元着色器，这些可编程的着色器阶段可以说是GPU进化最重要的贡献。</p>
+<h2 id="Shader"><a href="#Shader" class="headerlink" title="Shader"></a>Shader</h2><p>Shader 所在的阶段就是渲染流水线的一部分，更具体来说，Shader就是:</p>
+<ul>
+<li>GPU流水线上一些可高度编程的阶段，而由着色器编译出来的最终代码是会在GPU上运行的（对于固定管线的渲染来说，着色器有时等同于一些特定的渲染设置)</li>
+<li>有一些特定类型的着色器，如顶点着色器、片元着色器等</li>
+<li>依靠着色器我们可以控制流水线中的渲染细节，例如用顶点着色器来进行顶点变换以及传递数据，用片元着色器来进行逐像素的渲染。但同时，我们也要明白，要得到出色的游戏画面是需要包括Shader 在内的所有渲染流水线阶段的共同参与才可完成:设置适当的渲染状态，使用合适的混合函数，开启还是关闭深度测试/深度写入等。</li>
+</ul>
+<p>Unity 作为一个出色的编辑工具，为我们提供了一个既可以方便地编写着色器，同时又可设置渲染状态的地方：Unity Shader</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" class="category-chain-item">计算机图形学</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E3%80%8AUnityShader%E5%85%A5%E9%97%A8%E7%B2%BE%E8%A6%81%E3%80%8B%E7%AC%94%E8%AE%B0/" class="category-chain-item">《UnityShader入门精要》笔记</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="print-no-link">#性能优化</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>02 渲染流水线</div>
+      <div>https://enlight3n.github.io/2025/04/30/UnityShader入门精要/02 渲染流水线/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Enlight3n</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年4月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/30/UnityShader%E5%85%A5%E9%97%A8%E7%B2%BE%E8%A6%81/01%20%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0Shader%E7%9A%84%E4%B8%96%E7%95%8C/" title="01 欢迎来到Shader的世界">
+                        <span class="hidden-mobile">01 欢迎来到Shader的世界</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
