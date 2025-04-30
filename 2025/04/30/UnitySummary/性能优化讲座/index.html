@@ -19,21 +19,21 @@
   <meta name="author" content="Enlight3n">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. FPS游戏简介FPS：First-person Shootergraph LR 德军总部3D --&gt; 毁灭战士 毁灭战士 --&gt; 半条命 半条命 --&gt; 反恐精英  2. FPS游戏基础框架      Weapon   3C   GamePlay         GamePlay         Game Core    Third Party Library">
+    <meta name="description" content="性能优化讲座——摘自维塔士Switch性能优化讲座 2024.8.22 项目准备阶段项目准备阶段，监测游戏在主平台的性能情况，同时分析Switch平台的性能瓶颈。  监测主平台游戏性能，与客户商定性能优化的分工合作，减少或避免双方在不同平台上的优化工作。 剖析Switch游戏的性能表现，在技术文档中定位性能瓶颈，提出实施流程以及优化策略，与客户商定。  内存瓶颈 游戏开始时加载了过多数据表，导致很">
 <meta property="og:type" content="article">
-<meta property="og:title" content="10 FPS游戏开发基础">
-<meta property="og:url" content="https://enlight3n.github.io/2025/04/29/UE_TOC/10-FPS%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:title" content="性能优化讲座">
+<meta property="og:url" content="https://enlight3n.github.io/2025/04/30/UnitySummary/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%B2%E5%BA%A7/index.html">
 <meta property="og:site_name" content="Enlight3n的博客">
-<meta property="og:description" content="1. FPS游戏简介FPS：First-person Shootergraph LR 德军总部3D --&gt; 毁灭战士 毁灭战士 --&gt; 半条命 半条命 --&gt; 反恐精英  2. FPS游戏基础框架      Weapon   3C   GamePlay         GamePlay         Game Core    Third Party Library">
+<meta property="og:description" content="性能优化讲座——摘自维塔士Switch性能优化讲座 2024.8.22 项目准备阶段项目准备阶段，监测游戏在主平台的性能情况，同时分析Switch平台的性能瓶颈。  监测主平台游戏性能，与客户商定性能优化的分工合作，减少或避免双方在不同平台上的优化工作。 剖析Switch游戏的性能表现，在技术文档中定位性能瓶颈，提出实施流程以及优化策略，与客户商定。  内存瓶颈 游戏开始时加载了过多数据表，导致很">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-04-29T02:45:38.242Z">
-<meta property="article:modified_time" content="2025-04-28T16:49:42.786Z">
+<meta property="article:published_time" content="2025-04-30T03:50:02.000Z">
+<meta property="article:modified_time" content="2025-04-30T03:58:07.804Z">
 <meta property="article:author" content="Enlight3n">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>10 FPS游戏开发基础 - Enlight3n的博客</title>
+  <title>性能优化讲座 - Enlight3n的博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="10 FPS游戏开发基础"></span>
+            <span id="subtitle" data-typed-text="性能优化讲座"></span>
           
         </div>
 
@@ -214,8 +214,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-04-29 10:45" pubdate>
-          2025年4月29日 上午
+        <time datetime="2025-04-30 11:50" pubdate>
+          2025年4月30日 中午
         </time>
       </span>
     
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          581 字
+          668 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          5 分钟
+          6 分钟
         
       </span>
     
@@ -274,109 +274,56 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">10 FPS游戏开发基础</h1>
+            <h1 id="seo-header">性能优化讲座</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="1-FPS游戏简介"><a href="#1-FPS游戏简介" class="headerlink" title="1. FPS游戏简介"></a>1. FPS游戏简介</h1><p>FPS：First-person Shooter<br><pre><code class=" mermaid">graph LR
-德军总部3D --&gt; 毁灭战士
-毁灭战士 --&gt; 半条命
-半条命 --&gt; 反恐精英
-</code></pre></p>
-<h1 id="2-FPS游戏基础框架"><a href="#2-FPS游戏基础框架" class="headerlink" title="2. FPS游戏基础框架"></a>2. FPS游戏基础框架</h1><table>  
-<tr align="center">  
-<td colspan=2,>Weapon</td>  
-<td colspan=2>3C</td>  
-<td colspan=2,>GamePlay</td>  
-</tr>  
-<tr align="center">  
-<td colspan=6,>GamePlay</td>  
-</tr>  
-<tr align="center">  
-<td colspan=3,>Game Core
-</td>  
-<td colspan=3>Third Party Library</td>  
-</tr>  
-<tr align="center">  
-<td colspan=6,>Game Engine </td>  
-</tr>  
-<tr align="center">  
-<td colspan=6,>Operating System </td>  
-</tr>  
-</table>
-
-<h1 id="3-Weapon-System"><a href="#3-Weapon-System" class="headerlink" title="3. Weapon System"></a>3. Weapon System</h1><h2 id="FPS中常见的武器类型"><a href="#FPS中常见的武器类型" class="headerlink" title="FPS中常见的武器类型"></a>FPS中常见的武器类型</h2><ul>
-<li>按种类分：<br>步枪、狙击枪、手枪、手雷等</li>
-<li>按装备位分<br>主武器、副武器、近战武器、投掷武器</li>
-<li>按程序逻辑分<br>lnstantHit、Projectile等</li>
-</ul>
-<h2 id="关键基础组件"><a href="#关键基础组件" class="headerlink" title="关键基础组件"></a>关键基础组件</h2><h3 id="物理引擎"><a href="#物理引擎" class="headerlink" title="物理引擎"></a>物理引擎</h3><h4 id="PhysX"><a href="#PhysX" class="headerlink" title="PhysX"></a>PhysX</h4><ul>
-<li>属于NVIDA，现已开源，是UE4和Unitl的主要内置物理引擎，使用它的游戏非常多<h4 id="Havok"><a href="#Havok" class="headerlink" title="Havok"></a>Havok</h4></li>
-<li>老牌的商业引擎，代表作品包括：刺客信条，Doom Eternal，Monster Hunter World等<h4 id="Bullet"><a href="#Bullet" class="headerlink" title="Bullet"></a>Bullet</h4></li>
-<li>广泛应用于游戏开发和电影制作中。Bullet也是AMD开放物理计划成员之一<h3 id="弹道模型"><a href="#弹道模型" class="headerlink" title="弹道模型"></a>弹道模型</h3><h4 id="影响弹道的因素"><a href="#影响弹道的因素" class="headerlink" title="影响弹道的因素"></a>影响弹道的因素</h4></li>
-<li>主视角角度</li>
-<li>后坐力</li>
-<li>连发数</li>
-<li>精准度</li>
-<li>散发度<h4 id="后坐力与连发的关系"><a href="#后坐力与连发的关系" class="headerlink" title="后坐力与连发的关系"></a>后坐力与连发的关系</h4></li>
-<li>主弹道子弹射出方向=主视角角度+后坐力+精准度+散发度</li>
-<li>后坐力、精准度、散发度与具体武器相关，通过配置参数与公式计算得出</li>
-<li>举例一种散发度的公式：散发方向=随机数x散发x水平/垂直方向</li>
-</ul>
-<h1 id="4-3C-System"><a href="#4-3C-System" class="headerlink" title="4. 3C System"></a>4. 3C System</h1><h2 id="Character"><a href="#Character" class="headerlink" title="Character"></a>Character</h2><p>角色，具有一定的能力或行为，玩家可以进行扮演或观察</p>
-<p>技术要点：</p>
+                <h1 id="性能优化讲座"><a href="#性能优化讲座" class="headerlink" title="性能优化讲座"></a>性能优化讲座</h1><p>——摘自维塔士Switch性能优化讲座 2024.8.22</p>
+<h2 id="项目准备阶段"><a href="#项目准备阶段" class="headerlink" title="项目准备阶段"></a>项目准备阶段</h2><p>项目准备阶段，监测游戏在主平台的性能情况，同时分析Switch平台的性能瓶颈。</p>
 <ul>
-<li>表现方面</li>
-<li>逻辑方面</li>
-<li>角色状态的设计与转换</li>
-<li>细节问题</li>
+<li>监测主平台游戏性能，与客户商定性能优化的分工合作，减少或避免双方在不同平台上的优化工作。</li>
+<li>剖析Switch游戏的性能表现，在技术文档中定位性能瓶颈，提出实施流程以及优化策略，与客户商定。</li>
 </ul>
-<h2 id="Camera"><a href="#Camera" class="headerlink" title="Camera"></a>Camera</h2><p>相机，玩家通过它观察游戏世界，获得体验感和沉浸感</p>
-<p>技术要点</p>
+<h3 id="内存瓶颈"><a href="#内存瓶颈" class="headerlink" title="内存瓶颈"></a>内存瓶颈</h3><ul>
+<li>游戏开始时加载了过多数据表，导致很多不必要的资源被加载进内存并常驻。</li>
+<li>模型面数过高且LOD层数过多。</li>
+<li>声音资源的内存占用超过600M。</li>
+</ul>
+<h3 id="GPU瓶颈"><a href="#GPU瓶颈" class="headerlink" title="GPU瓶颈"></a>GPU瓶颈</h3><ul>
+<li>Grass造成了Vertex Bound并且Overdraw相当严重。</li>
+<li>多个玩家角色同时渲染造成GPU Bound。</li>
+<li>默认的Deferred渲染管线在Switch上很昂贵，测试地图的GPU消耗超过了85ms。</li>
+</ul>
+<h3 id="CPU瓶颈"><a href="#CPU瓶颈" class="headerlink" title="CPU瓶颈"></a>CPU瓶颈</h3><ul>
+<li>Drawcall超过8000，计算物体可见性耗费44ms。</li>
+<li>计算动态阴影耗费11ms。</li>
+<li>角色移动时物理和动画计算过于昂贵。</li>
+<li>低先级的小物件被设为Always Tick。</li>
+<li>UI界面的重绘每帧会消耗5ms以上。</li>
+</ul>
+<h2 id="项目开发阶段"><a href="#项目开发阶段" class="headerlink" title="项目开发阶段"></a>项目开发阶段</h2><p>选定一张目标地图进行优化策略验证。</p>
 <ul>
-<li>渲染顺序</li>
-<li>FOV</li>
-<li><p>碰撞盒位置的控制</p>
-<h2 id="Control"><a href="#Control" class="headerlink" title="Control"></a>Control</h2><p>为玩家提供了不同的方式和不同的体验</p>
-<ul>
-<li>设备与手感</li>
-<li>手游适配问题<ul>
-<li>同样代码，iOS与Android灵敏度不同</li>
-<li>不同Android手机，灵敏度不同</li>
-<li>部分Android手机灵敏度偏低</li>
+<li>选定一张地图作为试验范围，验证主要优化策略能否达到预期目标。同时在性能优化和视觉表现上找到平衡点，与客户商定。</li>
+<li>先着手内存优化工作，并行修复严重的游戏显示问题。内存优化完成后，同时进行GPU和CPU优化。</li>
 </ul>
-</li>
+<h3 id="实施内存优化"><a href="#实施内存优化" class="headerlink" title="实施内存优化"></a>实施内存优化</h3><ul>
+<li>按需加载资源，减少常驻内存物体的数量。</li>
+<li>根据平台硬件性能，减少模型的精度和LOD层数。</li>
+<li>优化声音质量等级，优先使用Streaming方式加载声音资源。</li>
 </ul>
-</li>
-<li>辅助瞄准</li>
-<li>硬件功能</li>
+<h3 id="实施GPU优化"><a href="#实施GPU优化" class="headerlink" title="实施GPU优化"></a>实施GPU优化</h3><ul>
+<li>优化Grass模型并调整密度解决Vertex Bound问题；同时开启Early-z解决Overdraw问题。</li>
+<li>限制最大可显示玩家数量，不可见的玩家以名字标识。</li>
+<li>使用Mobile Deferred优化渲染管线。</li>
 </ul>
-<h1 id="5-其他技术点"><a href="#5-其他技术点" class="headerlink" title="5. 其他技术点"></a>5. 其他技术点</h1><h2 id="网络同步"><a href="#网络同步" class="headerlink" title="网络同步"></a>网络同步</h2><ul>
-<li>帧同步与状态同步</li>
-<li>Peeker’s Advantage<h2 id="反外挂"><a href="#反外挂" class="headerlink" title="反外挂"></a>反外挂</h2></li>
-<li>外挂分类</li>
-<li>外挂原理</li>
-<li>方法：<ul>
-<li>服务器校验</li>
-<li>服务器数据下发</li>
-<li>客户端数据加密</li>
-<li>客户端动态检测</li>
-</ul>
-</li>
-</ul>
-<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><h3 id="CPU优化"><a href="#CPU优化" class="headerlink" title="CPU优化"></a>CPU优化</h3><ul>
-<li>物理性能优化</li>
-<li>动画优化</li>
-<li>流程逻辑优化</li>
-<li>Pool的使用<h3 id="渲染性能优化"><a href="#渲染性能优化" class="headerlink" title="渲染性能优化"></a>渲染性能优化</h3></li>
-<li>UI/场景优化</li>
-<li>指定制作规范<h3 id="内存优化"><a href="#内存优化" class="headerlink" title="内存优化"></a>内存优化</h3></li>
-<li>合理合图</li>
-<li>资源压缩</li>
-<li>资源分包<h3 id="流量优化"><a href="#流量优化" class="headerlink" title="流量优化"></a>流量优化</h3></li>
-<li>减少网络总类</li>
-<li>合并网络包</li>
+<h3 id="实施CPU优化"><a href="#实施CPU优化" class="headerlink" title="实施CPU优化"></a>实施CPU优化</h3><ul>
+<li>引入DetailMode在Switch上排除低优先级物件，并设置可见距离来裁掉远处的小物体。</li>
+<li>减少室内动态光源数量，调整TOD更新的时间间隔。</li>
+<li>异步物理计算：按距离和可见性调整角色更新频率。</li>
+<li>减少每帧需要Tick的物件数量：按事件触发Tick，成组Tick，屏蔽低优先级物件Tick。</li>
+<li>使用Global invalidation缓存UI以减少重绘界面数量。</li>
+<li>优化声管中的特效</li>
 </ul>
 
                 
@@ -396,12 +343,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Unreal/" class="category-chain-item">Unreal</a>
+  <a href="/categories/Unity/" class="category-chain-item">Unity</a>
   
   
     <span>></span>
     
-  <a href="/categories/Unreal/%E8%85%BE%E8%AE%AF%E5%85%AC%E5%BC%80%E8%AF%BE/" class="category-chain-item">腾讯公开课</a>
+  <a href="/categories/Unity/%E6%80%BB%E7%BB%93/" class="category-chain-item">总结</a>
   
   
 
@@ -423,8 +370,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>10 FPS游戏开发基础</div>
-      <div>https://enlight3n.github.io/2025/04/29/UE_TOC/10-FPS游戏开发基础/</div>
+      <div>性能优化讲座</div>
+      <div>https://enlight3n.github.io/2025/04/30/UnitySummary/性能优化讲座/</div>
     </div>
     <div class="license-meta">
       
@@ -436,7 +383,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年4月29日</div>
+          <div>2025年4月30日</div>
         </div>
       
       
@@ -468,18 +415,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/04/30/UnitySummary/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%B2%E5%BA%A7/" title="性能优化讲座">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">性能优化讲座</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/04/29/UE_TOC/09-AI%E6%8A%80%E6%9C%AF/" title="09 AI技术">
-                        <span class="hidden-mobile">09 AI技术</span>
+                      <a href="/2025/04/29/UE_TOC/10-FPS%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/" title="10 FPS游戏开发基础">
+                        <span class="hidden-mobile">10 FPS游戏开发基础</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
